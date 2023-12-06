@@ -5,9 +5,12 @@
 package org.uv.Abarrotes.Controladores;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.uv.Abarrotes.modelos.Producto;
 import org.uv.Abarrotes.servicio.ProductoService;
 
 /**
@@ -15,7 +18,14 @@ import org.uv.Abarrotes.servicio.ProductoService;
  * @author loken
  */
 @Controller
+@RequestMapping("/productos")
 public class ProductoController {
     @Autowired
     private ProductoService productoService;
+
+    @PostMapping
+    public ResponseEntity<Producto> crearProducto(Producto producto){
+        Producto nuevoProducto = productoService.crearProducto(producto);
+        return ResponseEntity.ok(nuevoProducto);
+    }
 }

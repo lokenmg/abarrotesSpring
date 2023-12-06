@@ -5,11 +5,11 @@
 package org.uv.Abarrotes.repositorio;
 
 import org.springframework.data.jpa.repository.JpaRepository;
-
+import org.uv.Abarrotes.modelos.Empleado;
 /**
  *
  * @author loken
  */
-public interface EmpleadoRepository extends JpaRepository<EmpleadoRepository, Long>{
+public interface EmpleadoRepository extends JpaRepository<Empleado, Long>{
     
 }

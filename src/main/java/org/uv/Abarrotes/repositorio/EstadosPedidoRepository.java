@@ -5,11 +5,12 @@
 package org.uv.Abarrotes.repositorio;
 
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.uv.Abarrotes.modelos.EstadosPedido;
 
 /**
  *
  * @author loken
  */
-public interface EstadosPedido extends JpaRepository<EstadosPedido, Long>{
+public interface EstadosPedidoRepository extends JpaRepository<EstadosPedido, Long>{
     
 }

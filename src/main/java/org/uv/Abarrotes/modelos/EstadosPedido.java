@@ -19,7 +19,7 @@ import javax.persistence.Column;
 
 @Entity
 @Table(name = "Estados_pedidos")
-public class EstadosPedido {
+public class EstadosPedido{
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "estados_pedidos_id_estado_seq")
     @SequenceGenerator(name = "estados_pedidos_id_estado_seq", sequenceName = "estados_pedidos_id_estado_seq",
