@@ -13,6 +13,11 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
+import java.util.ArrayList;
 import java.util.List;
 /**
  *
@@ -30,29 +35,31 @@ public class Producto {
     
     @JoinColumn(name = "id_categoria", nullable = false)
     @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+        @JsonIgnore
     private Categoria categoria;
     
     @JoinColumn(name = "id_marca", nullable = false)
     @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @JsonIgnore
     private Marca marca;
     
-    @JoinColumn(name = "id__unidad_med", nullable = false)
+    @JoinColumn(name = "id_unidad_med", nullable = false)
     @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @JsonIgnore
     private UnidadMedida unidadMedida;
 
     @OneToMany(mappedBy = "producto")
-    private List<DetalleVenta> detalleVenta;
+    private List<DetalleVenta> detalleVenta= new ArrayList<>();
 
-    public Producto(long codigo, String nombre, Categoria categoria, Marca marca, UnidadMedida unidadMedida, List<DetalleVenta> detalleVenta) {
+    public Producto() {
+    }
+
+    public Producto(long codigo, String nombre, Categoria categoria, Marca marca, UnidadMedida unidadMedida) {
         this.codigo = codigo;
         this.nombre = nombre;
         this.categoria = categoria;
         this.marca = marca;
         this.unidadMedida = unidadMedida;
-        this.detalleVenta = detalleVenta;
-    }
-
-    public Producto() {
     }
 
     public long getCodigo() {

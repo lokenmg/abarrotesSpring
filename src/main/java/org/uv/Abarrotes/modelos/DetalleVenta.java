@@ -12,6 +12,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.JoinColumn;
 import javax.persistence.Table;
 import java.sql.Date;
+import javax.persistence.SequenceGenerator;
 
 
 @Entity
@@ -21,6 +22,8 @@ public class DetalleVenta {
     @Id
     @Column(name = "id_detalle")
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "detalle_venta_id_detalle_seq")
+    @SequenceGenerator(name = "detalle_venta_id_detalle_seq", sequenceName = "detalle_venta_id_detalle_seq",
+            initialValue = 1, allocationSize = 1)
     private Integer codigo;
 
     @Column(name = "cantidad")

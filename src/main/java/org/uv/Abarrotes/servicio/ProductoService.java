@@ -4,6 +4,11 @@
  */
 package org.uv.Abarrotes.servicio;
 
+import java.util.List;
+
+import javax.persistence.EntityNotFoundException;
+
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.uv.Abarrotes.modelos.Categoria;
@@ -33,21 +38,27 @@ public class ProductoService {
     @Autowired
     private UnidadMedidaRepository unidadMedidaRepository;
 
-    public Producto crearProducto(Producto producto){
-        
+    public Producto crearProducto(Producto producto) {
+        // Verificar si la categoría existe
         Categoria categoria = categoriaRepository.findById(producto.getCategoria().getIdCategoria())
-                .orElseThrow(() -> new RuntimeException("Categoria no encontrada"));
+                .orElseThrow(() -> new EntityNotFoundException("Categoria no encontrada"));
 
+        // Verificar si la marca existe
         Marca marca = marcaRepository.findById(producto.getMarca().getIdMarca())
-                .orElseThrow(()-> new RuntimeException("Marca no encontrada"));
+                .orElseThrow(() -> new EntityNotFoundException("Marca no encontrada"));
 
+        // Verificar si la unidad de medida existe
         UnidadMedida unidadMedida = unidadMedidaRepository.findById(producto.getUnidadMedida().getIdUnidadMed())
-                .orElseThrow(() -> new RuntimeException("Unidad de medida no encontrada"));
+                .orElseThrow(() -> new EntityNotFoundException("Unidad de medida no encontrada"));
 
         producto.setCategoria(categoria);
         producto.setMarca(marca);
         producto.setUnidadMedida(unidadMedida);
 
         return productoRepository.save(producto);
+    }
+
+    public List<Producto> obtenerProductos() {
+        return productoRepository.findAll();
     }
 }

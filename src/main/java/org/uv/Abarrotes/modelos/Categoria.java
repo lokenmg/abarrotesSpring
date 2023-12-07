@@ -12,8 +12,9 @@ import javax.persistence.Column;
 import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
-
+import java.util.ArrayList;
 import java.util.List;
+
 @Entity
 @Table(name = "categorias")
 public class Categoria {
@@ -28,15 +29,14 @@ public class Categoria {
     private String nombre;
     
     @OneToMany(mappedBy = "categoria")
-    private List <Producto> productos;
+    private List <Producto> productos = new ArrayList<>();
 
     public Categoria() {
     }
 
-    public Categoria(Long idCategoria, String nombre, List<Producto> productos) {
+    public Categoria(Long idCategoria, String nombre) {
         this.idCategoria = idCategoria;
         this.nombre = nombre;
-        this.productos = productos;
     }
 
     public Long getIdCategoria() {

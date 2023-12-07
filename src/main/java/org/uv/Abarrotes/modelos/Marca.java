@@ -9,6 +9,9 @@ import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.GeneratedValue;
@@ -29,15 +32,14 @@ public class Marca {
     private String nombre;
 
     @OneToMany(mappedBy = "marca")
-    private List<Producto> producto;
+    private List<Producto> producto= new ArrayList<>();
 
     public Marca() {
     }
 
-    public Marca(Long idMarca, String nombre, List<Producto> producto) {
+    public Marca(Long idMarca, String nombre) {
         this.idMarca = idMarca;
         this.nombre = nombre;
-        this.producto = producto;
     }
 
     //getters and setters

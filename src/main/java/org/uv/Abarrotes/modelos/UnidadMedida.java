@@ -7,8 +7,13 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
+
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
+
+import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.Column;
 
@@ -25,15 +30,14 @@ public class UnidadMedida {
     private String nombre;
 
     @OneToMany(mappedBy = "unidadMedida")
-    private List<Producto> productos;
-
-    public UnidadMedida(Long idUnidadMed, String nombre, List<Producto> productos) {
-        this.idUnidadMed = idUnidadMed;
-        this.nombre = nombre;
-        this.productos = productos;
-    }
+    private List<Producto> productos= new ArrayList<>();
 
     public UnidadMedida() {
+    }
+
+    public UnidadMedida(Long idUnidadMed, String nombre){
+        this.idUnidadMed = idUnidadMed;
+        this.nombre = nombre;
     }
 
     public Long getIdUnidadMed() {
