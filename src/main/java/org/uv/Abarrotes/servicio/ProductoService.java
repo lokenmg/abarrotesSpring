@@ -4,6 +4,9 @@
  */
 package org.uv.Abarrotes.servicio;
 
+import DTOs.DTOProductoInfo;
+
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.EntityNotFoundException;
@@ -38,7 +41,7 @@ public class ProductoService {
     @Autowired
     private UnidadMedidaRepository unidadMedidaRepository;
 
-    public Producto crearProducto(Producto producto) {
+    public DTOProductoInfo crearProducto(Producto producto) {
         // Verificar si la categoría existe
         Categoria categoria = categoriaRepository.findById(producto.getCategoria().getIdCategoria())
                 .orElseThrow(() -> new EntityNotFoundException("Categoria no encontrada"));
@@ -54,11 +57,33 @@ public class ProductoService {
         producto.setCategoria(categoria);
         producto.setMarca(marca);
         producto.setUnidadMedida(unidadMedida);
-
-        return productoRepository.save(producto);
+        
+        Producto productoG=productoRepository.save(producto);
+        
+        DTOs.DTOProductoInfo dto = new DTOProductoInfo(productoG);
+        
+        return dto;
     }
 
-    public List<Producto> obtenerProductos() {
-        return productoRepository.findAll();
+    public List<DTOProductoInfo> obtenerProductos() {
+        List<DTOProductoInfo> DTOproductos = new ArrayList<>();
+        List<Producto> productos = productoRepository.findAll();
+
+        // Convertir cada producto a DTOProductoInfo
+        for (Producto producto : productos) {
+            DTOProductoInfo dto = new DTOProductoInfo(producto);
+            DTOproductos.add(dto);
+        }
+
+        return DTOproductos;
+    }
+
+    public DTOProductoInfo obtenerProductoPorId(long codigo) {
+        Producto producto = productoRepository.findById(codigo)
+                .orElseThrow(() -> new EntityNotFoundException("Producto no encontrado"));
+
+        DTOProductoInfo dto = new DTOProductoInfo(producto);
+
+        return dto;
     }
 }

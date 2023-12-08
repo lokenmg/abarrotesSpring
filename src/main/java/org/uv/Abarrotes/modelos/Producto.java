@@ -35,17 +35,14 @@ public class Producto {
     
     @JoinColumn(name = "id_categoria", nullable = false)
     @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-        @JsonIgnore
     private Categoria categoria;
     
     @JoinColumn(name = "id_marca", nullable = false)
     @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    @JsonIgnore
     private Marca marca;
     
     @JoinColumn(name = "id_unidad_med", nullable = false)
     @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    @JsonIgnore
     private UnidadMedida unidadMedida;
 
     @OneToMany(mappedBy = "producto")

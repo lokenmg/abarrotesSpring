@@ -13,11 +13,14 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.uv.Abarrotes.modelos.Producto;
 import org.uv.Abarrotes.servicio.ProductoService;
+
+import DTOs.DTOProductoInfo;
 
 /**
  *
@@ -30,16 +33,21 @@ public class ProductoController {
     private ProductoService productoService;
  
     @PostMapping
-    public ResponseEntity<Producto> crearProductoConEntidades(@RequestBody Producto nuevoProducto) {
-        System.out.println(nuevoProducto.getNombre());
-        Producto productoCreado = productoService.crearProducto(nuevoProducto);
+    public ResponseEntity<DTOs.DTOProductoInfo> crearProductoConEntidades(@RequestBody Producto nuevoProducto) {
+        DTOs.DTOProductoInfo productoCreado = productoService.crearProducto(nuevoProducto);
         return ResponseEntity.status(HttpStatus.CREATED).body(productoCreado);
     }
 
     @GetMapping
-    public ResponseEntity<List<Producto>> obtenerProductos(){
-        List<Producto> productos = productoService.obtenerProductos();
+    public ResponseEntity<List<DTOProductoInfo>> obtenerProductos(){
+        List<DTOProductoInfo> productos = productoService.obtenerProductos();
         return ResponseEntity.ok(productos);
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<DTOProductoInfo> obtenerProductoPorId(@PathVariable Long id){
+        DTOProductoInfo producto = productoService.obtenerProductoPorId(id);
+        return ResponseEntity.ok(producto);
     }
 
 }
