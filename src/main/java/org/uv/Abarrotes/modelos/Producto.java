@@ -28,10 +28,14 @@ import java.util.List;
 public class Producto {
    
     @Id
+    @Column(name = "codigo")
     private long codigo;
     
     @Column(name = "nombre")
     private String nombre;
+    
+    @Column(name = "existencia")
+    private long existencia;
     
     @JoinColumn(name = "id_categoria", nullable = false)
     @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
@@ -51,9 +55,10 @@ public class Producto {
     public Producto() {
     }
 
-    public Producto(long codigo, String nombre, Categoria categoria, Marca marca, UnidadMedida unidadMedida) {
+    public Producto(long codigo, String nombre, long existencia, Categoria categoria, Marca marca, UnidadMedida unidadMedida) {
         this.codigo = codigo;
         this.nombre = nombre;
+        this.existencia = existencia;
         this.categoria = categoria;
         this.marca = marca;
         this.unidadMedida = unidadMedida;
@@ -73,6 +78,14 @@ public class Producto {
 
     public void setNombre(String nombre) {
         this.nombre = nombre;
+    }
+
+    public long getExistencia() {
+        return existencia;
+    }
+
+    public void setExistencia(long existencia) {
+        this.existencia = existencia;
     }
 
     public Categoria getCategoria() {

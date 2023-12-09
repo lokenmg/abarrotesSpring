@@ -48,5 +48,45 @@ public class Rol {
     public Rol() {
     }
 
+    public Long getIdRol() {
+        return idRol;
+    }
+
+    public void setIdRol(Long idRol) {
+        this.idRol = idRol;
+    }
+
+    public String getCve() {
+        return cve;
+    }
+
+    public void setCve(String cve) {
+        this.cve = cve;
+    }
+
+    public String getDescripcion() {
+        return descripcion;
+    }
+
+    public void setDescripcion(String descripcion) {
+        this.descripcion = descripcion;
+    }
+
+    public List<OpcionesRol> getOpcionesRoles() {
+        return opcionesRoles;
+    }
+
+    public void setOpcionesRoles(List<OpcionesRol> opcionesRoles) {
+        this.opcionesRoles = opcionesRoles;
+    }
+
+    public List<Empleado> getUsuarios() {
+        return usuarios;
+    }
+
+    public void setUsuarios(List<Empleado> usuarios) {
+        this.usuarios = usuarios;
+    }
+
     
 }

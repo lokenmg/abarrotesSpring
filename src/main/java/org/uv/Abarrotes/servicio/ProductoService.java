@@ -4,7 +4,7 @@
  */
 package org.uv.Abarrotes.servicio;
 
-import DTOs.DTOProductoInfo;
+import org.uv.Abarrotes.DTOs.DTOProductoInfo;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -60,7 +60,7 @@ public class ProductoService {
         
         Producto productoG=productoRepository.save(producto);
         
-        DTOs.DTOProductoInfo dto = new DTOProductoInfo(productoG);
+        org.uv.Abarrotes.DTOs.DTOProductoInfo dto = new DTOProductoInfo(productoG);
         
         return dto;
     }
