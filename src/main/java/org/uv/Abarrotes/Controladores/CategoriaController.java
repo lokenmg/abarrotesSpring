@@ -4,6 +4,7 @@
  */
 package org.uv.Abarrotes.Controladores;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -18,8 +19,11 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.uv.Abarrotes.modelos.Categoria;
 import org.uv.Abarrotes.servicio.CategoriaService;
+
+import DTOs.DTOCategoria;
 
 /**
  *
@@ -32,35 +36,45 @@ public class CategoriaController {
     private CategoriaService categoriaService;
 
     @GetMapping
-    public ResponseEntity<List<Categoria>> obtenerCategorias(){
+    public ResponseEntity<List<DTOCategoria>> obtenerCategorias(){
         List<Categoria> categorias = categoriaService.obtenerCategorias();
-        return ResponseEntity.ok(categorias);
+        List<DTOCategoria> dtoCategorias = new ArrayList<>();
+        for(Categoria categoria : categorias){
+            dtoCategorias.add(new DTOCategoria(categoria));
+        }
+        return ResponseEntity.ok(dtoCategorias);
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Categoria> obtenerCategoriaPorId(@PathVariable Long id){
-        Categoria categoria = categoriaService.obtenerCategoriaPorId(id);
+    public ResponseEntity<DTOCategoria> obtenerCategoriaPorId(@PathVariable Long id){
+        DTOCategoria categoria = new DTOCategoria(categoriaService.obtenerCategoriaPorId(id));
         return ResponseEntity.ok(categoria);
     }
 
     @PostMapping
-    public ResponseEntity<Categoria> crearCategoria(@RequestBody Categoria categoria){
+    public ResponseEntity<DTOCategoria> crearCategoria(@RequestBody Categoria categoria){
         Categoria nuevaCategoria = categoriaService.crearCategoria(categoria);
-        return ResponseEntity.status(HttpStatus.CREATED).body(nuevaCategoria);
+        return ResponseEntity.status(HttpStatus.CREATED).body(new DTOCategoria(nuevaCategoria));
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Categoria> actualizarCategoria(@PathVariable Long id,@RequestBody Categoria categoria){
+    public ResponseEntity<DTOCategoria> actualizarCategoria(@PathVariable Long id,@RequestBody Categoria categoria){
         Optional<Categoria> categoriaActualizada = categoriaService.actualizarCategoria(id, categoria);
         if(categoriaActualizada.isPresent()){
-            return ResponseEntity.ok(categoriaActualizada.get());
+            return ResponseEntity.ok(new DTOCategoria(categoriaActualizada.get()));
         }
         return ResponseEntity.notFound().build();
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Categoria> eliminarCategoria(@PathVariable Long id){
+    public ResponseEntity<DTOCategoria> eliminarCategoria(@PathVariable Long id){
         boolean eliminada= categoriaService.eliminarCategoria(id);
         return eliminada ? ResponseEntity.noContent().build() : ResponseEntity.notFound().build();
+    }
+
+    @GetMapping("/buscar")
+    public ResponseEntity<List<DTOCategoria>> buscarCategoriaPorNombre(@RequestParam String nombre){
+        List<DTOCategoria> categorias = categoriaService.buscarCategoriaPorNombre(nombre);
+        return ResponseEntity.ok(categorias);
     }
 }

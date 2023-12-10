@@ -42,6 +42,10 @@ public class ProductoService {
     private UnidadMedidaRepository unidadMedidaRepository;
 
     public DTOProductoInfo crearProducto(Producto producto) {
+
+        if (productoRepository.existsById(producto.getCodigo())) {
+            throw new EntityNotFoundException("Producto ya existe");
+        }
         // Verificar si la categoría existe
         Categoria categoria = categoriaRepository.findById(producto.getCategoria().getIdCategoria())
                 .orElseThrow(() -> new EntityNotFoundException("Categoria no encontrada"));
@@ -85,5 +89,44 @@ public class ProductoService {
         DTOProductoInfo dto = new DTOProductoInfo(producto);
 
         return dto;
+    }
+
+    //modificar producto
+    public DTOProductoInfo modificarProducto(Producto producto, long codigo){
+        Producto productoExistente=productoRepository.findById(producto.getCodigo())
+                .orElseThrow(()-> new EntityNotFoundException("Producto no encontrado"));
+        
+        // Verificar si la categoría existe
+        Categoria categoria = categoriaRepository.findById(producto.getCategoria().getIdCategoria())
+                .orElseThrow(() -> new EntityNotFoundException("Categoria no encontrada"));
+        
+        // Verificar si la marca existe
+        Marca marca = marcaRepository.findById(producto.getMarca().getIdMarca())
+                .orElseThrow(() -> new EntityNotFoundException("Marca no encontrada"));
+        
+        // Verificar si la unidad de medida existe
+        UnidadMedida unidadMedida = unidadMedidaRepository.findById(producto.getUnidadMedida().getIdUnidadMed())
+                .orElseThrow(() -> new EntityNotFoundException("Unidad de medida no encontrada"));
+        productoExistente.setNombre(producto.getNombre());
+        productoExistente.setExistencia(producto.getExistencia());
+        productoExistente.setCategoria(categoria);
+        productoExistente.setMarca(marca);
+        productoExistente.setUnidadMedida(unidadMedida);
+
+        DTOProductoInfo dto = new DTOProductoInfo(productoRepository.save(productoExistente));
+        return dto;
+    }
+
+    public List<DTOProductoInfo> buscarProductoPorNombre(String nombre) {
+        List<DTOProductoInfo> DTOproductos = new ArrayList<>();
+        List<Producto> productos = productoRepository.findByNombreContainingIgnoreCase(nombre);
+
+        // Convertir cada producto a DTOProductoInfo
+        for (Producto producto : productos) {
+            DTOProductoInfo dto = new DTOProductoInfo(producto);
+            DTOproductos.add(dto);
+        }
+
+        return DTOproductos;
     }
 }

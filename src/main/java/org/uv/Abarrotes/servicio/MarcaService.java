@@ -12,6 +12,9 @@ import javax.swing.text.html.Option;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.uv.Abarrotes.repositorio.MarcaRepository;
+
+import DTOs.DTOmarca;
+
 import org.uv.Abarrotes.modelos.Marca;
 /**
  *
@@ -28,8 +31,12 @@ public class MarcaService {
     }
     
     //obtener una marca por id
-    public Optional<Marca> obtenerMarcaPorId(Long id){
-        return marcaRepository.findById(id);
+    public Optional<DTOmarca> obtenerMarcaPorId(Long id){
+        Optional<Marca> marca = marcaRepository.findById(id);
+        if(marca.isPresent()){
+            return Optional.of(new DTOmarca(marca.get()));
+        }
+        return Optional.empty();
     }
 
     //obtener una marca por nombre

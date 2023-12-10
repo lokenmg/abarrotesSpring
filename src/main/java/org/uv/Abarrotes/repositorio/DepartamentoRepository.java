@@ -13,4 +13,5 @@ import org.uv.Abarrotes.modelos.Departamento;
  */
 public interface DepartamentoRepository extends JpaRepository<Departamento, Long> {
     
+    Departamento findByNombre(String nombre);
 }

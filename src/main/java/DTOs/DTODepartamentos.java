@@ -4,24 +4,24 @@
  */
 package DTOs;
 
-import org.uv.Abarrotes.modelos.UnidadMedida;
+import org.uv.Abarrotes.modelos.Departamento;
 
 /**
  *
  * @author loken
  */
-public class DTOUnidadMedida {
+public class DTODepartamentos {
     private String nombre;
 
-    public DTOUnidadMedida(String nombre) {
+    public DTODepartamentos(String nombre) {
         this.nombre = nombre;
     }
 
-    public DTOUnidadMedida(UnidadMedida unidadMedida) {
-        this.nombre = unidadMedida.getNombre();
+    public DTODepartamentos() {
     }
-
-    public DTOUnidadMedida() {
+    
+    public DTODepartamentos(Departamento departamento){
+        this.nombre = departamento.getNombre();
     }
 
     public String getNombre() {
@@ -31,4 +31,7 @@ public class DTOUnidadMedida {
     public void setNombre(String nombre) {
         this.nombre = nombre;
     }
+    
+    
+    
 }

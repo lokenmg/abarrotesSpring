@@ -4,6 +4,7 @@
  */
 package org.uv.Abarrotes.Controladores;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -18,8 +19,10 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.uv.Abarrotes.servicio.UnidadMedidaService;
-import org.uv.Abarrotes.modelos.UnidadMedida;
 
+import DTOs.DTOUnidadMedida;
+
+import org.uv.Abarrotes.modelos.UnidadMedida;
 /**
  *
  * @author loken
@@ -31,35 +34,43 @@ public class UnidadMedidaController {
     private UnidadMedidaService unidadMedidaService;
 
     @GetMapping
-    public ResponseEntity<List<UnidadMedida>> obtenerUnidadesMedida(){
+    public ResponseEntity<List<DTOUnidadMedida>> obtenerUnidadesMedida(){
         List<UnidadMedida> unidadesMedida = unidadMedidaService.obtenerUnidadesMedida();
-        return ResponseEntity.ok(unidadesMedida);
+        List<DTOUnidadMedida> dtoUnidadMedidas = new ArrayList<>();
+
+        for(UnidadMedida unidadMedida : unidadesMedida){
+            dtoUnidadMedidas.add(new DTOUnidadMedida(unidadMedida));
+        }
+        return ResponseEntity.ok(dtoUnidadMedidas);
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<UnidadMedida> obtenerUnidadMedidaPorId(@PathVariable Long id){
+    public ResponseEntity<DTOUnidadMedida> obtenerUnidadMedidaPorId(@PathVariable Long id){
         UnidadMedida unidadMedida = unidadMedidaService.obtenerUnidadMedidaPorId(id);
-        return ResponseEntity.ok(unidadMedida);
+        DTOUnidadMedida dtoUnidadMedida = new DTOUnidadMedida(unidadMedida);
+        return ResponseEntity.ok(dtoUnidadMedida);
     }
     
     @PostMapping
-    public ResponseEntity<UnidadMedida> crearUnidadMedida(@RequestBody UnidadMedida unidadMedida){
+    public ResponseEntity<DTOUnidadMedida> crearUnidadMedida(@RequestBody UnidadMedida unidadMedida){
         UnidadMedida nuevaUnidadMedida = unidadMedidaService.crearUnidadMedida(unidadMedida);
-        return ResponseEntity.ok(nuevaUnidadMedida);
+        DTOUnidadMedida dtoUnidadMedida = new DTOUnidadMedida(nuevaUnidadMedida);
+        return ResponseEntity.ok(dtoUnidadMedida);
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<UnidadMedida> actualizarUnidadMedida(@PathVariable Long id, @RequestBody UnidadMedida unidadMedida){
+    public ResponseEntity<DTOUnidadMedida> actualizarUnidadMedida(@PathVariable Long id, @RequestBody UnidadMedida unidadMedida){
         Optional<UnidadMedida> unidadMedidaActualizada = unidadMedidaService.actualizarUnidadMedida(id, unidadMedida);
         if(unidadMedidaActualizada.isPresent()){
-            return ResponseEntity.ok(unidadMedidaActualizada.get());
+            return ResponseEntity.ok(new DTOUnidadMedida(unidadMedidaActualizada.get()));
         }
         return ResponseEntity.notFound().build();
     }
-
+/*
     @DeleteMapping("/{id}")
     public ResponseEntity<UnidadMedida> eliminarUnidadMedida(@PathVariable Long id){
         boolean eliminado = unidadMedidaService.eliminarUnidadMedida(id);
         return eliminado ? ResponseEntity.noContent().build() : ResponseEntity.notFound().build();
     }
+*/
 }

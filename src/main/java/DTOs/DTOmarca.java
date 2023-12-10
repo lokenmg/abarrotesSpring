@@ -4,10 +4,32 @@
  */
 package DTOs;
 
+import org.uv.Abarrotes.modelos.Marca;
+
 /**
  *
  * @author loken
  */
 public class DTOmarca {
     
+    private String nombre;
+
+    public DTOmarca(String nombre) {
+        this.nombre = nombre;
+    }
+
+    public DTOmarca() {
+    }
+
+    public DTOmarca(Marca marca) {
+        this.nombre = marca.getNombre();
+    }
+
+    public String getNombre() {
+        return nombre;
+    }
+
+    public void setNombre(String nombre) {
+        this.nombre = nombre;
+    }
 }
