@@ -4,6 +4,7 @@
  */
 package org.uv.Abarrotes.repositorio;
 
+import java.util.List;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.uv.Abarrotes.modelos.UnidadMedida;
 
@@ -12,5 +13,5 @@ import org.uv.Abarrotes.modelos.UnidadMedida;
  * @author loken
  */
 public interface UnidadMedidaRepository extends JpaRepository<UnidadMedida, Long>{
-    
+    List<UnidadMedida> findByNombre(String nombre);
 }

@@ -9,8 +9,6 @@ import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
-import com.fasterxml.jackson.annotation.JsonManagedReference;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -65,6 +63,11 @@ public class Marca {
 
     public void setProducto(List<Producto> producto) {
         this.producto= producto;
+    }
+
+    @Override
+    public String toString() {
+        return "Marca{" + "idMarca=" + idMarca + ", nombre=" + nombre + ", producto=" + producto + '}';
     }
 
 }

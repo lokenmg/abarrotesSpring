@@ -8,8 +8,6 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
 
-import com.fasterxml.jackson.annotation.JsonManagedReference;
-
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 

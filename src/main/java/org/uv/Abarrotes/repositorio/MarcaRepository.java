@@ -4,6 +4,8 @@
  */
 package org.uv.Abarrotes.repositorio;
 
+import java.util.List;
+
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.uv.Abarrotes.modelos.Marca;
 
@@ -12,5 +14,5 @@ import org.uv.Abarrotes.modelos.Marca;
  * @author loken
  */
 public interface MarcaRepository extends JpaRepository<Marca, Long>{
-    
+    List<Marca> findByNombre(String nombre);
 }

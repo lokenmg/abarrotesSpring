@@ -12,5 +12,5 @@ import org.uv.Abarrotes.modelos.EstadosPedido;
  * @author loken
  */
 public interface EstadosPedidoRepository extends JpaRepository<EstadosPedido, Long>{
-    
+    public EstadosPedido findByEstado(String estado);
 }

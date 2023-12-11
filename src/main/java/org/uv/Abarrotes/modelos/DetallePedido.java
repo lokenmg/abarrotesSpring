@@ -12,6 +12,9 @@ import javax.persistence.GenerationType;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Table;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import java.sql.Time;
 import java.sql.Date;
 import javax.persistence.JoinColumn;
@@ -37,9 +40,11 @@ public class DetallePedido implements Serializable {
     private Time horaEntrega;
 
     @Column(name = "fecha_recoger")
+    @JsonIgnore
     private Date fechaRecoger;
 
     @Column(name = "hora_recoger")
+    @JsonIgnore
     private Time horaRecoger;
 
     @ManyToOne(cascade = CascadeType.ALL)
@@ -60,7 +65,11 @@ public class DetallePedido implements Serializable {
     }
 
     public DetallePedido() {
+        // Establecer valores predeterminados para fechaRecoger y horaRecoger
+        this.fechaRecoger = new java.sql.Date(System.currentTimeMillis()); // Fecha actual como valor predeterminado
+        this.horaRecoger = Time.valueOf("12:00:00"); // 12:00 PM como valor predeterminado
     }
+
 
     public Long getIdDetallePedido() {
         return idDetallePedido;

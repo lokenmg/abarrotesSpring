@@ -14,12 +14,12 @@ public class DTOProductoInfo {
     
     private long codigo;
     
-    private String nombre;
-    
     private long existencia;
     
-    private String marca;
+    private String nombre;
     
+    private String marca;
+
     private String unidadMedida;
     
     private String categoria;
@@ -28,6 +28,7 @@ public class DTOProductoInfo {
     }
 
     public DTOProductoInfo(long codigo, String nombre, long existencia, String marca, String unidadMedida, String categoria) {
+
         this.codigo = codigo;
         this.nombre = nombre;
         this.existencia = existencia;

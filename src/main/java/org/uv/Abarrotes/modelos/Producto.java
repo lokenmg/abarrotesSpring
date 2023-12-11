@@ -14,9 +14,6 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonIgnore;
-
 import java.util.ArrayList;
 import java.util.List;
 /**
@@ -55,13 +52,15 @@ public class Producto {
     public Producto() {
     }
 
-    public Producto(long codigo, String nombre, long existencia, Categoria categoria, Marca marca, UnidadMedida unidadMedida) {
+    public Producto(long codigo, String nombre, long existencia, Categoria categoria, Marca marca, UnidadMedida unidadMedida, List<DetalleVenta> detalleVenta) {
+
         this.codigo = codigo;
         this.nombre = nombre;
         this.existencia = existencia;
         this.categoria = categoria;
         this.marca = marca;
         this.unidadMedida = unidadMedida;
+        this.detalleVenta = detalleVenta;
     }
 
     public long getCodigo() {
@@ -79,7 +78,8 @@ public class Producto {
     public void setNombre(String nombre) {
         this.nombre = nombre;
     }
-
+    
+    // getters y setters de existencia
     public long getExistencia() {
         return existencia;
     }
