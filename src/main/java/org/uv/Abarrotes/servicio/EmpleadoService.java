@@ -3,14 +3,13 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
 package org.uv.Abarrotes.servicio;
+
 import java.util.ArrayList;
 import java.util.List;
-
 import javax.persistence.EntityNotFoundException;
-
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
 import org.uv.Abarrotes.DTOs.DTOEmpleadoInfo;
 import org.uv.Abarrotes.modelos.Empleado;
 import org.uv.Abarrotes.modelos.Rol;
@@ -62,5 +61,30 @@ public class EmpleadoService {
         DTOEmpleadoInfo dto = new DTOEmpleadoInfo(empleado);
 
         return dto;
+    }
+    
+    public DTOEmpleadoInfo actualizarEmpleado(Long idEmpleado, Empleado empleadoActualizado) {
+        Empleado empleadoExistente = empleadoRepository.findById(idEmpleado)
+                .orElseThrow(() -> new EntityNotFoundException("Empleado no encontrado"));
+
+        // Update fields
+        empleadoExistente.setNombre(empleadoActualizado.getNombre());
+        empleadoExistente.setApellidos(empleadoActualizado.getApellidos());
+        empleadoExistente.setRoles(empleadoActualizado.getRoles());
+
+        // Save the updated employee
+        Empleado empleadoG = empleadoRepository.save(empleadoExistente);
+
+        // Convert to DTO and return
+        DTOEmpleadoInfo dto = new DTOEmpleadoInfo(empleadoG);
+        return dto;
+    }
+
+    public void eliminarEmpleado(Long idEmpleado) {
+        Empleado empleadoExistente = empleadoRepository.findById(idEmpleado)
+                .orElseThrow(() -> new EntityNotFoundException("Empleado no encontrado"));
+
+        // Delete the employee
+        empleadoRepository.delete(empleadoExistente);
     }
 }

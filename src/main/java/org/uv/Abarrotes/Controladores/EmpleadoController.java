@@ -9,9 +9,11 @@ import java.util.List;
 import org.springframework.http.*;
 import org.springframework.stereotype.Controller;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.uv.Abarrotes.DTOs.DTOEmpleadoInfo;
@@ -44,5 +46,17 @@ public class EmpleadoController {
     public ResponseEntity<DTOEmpleadoInfo> obtenerEmpleadoPorId(@PathVariable Long id){
         DTOEmpleadoInfo empleado = empleadoService.obtenerEmpleadoPorId(id);
         return ResponseEntity.ok(empleado);
+    }
+    
+    @PutMapping("/{id}")
+    public ResponseEntity<DTOEmpleadoInfo> actualizarEmpleado(@PathVariable Long id, @RequestBody Empleado empleadoActualizado) {
+        DTOEmpleadoInfo empleado = empleadoService.actualizarEmpleado(id, empleadoActualizado);
+        return ResponseEntity.ok(empleado);
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> eliminarEmpleado(@PathVariable Long id) {
+        empleadoService.eliminarEmpleado(id);
+        return ResponseEntity.noContent().build();
     }
 }

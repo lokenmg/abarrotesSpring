@@ -59,7 +59,7 @@ public class ProductoService {
         producto.setUnidadMedida(unidadMedida);
         
         Producto productoG=productoRepository.save(producto);
-        
+        System.out.println(producto.getCategoria());
         org.uv.Abarrotes.DTOs.DTOProductoInfo dto = new DTOProductoInfo(productoG);
         
         return dto;
