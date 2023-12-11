@@ -4,8 +4,6 @@
  */
 package org.uv.Abarrotes.servicio;
 
-import DTOs.DTOProductoInfo;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -14,6 +12,7 @@ import javax.persistence.EntityNotFoundException;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.uv.Abarrotes.DTOs.DTOProductoInfo;
 import org.uv.Abarrotes.modelos.Categoria;
 import org.uv.Abarrotes.modelos.Marca;
 import org.uv.Abarrotes.modelos.Producto;
@@ -64,7 +63,7 @@ public class ProductoService {
         
         Producto productoG=productoRepository.save(producto);
         
-        DTOs.DTOProductoInfo dto = new DTOProductoInfo(productoG);
+        org.uv.Abarrotes.DTOs.DTOProductoInfo dto = new DTOProductoInfo(productoG);
         
         return dto;
     }

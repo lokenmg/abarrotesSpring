@@ -6,10 +6,9 @@ import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.uv.Abarrotes.DTOs.DTOCategoria;
 import org.uv.Abarrotes.modelos.Categoria;
 import org.uv.Abarrotes.repositorio.CategoriaRepository;
-
-import DTOs.DTOCategoria;
 
 /**
  *

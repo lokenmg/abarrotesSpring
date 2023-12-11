@@ -2,27 +2,26 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package DTOs;
+package org.uv.Abarrotes.DTOs;
 
-import org.uv.Abarrotes.modelos.Marca;
+import org.uv.Abarrotes.modelos.UnidadMedida;
 
 /**
  *
  * @author loken
  */
-public class DTOmarca {
-    
+public class DTOUnidadMedida {
     private String nombre;
 
-    public DTOmarca(String nombre) {
+    public DTOUnidadMedida(String nombre) {
         this.nombre = nombre;
     }
 
-    public DTOmarca() {
+    public DTOUnidadMedida(UnidadMedida unidadMedida) {
+        this.nombre = unidadMedida.getNombre();
     }
 
-    public DTOmarca(Marca marca) {
-        this.nombre = marca.getNombre();
+    public DTOUnidadMedida() {
     }
 
     public String getNombre() {

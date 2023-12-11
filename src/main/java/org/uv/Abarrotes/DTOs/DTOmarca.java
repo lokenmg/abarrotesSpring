@@ -2,27 +2,27 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package DTOs;
+package org.uv.Abarrotes.DTOs;
 
-import org.uv.Abarrotes.modelos.Categoria;
+import org.uv.Abarrotes.modelos.Marca;
 
 /**
  *
  * @author loken
  */
-public class DTOCategoria {
+public class DTOmarca {
     
     private String nombre;
 
-    public DTOCategoria(String nombre) {
+    public DTOmarca(String nombre) {
         this.nombre = nombre;
     }
 
-    public DTOCategoria() {
+    public DTOmarca() {
     }
 
-    public DTOCategoria(Categoria categoria) {
-        this.nombre = categoria.getNombre();
+    public DTOmarca(Marca marca) {
+        this.nombre = marca.getNombre();
     }
 
     public String getNombre() {

@@ -20,10 +20,9 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.uv.Abarrotes.DTOs.DTOCategoria;
 import org.uv.Abarrotes.modelos.Categoria;
 import org.uv.Abarrotes.servicio.CategoriaService;
-
-import DTOs.DTOCategoria;
 
 /**
  *

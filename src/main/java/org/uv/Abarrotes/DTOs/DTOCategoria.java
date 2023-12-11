@@ -2,26 +2,27 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package DTOs;
+package org.uv.Abarrotes.DTOs;
 
-import org.uv.Abarrotes.modelos.UnidadMedida;
+import org.uv.Abarrotes.modelos.Categoria;
 
 /**
  *
  * @author loken
  */
-public class DTOUnidadMedida {
+public class DTOCategoria {
+    
     private String nombre;
 
-    public DTOUnidadMedida(String nombre) {
+    public DTOCategoria(String nombre) {
         this.nombre = nombre;
     }
 
-    public DTOUnidadMedida(UnidadMedida unidadMedida) {
-        this.nombre = unidadMedida.getNombre();
+    public DTOCategoria() {
     }
 
-    public DTOUnidadMedida() {
+    public DTOCategoria(Categoria categoria) {
+        this.nombre = categoria.getNombre();
     }
 
     public String getNombre() {
