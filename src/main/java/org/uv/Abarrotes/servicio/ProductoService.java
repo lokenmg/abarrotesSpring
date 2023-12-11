@@ -4,6 +4,7 @@
  */
 package org.uv.Abarrotes.servicio;
 
+import org.uv.Abarrotes.DTOs.DTOProductoInfo;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -62,7 +63,6 @@ public class ProductoService {
         producto.setUnidadMedida(unidadMedida);
         
         Producto productoG=productoRepository.save(producto);
-        
         org.uv.Abarrotes.DTOs.DTOProductoInfo dto = new DTOProductoInfo(productoG);
         
         return dto;

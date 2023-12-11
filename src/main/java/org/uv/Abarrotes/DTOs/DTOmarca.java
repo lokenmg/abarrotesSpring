@@ -6,12 +6,12 @@ package org.uv.Abarrotes.DTOs;
 
 import org.uv.Abarrotes.modelos.Marca;
 
+
 /**
  *
  * @author loken
  */
 public class DTOmarca {
-    
     private String nombre;
 
     public DTOmarca(String nombre) {
@@ -32,4 +32,5 @@ public class DTOmarca {
     public void setNombre(String nombre) {
         this.nombre = nombre;
     }
+
 }

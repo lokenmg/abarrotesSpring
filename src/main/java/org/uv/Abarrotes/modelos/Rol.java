@@ -19,8 +19,8 @@ import javax.persistence.Table;
 @Table(name = "Roles")
 public class Rol {
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "rol_id_rol_seq")
-    @SequenceGenerator(name = "rol_id_rol_seq", sequenceName = "rol_id_rol_seq",
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "roles_id_rol_seq")
+    @SequenceGenerator(name = "roles_id_rol_seq", sequenceName = "roles_id_rol_seq",
             initialValue = 1, allocationSize = 1)
     @Column(name = "id_rol")
     private Long idRol;
@@ -46,6 +46,46 @@ public class Rol {
     }
 
     public Rol() {
+    }
+
+    public Long getIdRol() {
+        return idRol;
+    }
+
+    public void setIdRol(Long idRol) {
+        this.idRol = idRol;
+    }
+
+    public String getCve() {
+        return cve;
+    }
+
+    public void setCve(String cve) {
+        this.cve = cve;
+    }
+
+    public String getDescripcion() {
+        return descripcion;
+    }
+
+    public void setDescripcion(String descripcion) {
+        this.descripcion = descripcion;
+    }
+
+    public List<OpcionesRol> getOpcionesRoles() {
+        return opcionesRoles;
+    }
+
+    public void setOpcionesRoles(List<OpcionesRol> opcionesRoles) {
+        this.opcionesRoles = opcionesRoles;
+    }
+
+    public List<Empleado> getUsuarios() {
+        return usuarios;
+    }
+
+    public void setUsuarios(List<Empleado> usuarios) {
+        this.usuarios = usuarios;
     }
 
     

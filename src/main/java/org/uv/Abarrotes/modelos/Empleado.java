@@ -27,7 +27,7 @@ public class Empleado {
     @SequenceGenerator(name = "empleados_id_empleado_seq", sequenceName = "empleados_id_empleado_seq",
             initialValue = 1, allocationSize = 1)
     @Column(name = "id_empleado")
-    private Long idEmpleado;
+    private long idEmpleado;
 
     @Column(name = "nombre")
     private String nombre;

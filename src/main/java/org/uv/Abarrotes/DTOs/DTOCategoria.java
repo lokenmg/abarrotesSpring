@@ -4,7 +4,9 @@
  */
 package org.uv.Abarrotes.DTOs;
 
+
 import org.uv.Abarrotes.modelos.Categoria;
+
 
 /**
  *
@@ -12,6 +14,7 @@ import org.uv.Abarrotes.modelos.Categoria;
  */
 public class DTOCategoria {
     
+
     private String nombre;
 
     public DTOCategoria(String nombre) {

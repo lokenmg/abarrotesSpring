@@ -25,13 +25,14 @@ import java.util.List;
 public class Producto {
    
     @Id
+    @Column(name = "codigo")
     private long codigo;
     
     @Column(name = "nombre")
     private String nombre;
-
+    
     @Column(name = "existencia")
-    private int existencia;
+    private long existencia;
     
     @JoinColumn(name = "id_categoria", nullable = false)
     @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
@@ -51,7 +52,8 @@ public class Producto {
     public Producto() {
     }
 
-    public Producto(long codigo, String nombre, int existencia, Categoria categoria, Marca marca, UnidadMedida unidadMedida, List<DetalleVenta> detalleVenta) {
+    public Producto(long codigo, String nombre, long existencia, Categoria categoria, Marca marca, UnidadMedida unidadMedida, List<DetalleVenta> detalleVenta) {
+
         this.codigo = codigo;
         this.nombre = nombre;
         this.existencia = existencia;
@@ -78,11 +80,11 @@ public class Producto {
     }
     
     // getters y setters de existencia
-    public int getExistencia() {
+    public long getExistencia() {
         return existencia;
     }
 
-    public void setExistencia(int existencia) {
+    public void setExistencia(long existencia) {
         this.existencia = existencia;
     }
 

@@ -14,11 +14,11 @@ public class DTOProductoInfo {
     
     private long codigo;
     
+    private long existencia;
+    
     private String nombre;
     
     private String marca;
-    
-    private int existencia;
 
     private String unidadMedida;
     
@@ -27,7 +27,8 @@ public class DTOProductoInfo {
     public DTOProductoInfo() {
     }
 
-    public DTOProductoInfo(long codigo, String nombre, int existencia, String marca, String unidadMedida, String categoria) {
+    public DTOProductoInfo(long codigo, String nombre, long existencia, String marca, String unidadMedida, String categoria) {
+
         this.codigo = codigo;
         this.nombre = nombre;
         this.existencia = existencia;
@@ -61,12 +62,11 @@ public class DTOProductoInfo {
         this.nombre = nombre;
     }
 
-    // setters y getters de existencia
-    public int getExistencia() {
+    public long getExistencia() {
         return existencia;
     }
 
-    public void setExistencia(int existencia) {
+    public void setExistencia(long existencia) {
         this.existencia = existencia;
     }
 
