@@ -9,9 +9,7 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.uv.Abarrotes.repositorio.MarcaRepository;
-
-import DTOs.DTOmarca;
-
+import org.uv.Abarrotes.DTOs.DTOmarca;
 import org.uv.Abarrotes.modelos.Marca;
 /**
  *

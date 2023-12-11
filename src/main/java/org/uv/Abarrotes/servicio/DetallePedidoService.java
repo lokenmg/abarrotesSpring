@@ -2,12 +2,11 @@ package org.uv.Abarrotes.servicio;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.uv.Abarrotes.DTOs.DTODetallePedido;
 import org.uv.Abarrotes.modelos.DetallePedido;
 import org.uv.Abarrotes.modelos.EstadosPedido;
 import org.uv.Abarrotes.repositorio.DetallePedidoRepository;
 import org.uv.Abarrotes.repositorio.EstadosPedidoRepository;
-
-import DTOs.DTODetallePedido;
 
 @Service
 public class DetallePedidoService {

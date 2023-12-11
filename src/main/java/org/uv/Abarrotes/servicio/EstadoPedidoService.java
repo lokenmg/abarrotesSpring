@@ -6,10 +6,9 @@ import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.uv.Abarrotes.DTOs.DTOEstadoPedido;
 import org.uv.Abarrotes.modelos.EstadosPedido;
 import org.uv.Abarrotes.repositorio.EstadosPedidoRepository;
-
-import DTOs.DTOEstadoPedido;
 
 @Service
 public class EstadoPedidoService {

@@ -18,9 +18,7 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.uv.Abarrotes.servicio.UnidadMedidaService;
-
-import DTOs.DTOUnidadMedida;
-
+import org.uv.Abarrotes.DTOs.DTOUnidadMedida;
 import org.uv.Abarrotes.modelos.UnidadMedida;
 /**
  *

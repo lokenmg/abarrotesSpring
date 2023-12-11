@@ -17,10 +17,9 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.uv.Abarrotes.DTOs.DTOProductoInfo;
 import org.uv.Abarrotes.modelos.Producto;
 import org.uv.Abarrotes.servicio.ProductoService;
-
-import DTOs.DTOProductoInfo;
 
 /**
  *
@@ -33,8 +32,8 @@ public class ProductoController {
     private ProductoService productoService;
  
     @PostMapping
-    public ResponseEntity<DTOs.DTOProductoInfo> crearProductoConEntidades(@RequestBody Producto nuevoProducto) {
-        DTOs.DTOProductoInfo productoCreado = productoService.crearProducto(nuevoProducto);
+    public ResponseEntity<org.uv.Abarrotes.DTOs.DTOProductoInfo> crearProductoConEntidades(@RequestBody Producto nuevoProducto) {
+        org.uv.Abarrotes.DTOs.DTOProductoInfo productoCreado = productoService.crearProducto(nuevoProducto);
         return ResponseEntity.status(HttpStatus.CREATED).body(productoCreado);
     }
 

@@ -6,9 +6,7 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.uv.Abarrotes.repositorio.DepartamentoRepository;
-
-import DTOs.DTODepartamentos;
-
+import org.uv.Abarrotes.DTOs.DTODepartamentos;
 import org.uv.Abarrotes.modelos.Departamento;
 
 @Service

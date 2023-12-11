@@ -9,10 +9,9 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.uv.Abarrotes.DTOs.DTODetallePedido;
 import org.uv.Abarrotes.modelos.DetallePedido;
 import org.uv.Abarrotes.servicio.DetallePedidoService;
-
-import DTOs.DTODetallePedido;
 
 @Repository
 @RequestMapping("api/detallepedido")
