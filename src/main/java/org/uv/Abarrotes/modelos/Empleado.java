@@ -4,7 +4,6 @@
  */
 package org.uv.Abarrotes.modelos;
 
-import java.util.logging.Logger;
 import javax.persistence.Entity;
 import javax.persistence.Table;
 import javax.persistence.Id;
