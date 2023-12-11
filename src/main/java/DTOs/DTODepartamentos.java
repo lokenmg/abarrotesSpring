@@ -11,9 +11,12 @@ import org.uv.Abarrotes.modelos.Departamento;
  * @author loken
  */
 public class DTODepartamentos {
+    private Long idDepartamento;
     private String nombre;
+    
 
-    public DTODepartamentos(String nombre) {
+    public DTODepartamentos(Long idDepartamento, String nombre) {
+        this .idDepartamento = idDepartamento;
         this.nombre = nombre;
     }
 
@@ -21,6 +24,7 @@ public class DTODepartamentos {
     }
     
     public DTODepartamentos(Departamento departamento){
+        this.idDepartamento = departamento.getIdDepartamento();
         this.nombre = departamento.getNombre();
     }
 
@@ -30,6 +34,14 @@ public class DTODepartamentos {
 
     public void setNombre(String nombre) {
         this.nombre = nombre;
+    }
+
+    public Long  getIdDepartamento() {
+        return idDepartamento;
+    }
+
+    public void setIdDepartamento(Long  idDepartamento) {
+        this.idDepartamento = idDepartamento;
     }
     
     

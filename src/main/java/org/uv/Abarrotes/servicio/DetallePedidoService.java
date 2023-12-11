@@ -24,15 +24,17 @@ public class DetallePedidoService {
         return new DTODetallePedido(detallePedidoRepository.save(detallePedido));
     }
 
-    public DTODetallePedido actualizarDetallePedido(DetallePedido detallePedido){
-        DetallePedido detallePedidoEncontrado = detallePedidoRepository.findById(detallePedido.getEstadoPedido().getIdEstado())
+    public DTODetallePedido actualizarDetallePedido(Long id, DetallePedido detallePedido){
+        DetallePedido detallePedidoEncontrado = detallePedidoRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Estado no encontrado"));
         EstadosPedido estado = estadosPedidoRepository.findById(detallePedido.getEstadoPedido().getIdEstado())
                 .orElseThrow(() -> new RuntimeException("Estado no encontrado"));
 
+        detallePedidoEncontrado.setFechaEntrega(detallePedido.getFechaEntrega());
+        detallePedidoEncontrado.setHoraEntrega(detallePedido.getHoraEntrega());
         detallePedidoEncontrado.setEstadoPedido(estado);
 
-        return new DTODetallePedido(detallePedidoRepository.save(detallePedido));
+        return new DTODetallePedido(detallePedidoRepository.save(detallePedidoEncontrado));
     }
 
     public DTODetallePedido obtenerDetallePedido(Long id){

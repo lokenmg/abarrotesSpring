@@ -30,6 +30,11 @@ public class EstadoPedidoService {
         return new DTOEstadoPedido(estadoPedido);
     }
 
+    public DTOEstadoPedido obtenerEstadoPedidoPorId(Long id){
+        Optional<EstadosPedido> estadoPedido = estadoPedidoRepository.findById(id);
+        return new DTOEstadoPedido(estadoPedido.get());
+    }
+
     public DTOEstadoPedido crearEstadoPedido(EstadosPedido estadoPedido){
         EstadosPedido nuevoEstadoPedido = estadoPedidoRepository.save(estadoPedido);
         return new DTOEstadoPedido(nuevoEstadoPedido);

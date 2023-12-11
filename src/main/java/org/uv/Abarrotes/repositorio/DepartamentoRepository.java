@@ -4,6 +4,8 @@
  */
 package org.uv.Abarrotes.repositorio;
 
+import java.util.List;
+
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.uv.Abarrotes.modelos.Departamento;
 
@@ -13,5 +15,5 @@ import org.uv.Abarrotes.modelos.Departamento;
  */
 public interface DepartamentoRepository extends JpaRepository<Departamento, Long> {
     
-    Departamento findByNombre(String nombre);
+    List<Departamento> findByNombreContainingIgnoreCase(String nombre);
 }

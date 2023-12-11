@@ -26,10 +26,20 @@ public class DepartamentoService {
         return dtoDepartamentos;
     }
 
-    //obtener departamento por nombre
-    public DTODepartamentos obtenerDepartamentoPorNombre(String nombre){
-        Departamento departamento = departamentoRepository.findByNombre(nombre);
+    public DTODepartamentos obtenerDepartamentoPorId(Long id){
+        Departamento departamento = departamentoRepository.findById(id).orElse(null);
         return new DTODepartamentos(departamento);
+    }
+
+    //obtener departamento por nombre
+    public List<DTODepartamentos> obtenerDepartamentoPorNombre(String nombre){
+
+        List<Departamento> departamentos = departamentoRepository.findByNombreContainingIgnoreCase(nombre);
+        List<DTODepartamentos> dtoDepartamentos = new ArrayList<>();
+        for(Departamento departamento : departamentos){
+            dtoDepartamentos.add(new DTODepartamentos(departamento));
+        }
+        return dtoDepartamentos;
     }
 
     //crear departamento
@@ -39,7 +49,7 @@ public class DepartamentoService {
     }
 
     //actualizar departamento
-    public Optional<DTODepartamentos> actualizarDepartamento(Long id, Departamento departamento){
+    public Optional<DTODepartamentos>actualizarDepartamento(Long id, Departamento departamento){
         if(!departamentoRepository.existsById(id)){
             return Optional.empty();
         }

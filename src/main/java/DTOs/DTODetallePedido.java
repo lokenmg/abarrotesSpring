@@ -14,11 +14,13 @@ import org.uv.Abarrotes.modelos.DetallePedido;
  * @author loken
  */
 public class DTODetallePedido {
+    private Long idDetallePedido;
     private Date fecha;
     private Time horaEntrega;
     private String estado;
 
-    public DTODetallePedido(Date fecha, Time horaEntrega, String estado) {
+    public DTODetallePedido(Long idDetallePedido, Date fecha, Time horaEntrega, String estado) {
+        this.idDetallePedido = idDetallePedido;
         this.fecha = fecha;
         this.horaEntrega = horaEntrega;
         this.estado = estado;
@@ -28,6 +30,7 @@ public class DTODetallePedido {
     }
 
     public DTODetallePedido(DetallePedido detallePedido) {
+        this.idDetallePedido = detallePedido.getIdDetallePedido();
         this.fecha = detallePedido.getFechaEntrega();
         this.horaEntrega = detallePedido.getHoraEntrega();
         this.estado = detallePedido.getEstadoPedido().getEstado();
@@ -55,5 +58,13 @@ public class DTODetallePedido {
 
     public void setEstado(String estado) {
         this.estado = estado;
+    }
+
+    public Long getIdDetallePedido() {
+        return idDetallePedido;
+    }
+
+    public void setIdDetallePedido(Long idDetallePedido) {
+        this.idDetallePedido = idDetallePedido;
     }
 }
