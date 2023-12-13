@@ -14,10 +14,12 @@ import org.uv.Abarrotes.modelos.Categoria;
  */
 public class DTOCategoria {
     
+    private long idCategoria;
 
     private String nombre;
 
-    public DTOCategoria(String nombre) {
+    public DTOCategoria(long idCategoria, String nombre) {
+        this.idCategoria = idCategoria;
         this.nombre = nombre;
     }
 
@@ -25,6 +27,7 @@ public class DTOCategoria {
     }
 
     public DTOCategoria(Categoria categoria) {
+        this.idCategoria = categoria.getIdCategoria();
         this.nombre = categoria.getNombre();
     }
 
@@ -34,5 +37,13 @@ public class DTOCategoria {
 
     public void setNombre(String nombre) {
         this.nombre = nombre;
+    }
+
+    public long getIdCategoria() {
+        return idCategoria;
+    }
+
+    public void setIdCategoria(long id) {
+        this.idCategoria = id;
     }
 }

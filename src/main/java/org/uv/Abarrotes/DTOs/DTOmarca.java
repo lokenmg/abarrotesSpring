@@ -12,16 +12,14 @@ import org.uv.Abarrotes.modelos.Marca;
  * @author loken
  */
 public class DTOmarca {
+    private Long idMarca;
     private String nombre;
-
-    public DTOmarca(String nombre) {
-        this.nombre = nombre;
-    }
 
     public DTOmarca() {
     }
 
     public DTOmarca(Marca marca) {
+        this.idMarca = marca.getIdMarca();
         this.nombre = marca.getNombre();
     }
 
@@ -33,4 +31,13 @@ public class DTOmarca {
         this.nombre = nombre;
     }
 
+    //get y set de idMarca
+
+    public Long getIdMarca() {
+        return idMarca;
+    }
+
+    public void setIdMarca(Long idMarca) {
+        this.idMarca = idMarca;
+    }
 }

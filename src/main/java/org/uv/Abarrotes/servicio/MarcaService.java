@@ -24,6 +24,10 @@ public class MarcaService {
     public List<Marca> obtenerMarcas(){
         return marcaRepository.findAll();
     }
+
+    public List<Marca> obtenerMarcaSinInfo(){
+        return marcaRepository.findAll();
+    }
     
     //obtener una marca por id
     public Optional<DTOmarca> obtenerMarcaPorId(Long id){

@@ -4,6 +4,7 @@
  */
 package org.uv.Abarrotes.modelos;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
@@ -29,7 +30,7 @@ public class Marca {
     @Column(name = "nombre")
     private String nombre;
 
-    @OneToMany(mappedBy = "marca")
+    @OneToMany(mappedBy = "marca", fetch = FetchType.LAZY)
     private List<Producto> producto= new ArrayList<>();
 
     public Marca() {

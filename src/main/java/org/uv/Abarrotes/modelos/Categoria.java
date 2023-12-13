@@ -5,6 +5,7 @@
 package org.uv.Abarrotes.modelos;
 
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -28,7 +29,7 @@ public class Categoria {
     @Column(name = "nombre")
     private String nombre;
     
-    @OneToMany(mappedBy = "categoria")
+    @OneToMany(mappedBy = "categoria", fetch = FetchType.LAZY)
     private List <Producto> productos = new ArrayList<>();
 
     public Categoria() {

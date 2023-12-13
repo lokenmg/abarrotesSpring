@@ -10,13 +10,15 @@ import org.uv.Abarrotes.modelos.UnidadMedida;
  * @author loken
  */
 public class DTOUnidadMedida {
+    private long idUnidadMedida;
     private String nombre;
 
-    public DTOUnidadMedida(String nombre) {
+    public DTOUnidadMedida(long idUnidadMed, String nombre) {
         this.nombre = nombre;
     }
 
     public DTOUnidadMedida(UnidadMedida unidadMedida) {
+        this.idUnidadMedida = unidadMedida.getIdUnidadMed();
         this.nombre = unidadMedida.getNombre();
     }
 
@@ -29,5 +31,13 @@ public class DTOUnidadMedida {
 
     public void setNombre(String nombre) {
         this.nombre = nombre;
+    }
+
+    public long getIdUnidadMedida() {
+        return idUnidadMedida;
+    }
+
+    public void setIdUnidadMedida(long id) {
+        this.idUnidadMedida = id;
     }
 }

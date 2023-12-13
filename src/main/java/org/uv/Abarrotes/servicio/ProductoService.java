@@ -13,7 +13,6 @@ import javax.persistence.EntityNotFoundException;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.uv.Abarrotes.DTOs.DTOProductoInfo;
 import org.uv.Abarrotes.modelos.Categoria;
 import org.uv.Abarrotes.modelos.Marca;
 import org.uv.Abarrotes.modelos.Producto;

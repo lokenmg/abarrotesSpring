@@ -61,4 +61,11 @@ public class ProductoController {
         return ResponseEntity.ok(productos);
     }
 
+    /*
+    @GetMapping("/get")
+    public ResponseEntity<List<Producto>> obtenerProductosSinInfo(){
+        List<Producto> productos = productoService.obtenerProductosSinInfo();
+        return ResponseEntity.ok(productos);
+    }
+     */
 }
