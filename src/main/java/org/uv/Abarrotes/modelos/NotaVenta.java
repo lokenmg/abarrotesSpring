@@ -144,6 +144,14 @@ public class NotaVenta {
     public void setDetalleVenta(List<DetalleVenta> detalleVenta) {
         this.detalleVenta = detalleVenta;
     }
+
+    @Override
+    public String toString() {
+        return "NotaVenta{" + "numeroNota=" + numeroNota + ", fecha=" + fecha + ", total=" + total +
+                ", anticipo=" + anticipo + ", cliente=" + cliente + ", empleado=" + empleado + 
+                ", departamento=" + departamento + ", detallePedido=" + detallePedido + ", detalleVenta=" + 
+                detalleVenta.size() + '}';
+    }
     
     
     

@@ -4,8 +4,12 @@
  */
 package org.uv.Abarrotes.servicio;
 
+import java.math.BigDecimal;
+import java.sql.Date;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
+
 import javax.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -14,15 +18,20 @@ import org.uv.Abarrotes.modelos.Anticipo;
 import org.uv.Abarrotes.modelos.Cliente;
 import org.uv.Abarrotes.modelos.Departamento;
 import org.uv.Abarrotes.modelos.DetallePedido;
+import org.uv.Abarrotes.modelos.DetalleVenta;
 import org.uv.Abarrotes.modelos.Empleado;
+import org.uv.Abarrotes.modelos.EstadoPago;
 import org.uv.Abarrotes.modelos.NotaVenta;
+import org.uv.Abarrotes.modelos.Producto;
 import org.uv.Abarrotes.repositorio.AnticipoRepository;
 import org.uv.Abarrotes.repositorio.ClienteRepository;
 import org.uv.Abarrotes.repositorio.DepartamentoRepository;
 import org.uv.Abarrotes.repositorio.DetallePedidoRepository;
 import org.uv.Abarrotes.repositorio.DetalleVentaRepository;
 import org.uv.Abarrotes.repositorio.EmpleadoRepository;
+import org.uv.Abarrotes.repositorio.EstadoPagoRepository;
 import org.uv.Abarrotes.repositorio.NotaVentaRepository;
+import org.uv.Abarrotes.repositorio.ProductoRepository;
 
 
 /**
@@ -34,6 +43,9 @@ public class NotaVentaService {
     
     @Autowired
     private NotaVentaRepository notaventaRepository;
+    
+    @Autowired
+    private EstadoPagoRepository estadopagoRepository;
     
     @Autowired
     private AnticipoRepository anticipoRepository;
@@ -52,6 +64,9 @@ public class NotaVentaService {
     
     @Autowired
     private DetalleVentaRepository detalleVentaRepository;
+
+    @Autowired
+    private ProductoRepository productoRepository;
     
     public DTONotaVenta crearNotaVenta(NotaVenta notaventa) {
         
@@ -77,6 +92,71 @@ public class NotaVentaService {
         org.uv.Abarrotes.DTOs.DTONotaVenta dto = new DTONotaVenta(notaventaG);
         
         return dto;
+    }
+    
+    public void crearNota(NotaVenta notaventa){
+        //obtener fecha con java.sql.Date
+        Date fecha = new Date(System.currentTimeMillis());
+        Optional<EstadoPago> estadoPago;
+        
+        //crear anticipo
+        Anticipo anticipo = new Anticipo();
+        anticipo.setFecha(fecha);
+        anticipo.setMonto(notaventa.getAnticipo().getMonto());
+        BigDecimal resto = notaventa.getAnticipo().getMonto().subtract(notaventa.getTotal());
+        anticipo.setResto(resto);
+        if (resto.compareTo(BigDecimal.ZERO) == 0) {
+        
+            estadoPago = estadopagoRepository.findById(1L);
+                
+        }else{
+            estadoPago = estadopagoRepository.findById(2L);
+        }
+        anticipo.setEstadoPago(estadoPago.get());
+        Anticipo nuevoAnticipo= anticipoRepository.save(anticipo);
+        //obteniendo el anticipo creado
+        Optional<Anticipo> anticipoExistente = anticipoRepository.findById(nuevoAnticipo.getIdAnticipo());
+
+        //obteniendo el cliente
+        Optional<Cliente> clienteExistente = clienteRepository.findById(notaventa.getCliente().getIdCliente());
+        
+        //obteniendo el empleado
+        Optional<Empleado> empleadoExistente = empleadoRepository.findById(notaventa.getEmpleado().getIdEmpleado());
+
+        //obteniendo el departamento
+        Optional<Departamento> departamentoExistente = departamentoRepository.findById(notaventa.getDepartamento().getIdDepartamento());
+
+        //obteniendo el detalle pedido
+        Optional<DetallePedido> detallepedidoExistente = detallepedidoRepository.findById(notaventa.getDetallePedido().getIdDetallePedido());
+
+        //creando la nota de venta
+        NotaVenta notaVenta = new NotaVenta();
+        notaVenta.setFecha(fecha);
+        notaVenta.setTotal(notaventa.getTotal());
+        notaVenta.setAnticipo(anticipoExistente.get());
+        notaVenta.setCliente(clienteExistente.get());
+        notaVenta.setEmpleado(empleadoExistente.get());
+        notaVenta.setDepartamento(departamentoExistente.get());
+        notaVenta.setDetallePedido(detallepedidoExistente.get());
+        notaventaRepository.save(notaVenta);
+
+        //creando detalle venta
+        List<DetalleVenta> detallesVenta = new ArrayList<>();
+        detallesVenta = notaventa.getDetalleVenta();
+        for (DetalleVenta detalle : detallesVenta) {
+            
+            //obteniendo el producto
+            Optional<Producto> productoExistente = productoRepository.findById(detalle.getProducto().getCodigo());
+            
+            //creando detalle venta
+            DetalleVenta detalleVentaG = new DetalleVenta();
+            detalleVentaG.setCantidad(detalle.getCantidad());
+            detalleVentaG.setSubtotal(detalle.getSubtotal());
+            detalleVentaG.setFecha(fecha);
+            detalleVentaG.setProducto(productoExistente.get());
+            detalleVentaG.setVenta(notaVenta);
+            detalleVentaRepository.save(detalleVentaG);
+        }
     }
     
     public List<DTONotaVenta> obtenerNotasVentas() {
