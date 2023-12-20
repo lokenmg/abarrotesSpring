@@ -34,11 +34,18 @@ public class NotaVentaController {
         return ResponseEntity.status(HttpStatus.CREATED).body(notaventaCreado);
     }
 
+    //postmapping para crear una nota de venta
+    @PostMapping("/crear")
+    public void crearNotaVenta(@RequestBody NotaVenta nuevoNotaVenta) {
+        notaventaService.crearNota(nuevoNotaVenta);
+        
+    }
     @GetMapping
     public ResponseEntity<List<DTONotaVenta>> obtenerNotasVentas(){
         List<DTONotaVenta> notasventas = notaventaService.obtenerNotasVentas();
         return ResponseEntity.ok(notasventas);
     }
+
 
     @GetMapping("/{id}")
     public ResponseEntity<DTONotaVenta> obtenerNotasVentasPorId(@PathVariable Long id){

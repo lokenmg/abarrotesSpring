@@ -6,6 +6,7 @@ package org.uv.Abarrotes.servicio;
 
 import java.math.BigDecimal;
 import java.sql.Date;
+import java.sql.Time;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -21,6 +22,7 @@ import org.uv.Abarrotes.modelos.DetallePedido;
 import org.uv.Abarrotes.modelos.DetalleVenta;
 import org.uv.Abarrotes.modelos.Empleado;
 import org.uv.Abarrotes.modelos.EstadoPago;
+import org.uv.Abarrotes.modelos.EstadosPedido;
 import org.uv.Abarrotes.modelos.NotaVenta;
 import org.uv.Abarrotes.modelos.Producto;
 import org.uv.Abarrotes.repositorio.AnticipoRepository;
@@ -30,6 +32,7 @@ import org.uv.Abarrotes.repositorio.DetallePedidoRepository;
 import org.uv.Abarrotes.repositorio.DetalleVentaRepository;
 import org.uv.Abarrotes.repositorio.EmpleadoRepository;
 import org.uv.Abarrotes.repositorio.EstadoPagoRepository;
+import org.uv.Abarrotes.repositorio.EstadosPedidoRepository;
 import org.uv.Abarrotes.repositorio.NotaVentaRepository;
 import org.uv.Abarrotes.repositorio.ProductoRepository;
 
@@ -67,6 +70,9 @@ public class NotaVentaService {
 
     @Autowired
     private ProductoRepository productoRepository;
+
+    @Autowired
+    private EstadosPedidoRepository estadosPedidoRepository;
     
     public DTONotaVenta crearNotaVenta(NotaVenta notaventa) {
         
@@ -97,6 +103,8 @@ public class NotaVentaService {
     public void crearNota(NotaVenta notaventa){
         //obtener fecha con java.sql.Date
         Date fecha = new Date(System.currentTimeMillis());
+        //obtener hora actual con java.sql.Time
+        Time hora = new Time(System.currentTimeMillis());
         Optional<EstadoPago> estadoPago;
         
         //crear anticipo
@@ -126,8 +134,13 @@ public class NotaVentaService {
         //obteniendo el departamento
         Optional<Departamento> departamentoExistente = departamentoRepository.findById(notaventa.getDepartamento().getIdDepartamento());
 
-        //obteniendo el detalle pedido
-        Optional<DetallePedido> detallepedidoExistente = detallepedidoRepository.findById(notaventa.getDetallePedido().getIdDetallePedido());
+        //crear detalle pedido
+        DetallePedido detallePedido = new DetallePedido();
+        detallePedido.setFechaEntrega(fecha);
+        detallePedido.setHoraEntrega(hora);
+        EstadosPedido estadoPedido = estadosPedidoRepository.findById(2L).get();
+        detallePedido.setEstadoPedido(estadoPedido);
+        DetallePedido nuevodetallepedido = detallepedidoRepository.save(detallePedido);
 
         //creando la nota de venta
         NotaVenta notaVenta = new NotaVenta();
@@ -137,8 +150,8 @@ public class NotaVentaService {
         notaVenta.setCliente(clienteExistente.get());
         notaVenta.setEmpleado(empleadoExistente.get());
         notaVenta.setDepartamento(departamentoExistente.get());
-        notaVenta.setDetallePedido(detallepedidoExistente.get());
-        notaventaRepository.save(notaVenta);
+        notaVenta.setDetallePedido(nuevodetallepedido);
+        NotaVenta notaguardada=notaventaRepository.save(notaVenta);
 
         //creando detalle venta
         List<DetalleVenta> detallesVenta = new ArrayList<>();
@@ -154,9 +167,10 @@ public class NotaVentaService {
             detalleVentaG.setSubtotal(detalle.getSubtotal());
             detalleVentaG.setFecha(fecha);
             detalleVentaG.setProducto(productoExistente.get());
-            detalleVentaG.setVenta(notaVenta);
+            detalleVentaG.setVenta(notaguardada);
             detalleVentaRepository.save(detalleVentaG);
         }
+
     }
     
     public List<DTONotaVenta> obtenerNotasVentas() {
