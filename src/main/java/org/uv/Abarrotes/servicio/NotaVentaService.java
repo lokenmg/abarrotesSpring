@@ -100,7 +100,7 @@ public class NotaVentaService {
         return dto;
     }
     
-    public void crearNota(NotaVenta notaventa){
+    public NotaVenta crearNota(NotaVenta notaventa){
         //obtener fecha con java.sql.Date
         Date fecha = new Date(System.currentTimeMillis());
         //obtener hora actual con java.sql.Time
@@ -170,7 +170,9 @@ public class NotaVentaService {
             detalleVentaG.setVenta(notaguardada);
             detalleVentaRepository.save(detalleVentaG);
         }
-
+        Optional<NotaVenta> notaventaG = notaventaRepository.findById(notaguardada.getNumeroNota());
+        NotaVenta verNota = notaventaG.get();
+        return notaventaG.get(); 
     }
     
     public List<DTONotaVenta> obtenerNotasVentas() {

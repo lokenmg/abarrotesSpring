@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.uv.Abarrotes.DTOs.DTONotaVenta;
+import org.uv.Abarrotes.DTOs.DTOVenta;
 import org.uv.Abarrotes.modelos.NotaVenta;
 import org.uv.Abarrotes.servicio.NotaVentaService;
 /**
@@ -36,9 +37,9 @@ public class NotaVentaController {
 
     //postmapping para crear una nota de venta
     @PostMapping("/crear")
-    public void crearNotaVenta(@RequestBody NotaVenta nuevoNotaVenta) {
-        notaventaService.crearNota(nuevoNotaVenta);
-        
+    public ResponseEntity<DTOVenta> crearNotaVenta(@RequestBody NotaVenta nuevoNotaVenta) {
+        DTOVenta notaVenta = new DTOVenta(notaventaService.crearNota(nuevoNotaVenta));
+        return ResponseEntity.ok(notaVenta);
     }
     @GetMapping
     public ResponseEntity<List<DTONotaVenta>> obtenerNotasVentas(){
