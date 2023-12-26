@@ -168,7 +168,7 @@ public class DTOVenta {
         List<DTODetallesVentas> detalles = new ArrayList<>();
         for (DetalleVenta detalleVenta : detalleVentas) {
             DTODetallesVentas detalle = new DTODetallesVentas();
-            detalle.setCantidad(detalleVenta.getCantidad());
+//            detalle.setCantidad(detalleVenta.getCantidad());
             detalle.setSubtotal(detalleVenta.getSubtotal());
             detalle.setCodigo(detalleVenta.getProducto().getCodigo());
             detalle.setNombre(detalleVenta.getProducto().getNombre());
