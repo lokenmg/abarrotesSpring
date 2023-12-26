@@ -32,7 +32,7 @@ public class DTODetalleVenta {
     
     public DTODetalleVenta(DetalleVenta detalleVenta) {
         this.codigo = detalleVenta.getCodigo();
-        this.cantidad = detalleVenta.getCantidad();
+//        this.cantidad = detalleVenta.getCantidad();
         this.subtotal = detalleVenta.getSubtotal();
         this.fecha = detalleVenta.getFecha();
         this.producto = detalleVenta.getProducto().getCodigo();
