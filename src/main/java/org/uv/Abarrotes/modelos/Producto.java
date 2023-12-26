@@ -34,6 +34,9 @@ public class Producto {
     @Column(name = "existencia")
     private long existencia;
     
+    @Column(name = "precio")
+    private double precio;
+    
     @JoinColumn(name = "id_categoria", nullable = false)
     @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private Categoria categoria;
@@ -52,7 +55,7 @@ public class Producto {
     public Producto() {
     }
 
-    public Producto(long codigo, String nombre, long existencia, Categoria categoria, Marca marca, UnidadMedida unidadMedida, List<DetalleVenta> detalleVenta) {
+    public Producto(long codigo, String nombre, long existencia, double precio, Categoria categoria, Marca marca, UnidadMedida unidadMedida, List<DetalleVenta> detalleVenta) {
 
         this.codigo = codigo;
         this.nombre = nombre;
@@ -61,6 +64,7 @@ public class Producto {
         this.marca = marca;
         this.unidadMedida = unidadMedida;
         this.detalleVenta = detalleVenta;
+        this.precio = precio;
     }
 
     public long getCodigo() {
@@ -88,6 +92,14 @@ public class Producto {
         this.existencia = existencia;
     }
 
+    public double getPrecio() {
+        return precio;
+    }
+
+    public void setPrecio(double precio) {
+        this.precio = precio;
+    }
+    
     public Categoria getCategoria() {
         return categoria;
     }

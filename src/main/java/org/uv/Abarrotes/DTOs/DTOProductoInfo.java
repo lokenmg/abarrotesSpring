@@ -16,6 +16,8 @@ public class DTOProductoInfo {
     
     private long existencia;
     
+    private double precio;
+    
     private String nombre;
     
     private String marca;
@@ -27,7 +29,7 @@ public class DTOProductoInfo {
     public DTOProductoInfo() {
     }
 
-    public DTOProductoInfo(long codigo, String nombre, long existencia, String marca, String unidadMedida, String categoria) {
+    public DTOProductoInfo(long codigo, String nombre, long existencia, double precio, String marca, String unidadMedida, String categoria) {
 
         this.codigo = codigo;
         this.nombre = nombre;
@@ -35,12 +37,14 @@ public class DTOProductoInfo {
         this.marca = marca;
         this.unidadMedida = unidadMedida;
         this.categoria = categoria;
+        this.precio = precio;
     }
 
     public DTOProductoInfo(Producto producto){
         this.codigo = producto.getCodigo();
         this.nombre = producto.getNombre();
         this.existencia = producto.getExistencia();
+        this.precio = producto.getPrecio();
         this.marca = producto.getMarca().getNombre();
         this.unidadMedida = producto.getUnidadMedida().getNombre();
         this.categoria = producto.getCategoria().getNombre();
@@ -68,6 +72,14 @@ public class DTOProductoInfo {
 
     public void setExistencia(long existencia) {
         this.existencia = existencia;
+    }
+
+    public double getPrecio() {
+        return precio;
+    }
+
+    public void setPrecio(double precio) {
+        this.precio = precio;
     }
 
     public String getMarca() {

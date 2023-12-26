@@ -15,8 +15,10 @@ import org.uv.Abarrotes.modelos.EstadosPedido;
 import org.uv.Abarrotes.servicio.EstadoPedidoService;
 import java.util.List;
 import java.util.Optional;
+import org.springframework.web.bind.annotation.CrossOrigin;
 @Controller
 @RequestMapping("api/estadopedido")
+@CrossOrigin(origins="*", allowCredentials="")
 public class EstadoPedidoController {
     @Autowired
     private EstadoPedidoService estadoPedidoService;

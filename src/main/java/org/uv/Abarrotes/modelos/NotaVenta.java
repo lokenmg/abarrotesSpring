@@ -17,7 +17,9 @@ import javax.persistence.Table;
  import java.math.BigDecimal;
 import javax.persistence.OneToMany;
 import java.util.List;
+import java.util.ArrayList;
 import java.sql.Date;
+import javax.persistence.CascadeType;
 
 @Entity
 @Table(name = "Nota_ventas")
@@ -55,7 +57,7 @@ public class NotaVenta {
     @JoinColumn(name = "id_detalle_pedido", unique = true, referencedColumnName = "id_detalle_pedido")
     private DetallePedido detallePedido;
     
-    @OneToMany(mappedBy = "venta")
+    @OneToMany(mappedBy = "venta", cascade = CascadeType.ALL)
     private List<DetalleVenta> detalleVenta;
 
     public NotaVenta(Long numeroNota, Date fecha, BigDecimal total, Anticipo anticipo, Cliente cliente, Empleado empleado, Departamento departamento, DetallePedido detallePedido, List<DetalleVenta> detalleVenta) {
@@ -143,8 +145,6 @@ public class NotaVenta {
 
     public void setDetalleVenta(List<DetalleVenta> detalleVenta) {
         this.detalleVenta = detalleVenta;
-    }
-    
-    
+    } 
     
 }

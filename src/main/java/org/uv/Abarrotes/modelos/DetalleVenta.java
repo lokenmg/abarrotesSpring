@@ -12,6 +12,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.JoinColumn;
 import javax.persistence.Table;
 import java.sql.Date;
+import javax.persistence.FetchType;
 import javax.persistence.SequenceGenerator;
 
 
@@ -27,7 +28,7 @@ public class DetalleVenta {
     private Integer codigo;
 
     @Column(name = "cantidad")
-    private Double cantidad;
+    private long cantidad;
 
     @Column(name = "subtotal")
     private Double subtotal;
@@ -39,11 +40,11 @@ public class DetalleVenta {
     @JoinColumn(name = "codigo")
     private Producto producto;
 
-    @ManyToOne 
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "numero_nota")
     private NotaVenta venta;
 
-    public DetalleVenta(Integer codigo, Double cantidad, Double subtotal, Date fecha, Producto producto, NotaVenta venta) {
+    public DetalleVenta(Integer codigo, long cantidad, Double subtotal, Date fecha, Producto producto, NotaVenta venta) {
         this.codigo = codigo;
         this.cantidad = cantidad;
         this.subtotal = subtotal;
@@ -63,11 +64,11 @@ public class DetalleVenta {
         this.codigo = codigo;
     }
 
-    public Double getCantidad() {
+    public long getCantidad() {
         return cantidad;
     }
 
-    public void setCantidad(Double cantidad) {
+    public void setCantidad(long cantidad) {
         this.cantidad = cantidad;
     }
 

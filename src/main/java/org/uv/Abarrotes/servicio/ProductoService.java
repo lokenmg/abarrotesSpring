@@ -107,6 +107,7 @@ public class ProductoService {
                 .orElseThrow(() -> new EntityNotFoundException("Unidad de medida no encontrada"));
         productoExistente.setNombre(producto.getNombre());
         productoExistente.setExistencia(producto.getExistencia());
+        productoExistente.setPrecio(producto.getPrecio());
         productoExistente.setCategoria(categoria);
         productoExistente.setMarca(marca);
         productoExistente.setUnidadMedida(unidadMedida);
