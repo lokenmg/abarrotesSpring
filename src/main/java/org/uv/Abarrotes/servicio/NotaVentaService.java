@@ -224,4 +224,68 @@ public class NotaVentaService {
         // Delete the sale
         notaventaRepository.delete(notaventaExistente);
     }
+
+
+    public NotaVenta crandoVenta(NotaVenta notaventa){
+        Date fecha = new Date(System.currentTimeMillis());
+        Time hora = new Time(System.currentTimeMillis());
+    
+        Anticipo anticipo = crearAnticipo(notaventa, fecha);
+        DetallePedido detallePedido = crearDetallePedido(fecha, hora);
+        NotaVenta notaVenta = crearNotaDeVenta(notaventa, fecha, anticipo, detallePedido);
+        crearDetalleVenta(notaventa, fecha, notaVenta);
+    
+        return notaVenta;
+    }
+
+    private Anticipo crearAnticipo(NotaVenta notaventa, Date fecha){
+        Anticipo anticipo = new Anticipo();
+        anticipo.setFecha(fecha);
+        anticipo.setMonto(notaventa.getAnticipo().getMonto());
+        BigDecimal resto = notaventa.getAnticipo().getMonto().subtract(notaventa.getTotal());
+        anticipo.setResto(resto);
+        Long estadoPagoId = resto.compareTo(BigDecimal.ZERO) == 0 ? 1L : 2L;
+        anticipo.setResto(resto);
+        EstadoPago estadoPago = estadopagoRepository.findById(estadoPagoId).orElseThrow(() -> new EntityNotFoundException("Estado de pago no encontrado"));
+        anticipo.setEstadoPago(estadoPago);
+        return anticipoRepository.save(anticipo);
+    }
+
+    private DetallePedido crearDetallePedido(Date fecha, Time hora){
+        DetallePedido detallePedido = new DetallePedido();
+        detallePedido.setFechaEntrega(fecha);
+        detallePedido.setHoraEntrega(hora);
+        EstadosPedido estadoPedido = estadosPedidoRepository.findById(2L).orElseThrow(() -> new EntityNotFoundException("Estado de pedido no encontrado"));
+        detallePedido.setEstadoPedido(estadoPedido);
+        return detallepedidoRepository.save(detallePedido);
+    }
+
+    private NotaVenta crearNotaDeVenta(NotaVenta notaventa, Date fecha, Anticipo anticipo, DetallePedido detallePedido){
+        NotaVenta notaVenta = new NotaVenta();
+        notaVenta.setFecha(fecha);
+        notaVenta.setTotal(notaventa.getTotal());
+        notaVenta.setAnticipo(anticipo);
+        notaVenta.setCliente(notaventa.getCliente());
+        notaVenta.setEmpleado(notaventa.getEmpleado());
+        notaVenta.setDepartamento(notaventa.getDepartamento());
+        notaVenta.setDetallePedido(detallePedido);
+        return notaventaRepository.save(notaVenta);
+    }
+
+    private void crearDetalleVenta(NotaVenta notaventa, Date fecha, NotaVenta notaVenta){
+        for (DetalleVenta detalle : notaventa.getDetalleVenta()) {
+            Producto producto = productoRepository.findById(detalle.getProducto().getCodigo()).orElseThrow();
+            DetalleVenta detalleVenta = new DetalleVenta();
+            detalleVenta.setCantidad(detalle.getCantidad());
+            detalleVenta.setSubtotal(detalle.getSubtotal());
+            detalleVenta.setFecha(fecha);
+            detalleVenta.setProducto(producto);
+            detalleVenta.setVenta(notaVenta);
+            detalleVentaRepository.save(detalleVenta);
+            //actualizar stock
+            
+            producto.setExistencia(producto.getExistencia() - detalle.getCantidad());
+            productoRepository.save(producto);
+        }
+    }
 }

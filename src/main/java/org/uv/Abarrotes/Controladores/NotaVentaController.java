@@ -8,6 +8,7 @@ import java.util.List;
 import org.springframework.http.*;
 import org.springframework.stereotype.Controller;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -16,7 +17,6 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.uv.Abarrotes.DTOs.DTONotaVenta;
-import org.uv.Abarrotes.DTOs.DTOVenta;
 import org.uv.Abarrotes.modelos.NotaVenta;
 import org.uv.Abarrotes.servicio.NotaVentaService;
 /**
@@ -25,6 +25,7 @@ import org.uv.Abarrotes.servicio.NotaVentaService;
  */
 @Controller
 @RequestMapping("api/notasventas")
+@CrossOrigin(origins="*", allowCredentials="")
 public class NotaVentaController {
     @Autowired
     private NotaVentaService notaventaService;
@@ -37,10 +38,23 @@ public class NotaVentaController {
 
     //postmapping para crear una nota de venta
     @PostMapping("/crear")
-    public ResponseEntity<DTOVenta> crearNotaVenta(@RequestBody NotaVenta nuevoNotaVenta) {
-        DTOVenta notaVenta = new DTOVenta(notaventaService.crearNota(nuevoNotaVenta));
-        return ResponseEntity.ok(notaVenta);
+    public void crearNotaVenta(@RequestBody NotaVenta nuevoNotaVenta) {
+        notaventaService.crearNota(nuevoNotaVenta);
+        
     }
+
+    //postmapping para crear una nota de venta con metdo limpio
+    @PostMapping("/crearlimpio")
+    public ResponseEntity<String> crearNota(@RequestBody NotaVenta notaVenta) {
+        try {
+            NotaVenta nuevaNotaVenta = notaventaService.crandoVenta(notaVenta);
+            return new ResponseEntity<>("Nota de venta creada con éxito", HttpStatus.CREATED);
+        } catch (Exception e) {
+            return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
+        } 
+    }
+    
+    
     @GetMapping
     public ResponseEntity<List<DTONotaVenta>> obtenerNotasVentas(){
         List<DTONotaVenta> notasventas = notaventaService.obtenerNotasVentas();
