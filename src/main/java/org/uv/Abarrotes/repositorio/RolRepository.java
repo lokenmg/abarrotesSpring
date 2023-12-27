@@ -4,6 +4,8 @@
  */
 package org.uv.Abarrotes.repositorio;
 
+import java.util.Optional;
+
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.uv.Abarrotes.modelos.Rol;
 
@@ -12,5 +14,5 @@ import org.uv.Abarrotes.modelos.Rol;
  * @author loken
  */
 public interface RolRepository extends JpaRepository<Rol, Long> {
-    
+    Optional<Rol> findFirstByCve(String cve);
 }

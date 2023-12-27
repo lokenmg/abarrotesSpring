@@ -19,6 +19,9 @@ public class DTOEmpleadoInfo {
     private String contrasenia;
     
     private String roles;
+
+    private Long idRol;  //línea para visualizar el idRol en el front
+
     
     public DTOEmpleadoInfo(){
         
@@ -79,5 +82,12 @@ public class DTOEmpleadoInfo {
     public void setRoles(String roles) {
         this.roles = roles;
     }
-    
+
+    public Long getIdRol() {
+        return idRol;
+    }
+
+    public void setIdRol(Long idRol) {
+        this.idRol = idRol;
+    }   
 }

@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.uv.Abarrotes.DTOs.DTOEmpleadoInfo;
 import org.uv.Abarrotes.modelos.Empleado;
 import org.uv.Abarrotes.servicio.EmpleadoService;
@@ -60,5 +61,14 @@ public class EmpleadoController {
     public ResponseEntity<Void> eliminarEmpleado(@PathVariable Long id) {
         empleadoService.eliminarEmpleado(id);
         return ResponseEntity.noContent().build();
+    }
+
+    //Metodo para buscar empleados por nombres y apellidos
+    @GetMapping("/buscar")
+    public ResponseEntity<List<DTOEmpleadoInfo>> buscarEmpleadosPorNombreYApellidos(
+         @RequestParam(value = "nombre", required = false) String nombre,
+         @RequestParam(value = "apellidos", required = false) String apellidos) {
+        List<DTOEmpleadoInfo> empleados = empleadoService.buscarEmpleadosPorNombreYApellidos(nombre, apellidos);
+        return ResponseEntity.ok(empleados);
     }
 }
