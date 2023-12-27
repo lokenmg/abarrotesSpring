@@ -33,7 +33,7 @@ public class DTOVenta {
     //datos de detalle pedido
     private Date fechaEntrega;
     private Time horaEntrega;
-    private EstadosPedido estadoPedido;
+    private String estadoPedido;
 
     //datos de detalle venta
     private java.util.List<DTODetallesVentas> detalleVenta = new java.util.ArrayList<>();
@@ -55,7 +55,7 @@ public class DTOVenta {
         this.nombredepartamento = notaVenta.getDepartamento().getNombre();
         this.fechaEntrega = notaVenta.getDetallePedido().getFechaEntrega();
         this.horaEntrega = notaVenta.getDetallePedido().getHoraEntrega();
-        this.estadoPedido = notaVenta.getDetallePedido().getEstadoPedido();
+        this.estadoPedido = notaVenta.getDetallePedido().getEstadoPedido().getEstado();
         //detalle venta
         this.detalleVenta = obtenerDetallesVentas(notaVenta.getDetalleVenta());
     }
@@ -148,11 +148,11 @@ public class DTOVenta {
         this.horaEntrega = horaEntrega;
     }
 
-    public EstadosPedido getEstadoPedido() {
+    public String getEstadoPedido() {
         return estadoPedido;
     }
 
-    public void setEstadoPedido(EstadosPedido estadoPedido) {
+    public void setEstadoPedido(String estadoPedido) {
         this.estadoPedido = estadoPedido;
     }
 
@@ -168,13 +168,11 @@ public class DTOVenta {
         List<DTODetallesVentas> detalles = new ArrayList<>();
         for (DetalleVenta detalleVenta : detalleVentas) {
             DTODetallesVentas detalle = new DTODetallesVentas();
-//            detalle.setCantidad(detalleVenta.getCantidad());
+            detalle.setCantidad(detalleVenta.getCantidad());
             detalle.setSubtotal(detalleVenta.getSubtotal());
             detalle.setCodigo(detalleVenta.getProducto().getCodigo());
             detalle.setNombre(detalleVenta.getProducto().getNombre());
             detalle.setExistencia(detalleVenta.getProducto().getExistencia());
-            detalle.setUnidadMedida(detalleVenta.getProducto().getUnidadMedida().getNombre());
-            detalle.setMarca(detalleVenta.getProducto().getMarca().getNombre());
             detalles.add(detalle);
         }
         return detalles;

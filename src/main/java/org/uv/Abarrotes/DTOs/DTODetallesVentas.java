@@ -1,21 +1,18 @@
 package org.uv.Abarrotes.DTOs;
 
 public class DTODetallesVentas {
-    private Double cantidad;
+    private long cantidad;
     private Double subtotal;
     private long codigo;
     private String nombre;
-    private long existencia;
-    private String unidadMedida;
-    private String marca;
-    
+    private long existencia;    
     
     //getters y setters
-    public Double getCantidad() {
+    public long getCantidad() {
         return cantidad;
     }
 
-    public void setCantidad(Double cantidad) {
+    public void setCantidad(long cantidad) {
         this.cantidad = cantidad;
     }
 
@@ -50,23 +47,4 @@ public class DTODetallesVentas {
     public void setExistencia(long existencia) {
         this.existencia = existencia;
     }
-
-    public String getUnidadMedida() {
-        return unidadMedida;
-    }
-
-    public void setUnidadMedida(String unidadMedida) {
-        this.unidadMedida = unidadMedida;
-    }
-
-    public String getMarca() {
-        return marca;
-    }
-
-    public void setMarca(String marca) {
-        this.marca = marca;
-    }
-    
-    
-
 }
