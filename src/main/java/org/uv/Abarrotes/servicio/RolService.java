@@ -74,4 +74,22 @@ public class RolService {
         // Delete the employee
         rolRepository.delete(rolExistente);
     }
+
+
+   // @Autowired
+    //private EmpleadoRepository empleadoRepository;
+
+    public void init() {
+        // Crear objetos Rol
+        Rol rolEmpl = new Rol(3L, "EMPLOYEE", "Rol del Empleado");
+
+        // Guardar los roles en la base de datos (si es necesario)
+        rolRepository.save(rolEmpl);
+
+//        // Crear objetos Empleado con roles asociados
+//        Empleado empleadoEmpl = new Empleado("John Doe", rolEmpl);
+//
+//        // Guardar los empleados en la base de datos
+//        empleadoRepository.save(empleadoEmpl);
+    }
 }

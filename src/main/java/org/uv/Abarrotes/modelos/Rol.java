@@ -88,5 +88,16 @@ public class Rol {
         this.usuarios = usuarios;
     }
 
-    
+
+    public String getNombre() {
+        // En este ejemplo, simplemente devolvemos la descripción como nombre
+        return this.descripcion;
+    }
+
+    //Metodo para Agregar Empleados
+    public Rol(Long idRol,String cve, String descripcion) {
+        this.idRol=idRol;
+        this.cve = cve;
+        this.descripcion = descripcion;
+    }  
 }

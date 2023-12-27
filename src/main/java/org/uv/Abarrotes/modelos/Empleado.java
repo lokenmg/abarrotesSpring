@@ -105,5 +105,9 @@ public class Empleado {
         this.notaVentas = notaVentas;
     }
 
-    
+    // Constructor que acepta un objeto Rol
+    public Empleado(String nombre, Rol rol) {
+        this.nombre = nombre;
+        this.roles = rol;
+    }   
 }
