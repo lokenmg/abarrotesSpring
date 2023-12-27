@@ -20,10 +20,13 @@ public class DTOProductoInfo {
     
     private String nombre;
     
+    private long idMarca;
     private String marca;
 
+    private long idUnidadMedida;
     private String unidadMedida;
     
+    private long idCategoria;
     private String categoria;
 
     public DTOProductoInfo() {
@@ -48,6 +51,9 @@ public class DTOProductoInfo {
         this.marca = producto.getMarca().getNombre();
         this.unidadMedida = producto.getUnidadMedida().getNombre();
         this.categoria = producto.getCategoria().getNombre();
+        this.idMarca = producto.getMarca().getIdMarca();
+        this.idUnidadMedida = producto.getUnidadMedida().getIdUnidadMed();
+        this.idCategoria = producto.getCategoria().getIdCategoria();
     }
 
     public long getCodigo() {
@@ -104,6 +110,30 @@ public class DTOProductoInfo {
 
     public void setCategoria(String categoria) {
         this.categoria = categoria;
+    }
+
+    public long getIdMarca() {
+        return idMarca;
+    }
+
+    public void setIdMarca(long idMarca) {
+        this.idMarca = idMarca;
+    }
+
+    public long getIdUnidadMedida() {
+        return idUnidadMedida;
+    }
+
+    public void setIdUnidadMedida(long idUnidadMedida) {
+        this.idUnidadMedida = idUnidadMedida;
+    }
+
+    public long getIdCategoria() {
+        return idCategoria;
+    }
+
+    public void setIdCategoria(long idCategoria) {
+        this.idCategoria = idCategoria;
     }
     
     

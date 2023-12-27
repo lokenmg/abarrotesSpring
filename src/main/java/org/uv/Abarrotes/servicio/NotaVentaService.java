@@ -15,6 +15,7 @@ import javax.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.uv.Abarrotes.DTOs.DTONotaVenta;
+import org.uv.Abarrotes.DTOs.DTOVenta;
 import org.uv.Abarrotes.modelos.Anticipo;
 import org.uv.Abarrotes.modelos.Cliente;
 import org.uv.Abarrotes.modelos.Departamento;
@@ -73,126 +74,23 @@ public class NotaVentaService {
 
     @Autowired
     private EstadosPedidoRepository estadosPedidoRepository;
+      
     
-    public DTONotaVenta crearNotaVenta(NotaVenta notaventa) {
-        
-        Anticipo anticipo = anticipoRepository.findById(notaventa.getAnticipo().getIdAnticipo())
-                .orElseThrow(() -> new EntityNotFoundException("Anticipo no encontrado"));
-        Cliente cliente = clienteRepository.findById(notaventa.getCliente().getIdCliente())
-                .orElseThrow(() -> new EntityNotFoundException("Cliente no encontrado"));
-        Empleado empleado = empleadoRepository.findById(notaventa.getEmpleado().getIdEmpleado())
-                .orElseThrow(() -> new EntityNotFoundException("Empleado no encontrado"));
-        Departamento departamento = departamentoRepository.findById(notaventa.getDepartamento().getIdDepartamento())
-                .orElseThrow(() -> new EntityNotFoundException("Departamento no encontrado"));
-        DetallePedido detallepedido = detallepedidoRepository.findById(notaventa.getDetallePedido().getIdDetallePedido())
-                .orElseThrow(() -> new EntityNotFoundException("Pedido no encontrado"));
-
-        notaventa.setAnticipo(anticipo);
-        notaventa.setCliente(cliente);
-        notaventa.setEmpleado(empleado);
-        notaventa.setDepartamento(departamento);
-        notaventa.setDetallePedido(detallepedido);
-        
-        NotaVenta notaventaG = notaventaRepository.save(notaventa);
-        
-        org.uv.Abarrotes.DTOs.DTONotaVenta dto = new DTONotaVenta(notaventaG);
-        
-        return dto;
+    public List<DTOVenta> obtenerNotasVentas() {
+        List<NotaVenta> notaventas = notaventaRepository.findAll();
+        List<DTOVenta> dtos = new ArrayList<>();
+        for (NotaVenta notaventa : notaventas) {
+            DTOVenta dto = new DTOVenta(notaventa);
+            dtos.add(dto);
+        }
+        return dtos;
     }
     
-    public NotaVenta crearNota(NotaVenta notaventa){
-        //obtener fecha con java.sql.Date
-        Date fecha = new Date(System.currentTimeMillis());
-        //obtener hora actual con java.sql.Time
-        Time hora = new Time(System.currentTimeMillis());
-        Optional<EstadoPago> estadoPago;
-        
-        //crear anticipo
-        Anticipo anticipo = new Anticipo();
-        anticipo.setFecha(fecha);
-        anticipo.setMonto(notaventa.getAnticipo().getMonto());
-        BigDecimal resto = notaventa.getAnticipo().getMonto().subtract(notaventa.getTotal());
-        anticipo.setResto(resto);
-        if (resto.compareTo(BigDecimal.ZERO) == 0) {
-        
-            estadoPago = estadopagoRepository.findById(1L);
-                
-        }else{
-            estadoPago = estadopagoRepository.findById(2L);
-        }
-        anticipo.setEstadoPago(estadoPago.get());
-        Anticipo nuevoAnticipo= anticipoRepository.save(anticipo);
-        //obteniendo el anticipo creado
-        Optional<Anticipo> anticipoExistente = anticipoRepository.findById(nuevoAnticipo.getIdAnticipo());
-
-        //obteniendo el cliente
-        Optional<Cliente> clienteExistente = clienteRepository.findById(notaventa.getCliente().getIdCliente());
-        
-        //obteniendo el empleado
-        Optional<Empleado> empleadoExistente = empleadoRepository.findById(notaventa.getEmpleado().getIdEmpleado());
-
-        //obteniendo el departamento
-        Optional<Departamento> departamentoExistente = departamentoRepository.findById(notaventa.getDepartamento().getIdDepartamento());
-
-        //crear detalle pedido
-        DetallePedido detallePedido = new DetallePedido();
-        detallePedido.setFechaEntrega(fecha);
-        detallePedido.setHoraEntrega(hora);
-        EstadosPedido estadoPedido = estadosPedidoRepository.findById(2L).get();
-        detallePedido.setEstadoPedido(estadoPedido);
-        DetallePedido nuevodetallepedido = detallepedidoRepository.save(detallePedido);
-
-        //creando la nota de venta
-        NotaVenta notaVenta = new NotaVenta();
-        notaVenta.setFecha(fecha);
-        notaVenta.setTotal(notaventa.getTotal());
-        notaVenta.setAnticipo(anticipoExistente.get());
-        notaVenta.setCliente(clienteExistente.get());
-        notaVenta.setEmpleado(empleadoExistente.get());
-        notaVenta.setDepartamento(departamentoExistente.get());
-        notaVenta.setDetallePedido(nuevodetallepedido);
-        NotaVenta notaguardada=notaventaRepository.save(notaVenta);
-
-        //creando detalle venta
-        List<DetalleVenta> detallesVenta = new ArrayList<>();
-        detallesVenta = notaventa.getDetalleVenta();
-        for (DetalleVenta detalle : detallesVenta) {
-            
-            //obteniendo el producto
-            Optional<Producto> productoExistente = productoRepository.findById(detalle.getProducto().getCodigo());
-            
-            //creando detalle venta
-            DetalleVenta detalleVentaG = new DetalleVenta();
-            detalleVentaG.setCantidad(detalle.getCantidad());
-            detalleVentaG.setSubtotal(detalle.getSubtotal());
-            detalleVentaG.setFecha(fecha);
-            detalleVentaG.setProducto(productoExistente.get());
-            detalleVentaG.setVenta(notaguardada);
-            detalleVentaRepository.save(detalleVentaG);
-        }
-        Optional<NotaVenta> notaventaG = notaventaRepository.findById(notaguardada.getNumeroNota());
-        NotaVenta verNota = notaventaG.get();
-        return notaventaG.get(); 
-    }
-    
-    public List<DTONotaVenta> obtenerNotasVentas() {
-        List<DTONotaVenta> DTOnotaventa = new ArrayList<>();
-        List<NotaVenta> notasventas = notaventaRepository.findAll();
-
-        
-        for (NotaVenta notaventa : notasventas) {
-            DTONotaVenta dto = new DTONotaVenta(notaventa);
-            DTOnotaventa.add(dto);
-        }
-
-        return DTOnotaventa;
-    }
-    
-    public DTONotaVenta obtenerNotaVentaPorId(long idNotaVenta) {
+    public DTOVenta obtenerNotaVentaPorId(long idNotaVenta) {
         NotaVenta notaventa = notaventaRepository.findById(idNotaVenta)
                 .orElseThrow(() -> new EntityNotFoundException("Nota venta no encontrado"));
 
-        DTONotaVenta dto = new DTONotaVenta(notaventa);
+        DTOVenta dto = new DTOVenta(notaventa);
 
         return dto;
     }

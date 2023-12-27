@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.uv.Abarrotes.DTOs.DTONotaVenta;
+import org.uv.Abarrotes.DTOs.DTOVenta;
 import org.uv.Abarrotes.modelos.NotaVenta;
 import org.uv.Abarrotes.servicio.NotaVentaService;
 /**
@@ -30,18 +31,6 @@ public class NotaVentaController {
     @Autowired
     private NotaVentaService notaventaService;
  
-    @PostMapping
-    public ResponseEntity<org.uv.Abarrotes.DTOs.DTONotaVenta> crearNotaVentaConEntidades(@RequestBody NotaVenta nuevoNotaVenta) {
-        org.uv.Abarrotes.DTOs.DTONotaVenta notaventaCreado = notaventaService.crearNotaVenta(nuevoNotaVenta);
-        return ResponseEntity.status(HttpStatus.CREATED).body(notaventaCreado);
-    }
-
-    //postmapping para crear una nota de venta
-    @PostMapping("/crear")
-    public void crearNotaVenta(@RequestBody NotaVenta nuevoNotaVenta) {
-        notaventaService.crearNota(nuevoNotaVenta);
-        
-    }
 
     //postmapping para crear una nota de venta con metdo limpio
     @PostMapping("/crearlimpio")
@@ -54,17 +43,16 @@ public class NotaVentaController {
         } 
     }
     
-    
     @GetMapping
-    public ResponseEntity<List<DTONotaVenta>> obtenerNotasVentas(){
-        List<DTONotaVenta> notasventas = notaventaService.obtenerNotasVentas();
+    public ResponseEntity<List<DTOVenta>> obtenerNotasVentas(){
+        List<DTOVenta> notasventas = notaventaService.obtenerNotasVentas();
         return ResponseEntity.ok(notasventas);
     }
 
 
     @GetMapping("/{id}")
-    public ResponseEntity<DTONotaVenta> obtenerNotasVentasPorId(@PathVariable Long id){
-        DTONotaVenta notasventas = notaventaService.obtenerNotaVentaPorId(id);
+    public ResponseEntity<DTOVenta> obtenerNotasVentasPorId(@PathVariable Long id){
+        DTOVenta notasventas = notaventaService.obtenerNotaVentaPorId(id);
         return ResponseEntity.ok(notasventas);
     }
     
