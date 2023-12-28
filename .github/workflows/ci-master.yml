@@ -1,5 +1,4 @@
 name: Deploy to Okteto
-
 on:
   push:
     branches:
@@ -10,36 +9,23 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v2
+    - name: Checkout code
+      uses: actions/checkout@v2
 
-      - name: Set up Java
-        uses: actions/setup-java@v2
-        with:
-          distribution: 'adopt'
-          java-version: '11'
+    - name: Login to Okteto
+      uses: okteto/login@v1
+      with:
+        token: ${{ secrets.OKTETO_TOKEN }}
 
-      - name: Set up Docker
-        uses: docker/setup-buildx-action@v1
+    - name: Activate development container
+      uses: okteto/deploy-preview@v1
+      with:
+        name: "my-app-${{ github.run_number }}"
+        scope: personal
+        timeout: 10m
 
-      - name: Login to Docker Hub
-        run: echo ${{ secrets.DOCKERHUB_PASSWORD }} | docker login -u ${{ secrets.DOCKERHUB_USERNAME }} --password-stdin
+    - name: Install dependencies
+      run: okteto exec -- mvn install
 
-      - name: Build and push Docker image
-        uses: docker/build-push-action@v2
-        with:
-          context: .
-          file: ./Dockerfile
-          push: true
-          tags: username/repo:latest
-
-      - name: Deploy to Okteto
-        run: |
-          echo "OCTETO_TOKEN=${{ secrets.OCTETO_TOKEN }}" >> $GITHUB_ENV
-          curl https://get.okteto.com -sSfL | sh
-          okteto version
-          okteto namespace
-          okteto login -u $OCTETO_TOKEN
-          okteto stack deploy -f okteto-stack.yml
-        env:
-          OCTETO_TOKEN: ${{ secrets.OCTETO_TOKEN }}
+    - name: Deploy to Okteto
+      run: okteto exec -- mvn spring-boot:run
