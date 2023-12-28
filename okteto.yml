@@ -1,0 +1,10 @@
+name: springboot-okteto
+image: maven:3.6.3-openjdk-11
+command: mvn spring-boot:run
+workdir: /usr/src/app
+volumes:
+  - /root/.m2
+sync:
+  - .:/usr/src/app
+forward:
+  - 8080:8080
