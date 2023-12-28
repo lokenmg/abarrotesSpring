@@ -16,7 +16,8 @@ import org.uv.Abarrotes.servicio.InicioSessionService;
 
 @RestController
 //@RequestMapping("/api/auth")
-@CrossOrigin(origins = "http://localhost:3000") // Reemplaza con la URL de tu aplicación React
+// Reemplaza con la URL de tu aplicación React
+@CrossOrigin(origins="*", allowCredentials="")
 
 public class inicioSessionController {
     @Autowired
