@@ -3,6 +3,7 @@ package org.uv.Abarrotes.Controladores;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Repository;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -15,6 +16,7 @@ import org.uv.Abarrotes.servicio.DetallePedidoService;
 
 @Repository
 @RequestMapping("api/detallepedido")
+@CrossOrigin(origins="*", allowCredentials="")
 public class DetallePedidoController {
     @Autowired
     private DetallePedidoService detallePedidoService;
