@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.uv.Abarrotes.modelos.VistaNotaVentaCancelada;
 import org.uv.Abarrotes.servicio.VistaNotaVentaCanceladaService;
 /**
@@ -18,6 +19,7 @@ import org.uv.Abarrotes.servicio.VistaNotaVentaCanceladaService;
  */
 @RestController
 @RequestMapping("/api/vista-nota-venta-cancelada")
+@CrossOrigin(origins="*", allowCredentials="")
 public class VistaNotaVentaCanceladaController {
     @Autowired
     private VistaNotaVentaCanceladaService vistaNotaVentaCanceladaService;

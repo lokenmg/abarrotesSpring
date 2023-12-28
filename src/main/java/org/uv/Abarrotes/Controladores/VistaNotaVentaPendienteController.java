@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.uv.Abarrotes.modelos.VistaNotaVentaPagada;
 
 import java.util.List;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.uv.Abarrotes.modelos.VistaNotaVentaPendiente;
 import org.uv.Abarrotes.servicio.VistaNotaVentaPendienteService;
 /**
@@ -20,6 +21,7 @@ import org.uv.Abarrotes.servicio.VistaNotaVentaPendienteService;
  */
 @RestController
 @RequestMapping("/api/vista-nota-venta-pendiente")
+@CrossOrigin(origins="*", allowCredentials="")
 public class VistaNotaVentaPendienteController {
     @Autowired
     private VistaNotaVentaPendienteService vistaNotaVentaPendienteService;
