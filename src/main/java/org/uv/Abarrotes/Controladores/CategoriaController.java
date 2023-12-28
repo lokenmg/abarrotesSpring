@@ -25,10 +25,7 @@ import org.uv.Abarrotes.DTOs.DTOCategoria;
 import org.uv.Abarrotes.modelos.Categoria;
 import org.uv.Abarrotes.servicio.CategoriaService;
 
-/**
- *
- * @author loken
- */
+
 @Controller
 @RequestMapping("/api/categorias")
 @CrossOrigin(origins="*", allowCredentials="")
