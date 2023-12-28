@@ -6,14 +6,14 @@ on:
 
 jobs:
   deploy:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-18.04
 
     steps:
     - name: Checkout code
       uses: actions/checkout@v2
 
     - name: Login to Okteto
-      uses: okteto/login@v1
+      uses: okteto/deploy-preview@v0.1.0
       with:
         token: ${{ secrets.OKTETO_TOKEN }}
 
