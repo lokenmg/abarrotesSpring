@@ -15,6 +15,7 @@ import javax.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.uv.Abarrotes.DTOs.DTONotaVenta;
+import org.uv.Abarrotes.DTOs.DTOPago;
 import org.uv.Abarrotes.DTOs.DTOVenta;
 import org.uv.Abarrotes.modelos.Anticipo;
 import org.uv.Abarrotes.modelos.Cliente;
@@ -140,7 +141,7 @@ public class NotaVentaService {
         Anticipo anticipo = new Anticipo();
         anticipo.setFecha(fecha);
         anticipo.setMonto(notaventa.getAnticipo().getMonto());
-        BigDecimal resto = notaventa.getAnticipo().getMonto().subtract(notaventa.getTotal());
+        BigDecimal resto = notaventa.getTotal().subtract(notaventa.getAnticipo().getMonto());
         anticipo.setResto(resto);
         Long estadoPagoId = resto.compareTo(BigDecimal.ZERO) == 0 ? 1L : 2L;
         anticipo.setResto(resto);
@@ -185,5 +186,22 @@ public class NotaVentaService {
             producto.setExistencia(producto.getExistencia() - detalle.getCantidad());
             productoRepository.save(producto);
         }
+    }
+
+    public String PagarNotaVenta(DTOPago pagoInfo){
+        //obtengo la nota de venta
+        NotaVenta notaVenta = notaventaRepository.findById(pagoInfo.getnNota()).orElseThrow(() -> new EntityNotFoundException("Nota de venta no encontrado"));
+        //obtengo el anticipo
+        Anticipo anticipo = anticipoRepository.findById(notaVenta.getAnticipo().getIdAnticipo()).orElseThrow(() -> new EntityNotFoundException("Anticipo no encontrado"));
+        //se suma el pago al anticipo
+        BigDecimal monto = anticipo.getMonto().add(pagoInfo.getPago());
+        anticipo.setMonto(monto);
+        BigDecimal resto = notaVenta.getTotal().subtract(notaVenta.getAnticipo().getMonto());
+        anticipo.setResto(resto);
+        Long estadoPagoId = resto.compareTo(BigDecimal.ZERO) <= 0 ? 1L : 2L;
+        EstadoPago estadoPago = estadopagoRepository.findById(estadoPagoId).orElseThrow(() -> new EntityNotFoundException("Estado de pago no encontrado"));
+        anticipo.setEstadoPago(estadoPago);
+        anticipoRepository.save(anticipo);
+        return "Pago realizado con exito, la nota numero: " + notaVenta.getNumeroNota()+ " tiene un monto de: " + anticipo.getMonto() + " y un resto de: " + anticipo.getResto() + " con un estado de pago: " + anticipo.getEstadoPago().getEstado() + "";
     }
 }

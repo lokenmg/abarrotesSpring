@@ -12,6 +12,7 @@ import javax.persistence.EntityNotFoundException;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.uv.Abarrotes.DTOs.DTOMEstadoPedido;
 import org.uv.Abarrotes.modelos.Anticipo;
 import org.uv.Abarrotes.modelos.DetallePedido;
 import org.uv.Abarrotes.modelos.DetalleVenta;
@@ -82,9 +83,9 @@ public class PedidoServicio {
         nuevoAnticipo.setFecha(this.fecha);
         nuevoAnticipo.setMonto(nota.getAnticipo().getMonto());
         
-        BigDecimal resto = nota.getAnticipo().getMonto().subtract(nota.getTotal());
+        //BigDecimal resto = nota.getAnticipo().getMonto().subtract(nota.getTotal());
+        BigDecimal resto = nota.getTotal().subtract(nota.getAnticipo().getMonto());
         nuevoAnticipo.setResto(resto);
-        
         Long estadoPagoId= resto.compareTo(BigDecimal.ZERO) == 0 ? 1L : 2L;
         EstadoPago estadoPago = estadopagoRepository.findById(estadoPagoId).orElseThrow(() -> new EntityNotFoundException("Estado de pago no encontrado"));
         nuevoAnticipo.setEstadoPago(estadoPago);
@@ -127,5 +128,17 @@ public class PedidoServicio {
             producto.setExistencia(producto.getExistencia() - detalle.getCantidad());
             productoRepository.save(producto);
         }
+    }
+
+    public String ModificarEstadoPedido(DTOMEstadoPedido estadoPedido){
+        DetallePedido detallePedido = detallepedidoRepository.findById(estadoPedido.getIdEstadoPedido()).orElseThrow(() -> new EntityNotFoundException("Detalle de pedido no encontrado"));
+        EstadosPedido estado = estadosPedidoRepository.findById(estadoPedido.getIdEstadoPedido()).orElseThrow(() -> new EntityNotFoundException("Estado de pedido no encontrado"));
+        detallePedido.setEstadoPedido(estado);
+        detallepedidoRepository.save(detallePedido);
+        return "Estado de pedido modificado";
+    }
+
+    public String ModificarEstadoPago(){
+        return "hola";
     }
 }
