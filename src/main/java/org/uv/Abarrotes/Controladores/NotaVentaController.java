@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.uv.Abarrotes.DTOs.DTONotaVenta;
+import org.uv.Abarrotes.DTOs.DTOPago;
 import org.uv.Abarrotes.DTOs.DTOVenta;
 import org.uv.Abarrotes.modelos.NotaVenta;
 import org.uv.Abarrotes.servicio.NotaVentaService;
@@ -66,5 +67,14 @@ public class NotaVentaController {
     public ResponseEntity<Void> eliminarNotaVenta(@PathVariable Long id) {
         notaventaService.eliminarNotaVenta(id);
         return ResponseEntity.noContent().build();
+    }
+
+    @PostMapping("/pagarnota")
+    public ResponseEntity<String> pagarNota(@RequestBody DTOPago pago) {
+        try {
+            return new ResponseEntity<>(notaventaService.PagarNotaVenta(pago), HttpStatus.CREATED);
+        } catch (Exception e) {
+            return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
+        } 
     }
 }
