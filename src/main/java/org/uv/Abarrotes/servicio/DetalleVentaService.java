@@ -61,6 +61,10 @@ public class DetalleVentaService {
 
         return DTOdetallesVenta;
     }
+
+        public List<DetalleVenta> getDetalleVentaByNumeroNota(Long numeroNota) {
+        return detalleVentaRepository.findByVenta_numeroNota(numeroNota);
+    }
     
     public List<DTODetalleVenta> getDetalleVentasEnRangoDeFechas(LocalDate startDate, LocalDate endDate) {
         // Convertir LocalDate a java.sql.Date

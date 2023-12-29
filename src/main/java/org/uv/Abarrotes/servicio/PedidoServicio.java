@@ -13,7 +13,7 @@ import javax.persistence.EntityNotFoundException;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.uv.Abarrotes.DTOs.DTOMEstadoPedido;
+import org.uv.Abarrotes.DTOs.Entradas.DTOMEstadoPedido;
 import org.uv.Abarrotes.modelos.Anticipo;
 import org.uv.Abarrotes.modelos.DetallePedido;
 import org.uv.Abarrotes.modelos.DetalleReporte;
@@ -133,16 +133,67 @@ public class PedidoServicio {
         }
     }
 
+    //modificar estado pedido
     public String ModificarEstadoPedido(DTOMEstadoPedido estadoPedido){
-        DetallePedido detallePedido = detallepedidoRepository.findById(estadoPedido.getIdEstadoPedido()).orElseThrow(() -> new EntityNotFoundException("Detalle de pedido no encontrado"));
-        EstadosPedido estado = estadosPedidoRepository.findById(estadoPedido.getIdEstadoPedido()).orElseThrow(() -> new EntityNotFoundException("Estado de pedido no encontrado"));
-        detallePedido.setEstadoPedido(estado);
-        detallepedidoRepository.save(detallePedido);
-        return "Estado de pedido modificado";
+        //buscamos la nota de venta
+        NotaVenta notaVenta = notaventaRepository.findById(estadoPedido.getnNota()).orElseThrow(() -> new EntityNotFoundException("Nota de venta no encontrada"));
+
+        //en case de que el pedido ya este cancelado
+        if(notaVenta.getDetallePedido().getEstadoPedido().getIdEstado() == 3L){
+            return "El pedido ya esta cancelado";
+        }else//en caso de que el pedido se cancele
+        if(estadoPedido.getIdEstadoPedido() == 3L){
+            CancelarPedido(notaVenta);
+            return "Pedido cancelado";
+        }
+        //en caso de que el pedido se entregue
+        else{
+            //
+            DetallePedido detallePedido = detallepedidoRepository.findById(notaVenta.getDetallePedido().getIdDetallePedido()).orElseThrow(() -> 
+                                new EntityNotFoundException("Detalle de pedido no encontrado"));
+            EstadosPedido estado = estadosPedidoRepository.findById(estadoPedido.getIdEstadoPedido()).orElseThrow(() -> 
+                                new EntityNotFoundException("Estado de pedido no encontrado"));
+        
+            detallePedido.setEstadoPedido(estado);
+            detallepedidoRepository.save(detallePedido);
+            return "Estado de pedido modificado";
+        }
     }
 
-    public String ModificarEstadoPago(){
-        return "hola";
+    private void CancelarPedido(NotaVenta notaVenta){
+        //modificar anticipo
+        //obtener anticipo
+        Anticipo anticipo = anticipoRepository.findById(notaVenta.getAnticipo().getIdAnticipo()).orElseThrow(() -> 
+                            new EntityNotFoundException("Anticipo no encontrado"));
+        //igualar monto a 0
+        anticipo.setMonto(BigDecimal.ZERO);
+        anticipo.setResto(BigDecimal.ZERO);
+        EstadoPago estadoPago = estadopagoRepository.findById(3L).orElseThrow(() -> 
+                            new EntityNotFoundException("Estado de pago no encontrado"));
+        System.out.println("Estado pago: " + estadoPago.getEstado());
+        anticipo.setEstadoPago(estadoPago);
+        anticipoRepository.save(anticipo);
+
+        //modificar detalle de pedido
+        DetallePedido detallePedido = detallepedidoRepository.findById(notaVenta.getDetallePedido().getIdDetallePedido()).orElseThrow(() -> 
+                            new EntityNotFoundException("Detalle de pedido no encontrado"));
+        EstadosPedido estado = estadosPedidoRepository.findById(3L).orElseThrow(() -> 
+                            new EntityNotFoundException("Estado de pedido no encontrado"));
+        detallePedido.setEstadoPedido(estado);
+        detallepedidoRepository.save(detallePedido);
+        //obtener detalle de venta
+        List<DetalleVenta> detallesVenta = notaVenta.getDetalleVenta();
+
+        for (DetalleVenta detalleVenta : detallesVenta) {
+            Producto producto = productoRepository.findById(detalleVenta.getProducto().getCodigo()).orElseThrow(() -> 
+                            new EntityNotFoundException("Producto no encontrado"));
+            //actualizar stock
+            System.out.println("Cantidad: " + detalleVenta.getCantidad());
+            System.out.println("Existencia: " + producto.getExistencia());
+            System.out.println("Cantidad + Existencia: " + (producto.getExistencia() + detalleVenta.getCantidad()));
+            producto.setExistencia(producto.getExistencia() + detalleVenta.getCantidad());
+            productoRepository.save(producto);
+        } 
     }
     
 //    public void guardarDetalleReporte(List <DetalleVenta> detalleVenta){
@@ -155,4 +206,15 @@ public class PedidoServicio {
 //            detalleReporte.setReporte(ReporteRepository.);
 //        }
 //    }
+
+    public void entregarPedido(NotaVenta notaVenta){
+        //obtener detalle de pedido
+        DetallePedido detallePedido = detallepedidoRepository.findById(notaVenta.getDetallePedido().getIdDetallePedido()).orElseThrow(() -> 
+                            new EntityNotFoundException("Detalle de pedido no encontrado"));
+        EstadosPedido estado = estadosPedidoRepository.findById(3L).orElseThrow(() -> 
+                            new EntityNotFoundException("Estado de pedido no encontrado"));
+        
+        detallePedido.setEstadoPedido(estado);
+        detallepedidoRepository.save(detallePedido);
+    }   
 }
