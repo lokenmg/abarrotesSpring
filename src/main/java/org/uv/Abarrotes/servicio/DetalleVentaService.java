@@ -59,5 +59,9 @@ public class DetalleVentaService {
 
         return DTOdetallesVenta;
     }
+
+        public List<DetalleVenta> getDetalleVentaByNumeroNota(Long numeroNota) {
+        return detalleVentaRepository.findByVenta_numeroNota(numeroNota);
+    }
     
 }

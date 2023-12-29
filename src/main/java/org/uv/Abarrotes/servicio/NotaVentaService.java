@@ -15,7 +15,7 @@ import javax.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.uv.Abarrotes.DTOs.DTONotaVenta;
-import org.uv.Abarrotes.DTOs.DTOPago;
+import org.uv.Abarrotes.DTOs.Entradas.DTOPago;
 import org.uv.Abarrotes.DTOs.DTOVenta;
 import org.uv.Abarrotes.modelos.Anticipo;
 import org.uv.Abarrotes.modelos.Cliente;
@@ -161,12 +161,16 @@ public class NotaVentaService {
 
     private NotaVenta crearNotaDeVenta(NotaVenta notaventa, Date fecha, Anticipo anticipo, DetallePedido detallePedido){
         NotaVenta notaVenta = new NotaVenta();
+        Cliente cliente = clienteRepository.findById(notaventa.getCliente().getIdCliente()).orElseThrow(() -> new EntityNotFoundException("Cliente no encontrado"));
+        Empleado empleado = empleadoRepository.findById(notaventa.getEmpleado().getIdEmpleado()).orElseThrow(() -> new EntityNotFoundException("Empleado no encontrado"));
+        Departamento departamento = departamentoRepository.findById(notaventa.getDepartamento().getIdDepartamento()).orElseThrow(() -> new EntityNotFoundException("Departamento no encontrado"));
+        
         notaVenta.setFecha(fecha);
         notaVenta.setTotal(notaventa.getTotal());
         notaVenta.setAnticipo(anticipo);
-        notaVenta.setCliente(notaventa.getCliente());
-        notaVenta.setEmpleado(notaventa.getEmpleado());
-        notaVenta.setDepartamento(notaventa.getDepartamento());
+        notaVenta.setCliente(cliente);
+        notaVenta.setEmpleado(empleado);
+        notaVenta.setDepartamento(departamento);
         notaVenta.setDetallePedido(detallePedido);
         return notaventaRepository.save(notaVenta);
     }
@@ -181,9 +185,13 @@ public class NotaVentaService {
             detalleVenta.setProducto(producto);
             detalleVenta.setVenta(notaVenta);
             detalleVentaRepository.save(detalleVenta);
+            long mExistencia = producto.getExistencia() - detalle.getCantidad();
             //actualizar stock
-            
-            producto.setExistencia(producto.getExistencia() - detalle.getCantidad());
+            if (mExistencia <= 0) {
+                producto.setExistencia(0);
+            }else{
+                producto.setExistencia(mExistencia);
+            }
             productoRepository.save(producto);
         }
     }
