@@ -11,7 +11,7 @@ import org.uv.Abarrotes.modelos.DetalleVenta;
  */
 public class DTODetalleVenta {
     private Integer codigo;
-    private Double cantidad;
+    private long cantidad;
     private Double subtotal;
     private Date fecha;
     private Long producto; 
@@ -20,7 +20,7 @@ public class DTODetalleVenta {
     public DTODetalleVenta() {
     }
     
-    public DTODetalleVenta(Integer codigo, Double cantidad, Double subtotal, Date fecha,
+    public DTODetalleVenta(Integer codigo, long cantidad, Double subtotal, Date fecha,
             Long producto, Long venta) {
         this.codigo = codigo;
         this.cantidad = cantidad;
@@ -32,7 +32,7 @@ public class DTODetalleVenta {
     
     public DTODetalleVenta(DetalleVenta detalleVenta) {
         this.codigo = detalleVenta.getCodigo();
-//        this.cantidad = detalleVenta.getCantidad();
+        this.cantidad = detalleVenta.getCantidad();
         this.subtotal = detalleVenta.getSubtotal();
         this.fecha = detalleVenta.getFecha();
         this.producto = detalleVenta.getProducto().getCodigo();
@@ -47,11 +47,11 @@ public class DTODetalleVenta {
         this.codigo = codigo;
     }
 
-    public Double getCantidad() {
+    public long getCantidad() {
         return cantidad;
     }
 
-    public void setCantidad(Double cantidad) {
+    public void setCantidad(long cantidad) {
         this.cantidad = cantidad;
     }
 

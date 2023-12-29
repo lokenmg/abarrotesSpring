@@ -17,7 +17,6 @@ import javax.persistence.Table;
  import java.math.BigDecimal;
 import javax.persistence.OneToMany;
 import java.util.List;
-import java.util.ArrayList;
 import java.sql.Date;
 import javax.persistence.CascadeType;
 
