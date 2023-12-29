@@ -7,6 +7,7 @@ package org.uv.Abarrotes.servicio;
 import java.math.BigDecimal;
 import java.sql.Date;
 import java.sql.Time;
+import java.util.List;
 
 import javax.persistence.EntityNotFoundException;
 
@@ -15,6 +16,7 @@ import org.springframework.stereotype.Service;
 import org.uv.Abarrotes.DTOs.DTOMEstadoPedido;
 import org.uv.Abarrotes.modelos.Anticipo;
 import org.uv.Abarrotes.modelos.DetallePedido;
+import org.uv.Abarrotes.modelos.DetalleReporte;
 import org.uv.Abarrotes.modelos.DetalleVenta;
 import org.uv.Abarrotes.modelos.EstadoPago;
 import org.uv.Abarrotes.modelos.EstadosPedido;
@@ -30,6 +32,7 @@ import org.uv.Abarrotes.repositorio.EstadoPagoRepository;
 import org.uv.Abarrotes.repositorio.EstadosPedidoRepository;
 import org.uv.Abarrotes.repositorio.NotaVentaRepository;
 import org.uv.Abarrotes.repositorio.ProductoRepository;
+import org.uv.Abarrotes.repositorio.ReporteRepository;
 
 /**
  *
@@ -141,4 +144,15 @@ public class PedidoServicio {
     public String ModificarEstadoPago(){
         return "hola";
     }
+    
+//    public void guardarDetalleReporte(List <DetalleVenta> detalleVenta){
+//        DetalleReporte detalleReporte = new DetalleReporte();
+//        double total = 0;
+//        for (DetalleVenta detalleVentaG : detalleVenta){
+//            detalleReporte.setDetalleVenta(detalleVentaG);
+//            total += detalleVentaG.getSubtotal();
+//            detalleReporte.setTotal(total);
+//            detalleReporte.setReporte(ReporteRepository.);
+//        }
+//    }
 }
