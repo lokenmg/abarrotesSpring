@@ -5,6 +5,8 @@
 package org.uv.Abarrotes.servicio;
 import java.util.ArrayList;
 import java.util.List;
+import java.sql.Date;
+import java.time.LocalDate;
 import javax.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -60,4 +62,18 @@ public class DetalleVentaService {
         return DTOdetallesVenta;
     }
     
-}
+    public List<DTODetalleVenta> getDetalleVentasEnRangoDeFechas(LocalDate startDate, LocalDate endDate) {
+        // Convertir LocalDate a java.sql.Date
+        Date sqlStartDate = Date.valueOf(startDate);
+        Date sqlEndDate = Date.valueOf(endDate);
+        List<DTODetalleVenta> DTOdetallesVenta = new ArrayList<>();
+        List<DetalleVenta> detallesVenta = detalleVentaRepository.findByFechaBetween(sqlStartDate, sqlEndDate); 
+        
+        for (DetalleVenta detalleVenta : detallesVenta) {
+            DTODetalleVenta dto = new DTODetalleVenta(detalleVenta);
+            DTOdetallesVenta.add(dto);
+        }
+
+        return DTOdetallesVenta;
+    }
+} 
