@@ -19,7 +19,10 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.uv.Abarrotes.DTOs.DTODetalleVenta;
 import org.uv.Abarrotes.DTOs.DTODetallesVentas;
+import org.uv.Abarrotes.DTOs.DTOReporte;
+import org.uv.Abarrotes.DTOs.Entradas.DTOCrearReporte;
 import org.uv.Abarrotes.modelos.DetalleVenta;
+import org.uv.Abarrotes.modelos.Reporte;
 import org.uv.Abarrotes.servicio.DetalleVentaService;
 import java.sql.Date;
 import java.time.LocalDate;
@@ -45,8 +48,8 @@ public class DetalleVentaController {
         List<DTODetalleVenta> detalleventas = detalleventaService.obtenerDetallesVenta();
         return ResponseEntity.ok(detalleventas);
     }
-
-    @GetMapping("/byNumeroNota/{numeroNota}")
+    
+@GetMapping("/byNumeroNota/{numeroNota}")
     public List<DTODetallesVentas> getDetalleVentaByNumeroNota(@PathVariable Long numeroNota) {
         List<DetalleVenta> detallesEncontrados = detalleventaService.getDetalleVentaByNumeroNota(numeroNota);
         List<DTODetallesVentas> detallesVentas = new ArrayList<>();
@@ -62,12 +65,11 @@ public class DetalleVentaController {
         return detallesVentas;
     }
     
-    @GetMapping("/rango-de-fechas")
-    public ResponseEntity<List<DTODetalleVenta>> getDetalleVentasEnRangoDeFechas(
-            @RequestParam("startDate") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate startDate,
-            @RequestParam("endDate") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate endDate) {
+    @PostMapping("/crearReporte")
+    public ResponseEntity<DTOReporte> CrearReporte(@RequestBody DTOCrearReporte reporte) {
 
-        List<DTODetalleVenta> detalleVentas = detalleventaService.getDetalleVentasEnRangoDeFechas(startDate, endDate);
-        return ResponseEntity.ok(detalleVentas);
+        Reporte nuevoReporte = detalleventaService.crearReporte(reporte);
+        DTOReporte dtoReporte = new DTOReporte(nuevoReporte);
+        return ResponseEntity.ok(dtoReporte);
     }
 }

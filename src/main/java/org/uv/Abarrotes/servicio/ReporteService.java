@@ -30,16 +30,12 @@ public class ReporteService {
     }
 
     public List<DTOReporte> obtenerReporte() {
-        List<DTOReporte> DTOreportes = new ArrayList<>();
         List<Reporte> reportes = reporteRepository.findAll();
-
-        // Convertir cada producto a DTOProductoInfo
+        List<DTOReporte> dto = new ArrayList<>();
         for (Reporte reporte : reportes) {
-            DTOReporte dto = new DTOReporte(reporte);
-            DTOreportes.add(dto);
+            dto.add(new DTOReporte(reporte));
         }
-
-        return DTOreportes;
+        return dto;
     }
 
     public DTOReporte obtenerReportePorId(long codigo) {
