@@ -27,7 +27,6 @@ public class VistaNotaVentaPedidoEnProceso {
     private String direccion;
     private Long idEmpleado;
     private String nombreCompletoEmpleado;
-    private String contrasenia;
     private Long numeroNota;
     private Date fechaNota;
     private BigDecimal total;
@@ -120,14 +119,6 @@ public class VistaNotaVentaPedidoEnProceso {
 
     public void setNombreCompletoEmpleado(String nombreCompletoEmpleado) {
         this.nombreCompletoEmpleado = nombreCompletoEmpleado;
-    }
-
-    public String getContrasenia() {
-        return contrasenia;
-    }
-
-    public void setContrasenia(String contrasenia) {
-        this.contrasenia = contrasenia;
     }
 
     public Long getNumeroNota() {
