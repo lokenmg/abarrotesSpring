@@ -18,7 +18,6 @@ public class AbarrotesApplication {
 	}
 
 	//Metodo para crear el rol=Empleado por defecto
-
     @PostConstruct
     public void init() {
         rolService.init();

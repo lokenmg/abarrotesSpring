@@ -3,6 +3,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
 package org.uv.Abarrotes.servicio;
+
 import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.EntityNotFoundException;
@@ -11,6 +12,7 @@ import org.springframework.stereotype.Service;
 import org.uv.Abarrotes.DTOs.DTORol;
 import org.uv.Abarrotes.modelos.Rol;
 import org.uv.Abarrotes.repositorio.RolRepository;
+
 /**
  *
  * @author yacruz
@@ -19,16 +21,16 @@ import org.uv.Abarrotes.repositorio.RolRepository;
 public class RolService {
     @Autowired
     private RolRepository rolRepository;
-    
+
     public DTORol crearRol(Rol rol) {
-        
+
         Rol rolG = rolRepository.save(rol);
-        
+
         org.uv.Abarrotes.DTOs.DTORol dto = new DTORol(rolG);
-        
+
         return dto;
     }
-    
+
     public List<DTORol> obtenerRoles() {
         List<DTORol> DTOrol = new ArrayList<>();
         List<Rol> roles = rolRepository.findAll();
@@ -41,7 +43,7 @@ public class RolService {
 
         return DTOrol;
     }
-    
+
     public DTORol obtenerRolesPorId(long idRol) {
         Rol rol = rolRepository.findById(idRol)
                 .orElseThrow(() -> new EntityNotFoundException("Rol no encontrado"));
@@ -50,7 +52,7 @@ public class RolService {
 
         return dto;
     }
-    
+
     public DTORol actualizarRol(Long idRol, Rol rolActualizado) {
         Rol rolExistente = rolRepository.findById(idRol)
                 .orElseThrow(() -> new EntityNotFoundException("Rol no encontrado"));
@@ -75,21 +77,23 @@ public class RolService {
         rolRepository.delete(rolExistente);
     }
 
-
-   // @Autowired
-    //private EmpleadoRepository empleadoRepository;
-
     public void init() {
-        // Crear objetos Rol
-        Rol rolEmpl = new Rol(3L, "EMPLOYEE", "Rol del Empleado");
+        // Verificar si el rol "Encargado_Caja" ya existe
+        if (!rolRepository.existsByDescripcion("Encargado_Caja")) {
+            // Crear objeto Rol para "Encargado_Caja"
+            Rol rolEncCaja = new Rol("ENCARGADO_CAJA", "Encargado_Caja");
 
-        // Guardar los roles en la base de datos (si es necesario)
-        rolRepository.save(rolEmpl);
+            // Guardar el rol "Encargado_Caja" en la base de datos
+            rolRepository.save(rolEncCaja);
+        }
 
-//        // Crear objetos Empleado con roles asociados
-//        Empleado empleadoEmpl = new Empleado("John Doe", rolEmpl);
-//
-//        // Guardar los empleados en la base de datos
-//        empleadoRepository.save(empleadoEmpl);
+        // Verificar si el rol "Encargado_Departamento" ya existe
+        if (!rolRepository.existsByDescripcion("Gerente_Departamento")) {
+            // Crear objeto Rol para "Encargado_Departamento"
+            Rol rolGerDepar = new Rol("GERENTE_DEPARTAMENTO", "Gerente_Departamento");
+
+            // Guardar el rol "Encargado_Departamento" en la base de datos
+            rolRepository.save(rolGerDepar);
+        }
     }
 }

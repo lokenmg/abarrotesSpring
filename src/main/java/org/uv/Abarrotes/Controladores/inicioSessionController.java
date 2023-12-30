@@ -1,8 +1,11 @@
 package org.uv.Abarrotes.Controladores;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -15,27 +18,40 @@ import org.uv.Abarrotes.servicio.EmpleadoService;
 import org.uv.Abarrotes.servicio.InicioSessionService;
 
 @RestController
-//@RequestMapping("/api/auth")
-// Reemplaza con la URL de tu aplicación React
-@CrossOrigin(origins="*", allowCredentials="")
+// @RequestMapping("/api/auth")
+@CrossOrigin(origins = "*", allowCredentials = "")
 
 public class inicioSessionController {
     @Autowired
     private InicioSessionService inicioSessionService;
     @Autowired
-    private EmpleadoService empleadoService; 
+    private EmpleadoService empleadoService;
 
-    @PostMapping("/api/login")
-    public String login(@RequestBody LoginRequest request) {
-        String usuario = request.getUsuario();
-        String contrasenia = request.getContrasenia();
+    @PostMapping("/login")
+    public ResponseEntity<Map<String, Object>> login(@RequestBody Map<String, String> credentials) {
+        String usuario = credentials.get("usuario");
+        String contrasenia = credentials.get("contrasenia");
 
+        // Realizar la autenticación del usuario (puedes usar tu lógica de autenticación
+        // aquí)
         if (inicioSessionService.autenticarUsuario(usuario, contrasenia)) {
+            // Si la autenticación es exitosa, asigna permisos
             String rol = inicioSessionService.asignarPermisos(usuario);
-            return "Inicio de sesión exitoso. Rol: " + rol;
-        } else {
-            return "Inicio de sesión fallido";
+
+            if (rol != null) {
+                // Devuelve la respuesta con el rol y un mensaje de éxito
+                Map<String, Object> response = new HashMap<>();
+                response.put("success", true);
+                response.put("rol", rol);
+                return ResponseEntity.ok(response);
+            }
         }
+
+        // Si la autenticación falla o el rol es nulo, devuelve una respuesta de error
+        Map<String, Object> response = new HashMap<>();
+        response.put("success", false);
+        response.put("message", "Credenciales incorrectas o permisos insuficientes");
+        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(response);
     }
 
     @GetMapping("/api/roles-inicioSession")
@@ -55,7 +71,7 @@ public class inicioSessionController {
             return ResponseEntity.notFound().build();
         }
     }
-    
+
     @GetMapping("/initEmpleados")
     public String inicializarEmpleados() {
         empleadoService.init(); // Llama al método init de EmpleadoService

@@ -95,8 +95,7 @@ public class Rol {
     }
 
     //Metodo para Agregar Empleados
-    public Rol(Long idRol,String cve, String descripcion) {
-        this.idRol=idRol;
+    public Rol(String cve, String descripcion) {
         this.cve = cve;
         this.descripcion = descripcion;
     }  
