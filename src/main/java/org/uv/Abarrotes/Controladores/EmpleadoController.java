@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.uv.Abarrotes.DTOs.DTOEmpleadoInfo;
+import org.uv.Abarrotes.DTOs.Entradas.DTOCrearEmpleado;
 import org.uv.Abarrotes.modelos.Empleado;
 import org.uv.Abarrotes.servicio.EmpleadoService;
 
@@ -70,5 +71,11 @@ public class EmpleadoController {
          @RequestParam(value = "apellidos", required = false) String apellidos) {
         List<DTOEmpleadoInfo> empleados = empleadoService.buscarEmpleadosPorNombreYApellidos(nombre, apellidos);
         return ResponseEntity.ok(empleados);
+    }
+
+    @PostMapping("/crearConDTO")
+    public ResponseEntity<DTOEmpleadoInfo> crearEmpleadoConDTO(@RequestBody DTOCrearEmpleado dto) {
+        DTOEmpleadoInfo empleadoCreado = empleadoService.crearEmpleadoConDTO(dto);
+        return ResponseEntity.status(HttpStatus.CREATED).body(empleadoCreado);
     }
 }

@@ -37,7 +37,7 @@ public class NotaVentaController {
     @PostMapping("/crearlimpio")
     public ResponseEntity<String> crearNota(@RequestBody NotaVenta notaVenta) {
         try {
-            NotaVenta nuevaNotaVenta = notaventaService.crandoVenta(notaVenta);
+            notaventaService.crandoVenta(notaVenta);
             return new ResponseEntity<>("Nota de venta creada con éxito", HttpStatus.CREATED);
         } catch (Exception e) {
             return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);

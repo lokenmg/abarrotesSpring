@@ -6,9 +6,7 @@ package org.uv.Abarrotes.DTOs;
 
 import java.math.BigDecimal;
 import java.sql.Date;
-import org.uv.Abarrotes.modelos.DetalleVenta;
 import org.uv.Abarrotes.modelos.NotaVenta;
-import java.util.List;
 
 /**
  *

@@ -17,7 +17,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.uv.Abarrotes.DTOs.DTOReporte;
 import org.uv.Abarrotes.modelos.Reporte;
 import org.uv.Abarrotes.servicio.ReporteService;

@@ -206,6 +206,7 @@ public class NotaVentaService {
         anticipo.setMonto(monto);
         BigDecimal resto = notaVenta.getTotal().subtract(notaVenta.getAnticipo().getMonto());
         anticipo.setResto(resto);
+        anticipo.setFecha(new Date(System.currentTimeMillis()));
         Long estadoPagoId = resto.compareTo(BigDecimal.ZERO) <= 0 ? 1L : 2L;
         EstadoPago estadoPago = estadopagoRepository.findById(estadoPagoId).orElseThrow(() -> new EntityNotFoundException("Estado de pago no encontrado"));
         anticipo.setEstadoPago(estadoPago);

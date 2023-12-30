@@ -7,7 +7,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.uv.Abarrotes.modelos.DetalleVenta;
-import org.uv.Abarrotes.modelos.EstadosPedido;
 import org.uv.Abarrotes.modelos.NotaVenta;
 
 

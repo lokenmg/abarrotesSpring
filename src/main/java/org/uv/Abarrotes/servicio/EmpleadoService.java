@@ -13,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import org.uv.Abarrotes.DTOs.DTOEmpleadoInfo;
+import org.uv.Abarrotes.DTOs.Entradas.DTOCrearEmpleado;
 import org.uv.Abarrotes.modelos.Empleado;
 import org.uv.Abarrotes.modelos.Rol;
 import org.uv.Abarrotes.repositorio.EmpleadoRepository;
@@ -199,5 +200,18 @@ public class EmpleadoService {
         return empleados.stream()
              .map(empleado -> convertirAEmpleadoInfo(empleado))
              .collect(Collectors.toList());
+    }
+
+
+    public DTOEmpleadoInfo crearEmpleadoConDTO(DTOCrearEmpleado empleado){
+        Empleado nuevoEmpleado = new Empleado();
+        nuevoEmpleado.setNombre(empleado.getNombre());
+        nuevoEmpleado.setApellidos(empleado.getApellidos());
+        nuevoEmpleado.setContrasenia(empleado.getContrasenia());
+        Rol rol = rolRepository.findById(empleado.getIdRol())
+                .orElseThrow(() -> new EntityNotFoundException("Rol no encontrado"));
+        nuevoEmpleado.setRoles(rol);
+        Empleado empleadoG = empleadoRepository.save(nuevoEmpleado);
+        return new DTOEmpleadoInfo(empleadoG);
     }
 }

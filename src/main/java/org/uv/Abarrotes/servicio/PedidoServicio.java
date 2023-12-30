@@ -6,7 +6,6 @@ package org.uv.Abarrotes.servicio;
 
 import java.math.BigDecimal;
 import java.sql.Date;
-import java.sql.Time;
 import java.util.List;
 
 import javax.persistence.EntityNotFoundException;
@@ -16,7 +15,6 @@ import org.springframework.stereotype.Service;
 import org.uv.Abarrotes.DTOs.Entradas.DTOMEstadoPedido;
 import org.uv.Abarrotes.modelos.Anticipo;
 import org.uv.Abarrotes.modelos.DetallePedido;
-import org.uv.Abarrotes.modelos.DetalleReporte;
 import org.uv.Abarrotes.modelos.DetalleVenta;
 import org.uv.Abarrotes.modelos.EstadoPago;
 import org.uv.Abarrotes.modelos.EstadosPedido;
@@ -32,8 +30,6 @@ import org.uv.Abarrotes.repositorio.EstadoPagoRepository;
 import org.uv.Abarrotes.repositorio.EstadosPedidoRepository;
 import org.uv.Abarrotes.repositorio.NotaVentaRepository;
 import org.uv.Abarrotes.repositorio.ProductoRepository;
-import org.uv.Abarrotes.repositorio.ReporteRepository;
-
 /**
  *
  * @author loken
@@ -99,7 +95,7 @@ public class PedidoServicio {
         DetallePedido nuevoDetallePedido = new DetallePedido();
         nuevoDetallePedido.setFechaEntrega(nota.getDetallePedido().getFechaEntrega());
         nuevoDetallePedido.setHoraEntrega(nota.getDetallePedido().getHoraEntrega());
-        EstadosPedido estadoPedido = estadosPedidoRepository.findById(2L).orElseThrow(() -> new EntityNotFoundException("Estado de pedido no encontrado"));
+        EstadosPedido estadoPedido = estadosPedidoRepository.findById(1L).orElseThrow(() -> new EntityNotFoundException("Estado de pedido no encontrado"));
         nuevoDetallePedido.setEstadoPedido(estadoPedido);
         return detallepedidoRepository.save(nuevoDetallePedido);
     }
