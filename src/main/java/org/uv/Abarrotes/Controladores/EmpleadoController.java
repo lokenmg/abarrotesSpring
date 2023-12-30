@@ -6,6 +6,9 @@ package org.uv.Abarrotes.Controladores;
 
 
 import java.util.List;
+
+import javax.persistence.EntityNotFoundException;
+
 import org.springframework.http.*;
 import org.springframework.stereotype.Controller;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,9 +38,13 @@ public class EmpleadoController {
     private EmpleadoService empleadoService;
  
     @PostMapping
-    public ResponseEntity<org.uv.Abarrotes.DTOs.DTOEmpleadoInfo> crearEmpleadoConEntidades(@RequestBody Empleado nuevoEmpleado) {
-        org.uv.Abarrotes.DTOs.DTOEmpleadoInfo empleadoCreado = empleadoService.crearEmpleado(nuevoEmpleado);
-        return ResponseEntity.status(HttpStatus.CREATED).body(empleadoCreado);
+    public ResponseEntity<DTOEmpleadoInfo> crearEmpleadoConEntidades(@RequestBody Empleado nuevoEmpleado, @RequestParam String descripcionRol) {
+        try {
+            DTOEmpleadoInfo empleadoCreado = empleadoService.crearEmpleado(nuevoEmpleado, descripcionRol);
+            return ResponseEntity.status(HttpStatus.CREATED).body(empleadoCreado);
+        } catch (EntityNotFoundException e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+        }
     }
 
     @GetMapping
@@ -77,5 +84,5 @@ public class EmpleadoController {
     public ResponseEntity<DTOEmpleadoInfo> crearEmpleadoConDTO(@RequestBody DTOCrearEmpleado dto) {
         DTOEmpleadoInfo empleadoCreado = empleadoService.crearEmpleadoConDTO(dto);
         return ResponseEntity.status(HttpStatus.CREATED).body(empleadoCreado);
-    }
+    } 
 }
