@@ -60,6 +60,7 @@ public class EmpleadoService {
         nuevoEmpleado.setNombre(empleado.getNombre());
         nuevoEmpleado.setApellidos(empleado.getApellidos());
         nuevoEmpleado.setContrasenia(empleado.getContrasenia());
+        nuevoEmpleado.setCorreoElectronico(empleado.getCorreoElectronico());
         Rol rol = rolRepository.findById(empleado.getIdRol())
                 .orElseThrow(() -> new EntityNotFoundException("Rol no encontrado"));
         nuevoEmpleado.setRoles(rol);
@@ -94,6 +95,8 @@ public class EmpleadoService {
         dtoEmpleado.setIdEmpleado(empleado.getIdEmpleado());
         dtoEmpleado.setNombre(empleado.getNombre());
         dtoEmpleado.setApellidos(empleado.getApellidos());
+        dtoEmpleado.setCorreoElectronico(empleado.getCorreoElectronico());
+        dtoEmpleado.setRoles(empleado.getRoles().getDescripcion());
 
         dtoEmpleado.setIdRol(empleado.getRoles().getIdRol());
 
@@ -117,6 +120,7 @@ public class EmpleadoService {
         empleadoExistente.setNombre(empleadoActualizado.getNombre());
         empleadoExistente.setApellidos(empleadoActualizado.getApellidos());
         empleadoExistente.setRoles(empleadoActualizado.getRoles());
+        empleadoExistente.setCorreoElectronico(empleadoActualizado.getCorreoElectronico());
 
         // Save the updated employee
         Empleado empleadoG = empleadoRepository.save(empleadoExistente);
@@ -168,6 +172,7 @@ public class EmpleadoService {
             empleadoEncDepart.setNombre("Maria del Carmen");
             empleadoEncDepart.setApellidos("Rodriguez Gutierrez");
             empleadoEncDepart.setContrasenia("jefe123"); // ¡Recuerda hashear la contraseña en un entorno de producción!
+            empleadoEncDepart.setCorreoElectronico("mariadelcarmen@gmail.com");
             empleadoEncDepart.setRoles(rolEncDepart);
             empleadoRepository.save(empleadoEncDepart);
 

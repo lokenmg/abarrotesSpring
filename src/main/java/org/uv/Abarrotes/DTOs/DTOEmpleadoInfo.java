@@ -16,7 +16,7 @@ public class DTOEmpleadoInfo {
 
     private String apellidos;
 
-    private String contrasenia;
+    private String correoElectronico;
     
     private String roles;
 
@@ -27,20 +27,22 @@ public class DTOEmpleadoInfo {
         
     }
     
-    public DTOEmpleadoInfo(long idEmpleado, String nombre, String apellidos, String contrasenia, String roles){
+    public DTOEmpleadoInfo(long idEmpleado, String nombre, String apellidos, Long idRol, String correoElectronico, String roles){
         this.idEmpleado = idEmpleado;
         this.nombre = nombre;
         this.apellidos = apellidos;
-        this.contrasenia = contrasenia;
         this.roles = roles;
+        this.correoElectronico = correoElectronico;
+        this.idRol = idRol;
     }
     
     public DTOEmpleadoInfo(Empleado empleado){
         this.idEmpleado = empleado.getIdEmpleado();
         this.nombre = empleado.getNombre();
         this.apellidos = empleado.getApellidos();
-        this.contrasenia = empleado.getContrasenia();
         this.roles = empleado.getRoles().getDescripcion();
+        this.correoElectronico = empleado.getCorreoElectronico();
+        this.idRol = empleado.getRoles().getIdRol();
     }
     
     public long getIdEmpleado() {
@@ -67,12 +69,12 @@ public class DTOEmpleadoInfo {
         this.apellidos = apellidos;
     }
 
-    public String getContrasenia() {
-        return contrasenia;
+    public String getCorreoElectronico() {
+        return correoElectronico;
     }
 
-    public void setContrasenia(String contrasenia) {
-        this.contrasenia = contrasenia;
+    public void setCorreoElectronico(String correoElectronico){
+        this.correoElectronico = correoElectronico;
     }
 
     public String getRoles() {
