@@ -32,6 +32,7 @@ public class VistaNotaVentaPedidoEntregado {
     private BigDecimal total;
     private Long idDepartamento;
     private String estado;
+    private String nombreDepartamento;
 
     public Long getIdAnticipo() {
         return idAnticipo;
@@ -159,6 +160,14 @@ public class VistaNotaVentaPedidoEntregado {
 
     public void setEstado(String estado) {
         this.estado = estado;
+    }
+
+    public String getNombreDepartamento() {
+        return nombreDepartamento;
+    }
+
+    public void setNombreDepartamento(String nombreDepartamento) {
+        this.nombreDepartamento = nombreDepartamento;
     }
     
 }
