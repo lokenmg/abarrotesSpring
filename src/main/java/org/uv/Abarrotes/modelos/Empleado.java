@@ -38,6 +38,9 @@ public class Empleado {
     @Column(name = "contrasenia")
     private String contrasenia;
 
+    @Column(name = "correo_electronico")
+    private String correoElectronico;
+
     @ManyToOne
     @JoinColumn(name = "id_rol", referencedColumnName = "id_rol")
     private Rol roles;
@@ -45,13 +48,14 @@ public class Empleado {
     @OneToMany(mappedBy = "empleado")
     private List<NotaVenta> notaVentas;
 
-    public Empleado(Long idEmpleado, String nombre, String apellidos, String contrasenia, Rol roles, List<NotaVenta> notaVentas) {
+    public Empleado(Long idEmpleado, String nombre, String apellidos, String contrasenia, String correoElectronico, Rol roles, List<NotaVenta> notaVentas) {
         this.idEmpleado = idEmpleado;
         this.nombre = nombre;
         this.apellidos = apellidos;
         this.contrasenia = contrasenia;
         this.roles = roles;
         this.notaVentas = notaVentas;
+        this.correoElectronico = correoElectronico;
     }
 
     public Empleado() {
@@ -87,6 +91,14 @@ public class Empleado {
 
     public void setContrasenia(String contrasenia) {
         this.contrasenia = contrasenia;
+    }
+    
+    public String getCorreoElectronico() {
+        return correoElectronico;
+    }
+
+    public void setCorreoElectronico(String correoElectronico){
+        this.correoElectronico = correoElectronico;
     }
 
     public Rol getRoles() {

@@ -5,17 +5,19 @@ public class DTOCrearEmpleado {
     private String apellidos;
     private String contrasenia;
     private String roles;
+    private String correoElectronico;
     private long idRol;
 
     public DTOCrearEmpleado() {
     }
 
-    public DTOCrearEmpleado(String nombre, String apellidos, String contrasenia,String roles, long idRol) {
+    public DTOCrearEmpleado(String nombre, String apellidos, String contrasenia, String correoElectronico, String roles, long idRol) {
         this.nombre = nombre;
         this.apellidos = apellidos;
         this.contrasenia = contrasenia;
         this.roles = roles;
         this.idRol = idRol;
+        this.correoElectronico = correoElectronico;
     }
 
     public String getNombre() {
@@ -42,6 +44,14 @@ public class DTOCrearEmpleado {
         this.contrasenia = contrasenia;
     }
 
+    public String getCorreoElectronico() {
+        return correoElectronico;
+    }
+
+    public void setCorreoElectronico(String correoElectronico) {
+        this.correoElectronico = correoElectronico;
+    }
+    
     public String getRoles() {
         return roles;
     }
