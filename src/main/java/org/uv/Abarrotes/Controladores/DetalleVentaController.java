@@ -21,6 +21,8 @@ import org.uv.Abarrotes.DTOs.Entradas.DTOCrearReporte;
 import org.uv.Abarrotes.modelos.DetalleVenta;
 import org.uv.Abarrotes.modelos.Reporte;
 import org.uv.Abarrotes.servicio.DetalleVentaService;
+
+import net.bytebuddy.asm.Advice.Return;
 /**
  *
  * @author yacruz
@@ -60,10 +62,18 @@ public class DetalleVentaController {
         return detallesVentas;
     }
     
-    @PostMapping("/crearReporte")
+    @PostMapping("/crearReporteMensual")
     public ResponseEntity<DTOReporte> CrearReporte(@RequestBody DTOCrearReporte reporte) {
 
-        Reporte nuevoReporte = detalleventaService.crearReporte(reporte);
+        Reporte nuevoReporte = detalleventaService.CrearReporteMensual(reporte);
+        DTOReporte dtoReporte = new DTOReporte(nuevoReporte);
+        return ResponseEntity.ok(dtoReporte);
+    }
+
+    @PostMapping("/crearReporteSemanal")
+    public ResponseEntity<DTOReporte> CrearReporteSemanal(@RequestBody DTOCrearReporte reporte) {
+
+        Reporte nuevoReporte = detalleventaService.CrearReporteSemanal(reporte);
         DTOReporte dtoReporte = new DTOReporte(nuevoReporte);
         return ResponseEntity.ok(dtoReporte);
     }

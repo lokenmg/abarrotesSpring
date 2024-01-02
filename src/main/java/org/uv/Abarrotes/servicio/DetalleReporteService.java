@@ -21,21 +21,13 @@ public class DetalleReporteService {
     @Autowired
     private DetalleReporteRepository detalleReporteRepository;
 
-    @Autowired
-    private ReporteService reporteService;
+    public void borraDetalleReporte(Long id) {
 
-    @Autowired
-    private DetalleVentaService detalleVentaService;
+        detalleReporteRepository.deleteById(id);;
+    }
 
-//    public DetalleReporte guardarDetalleReporte(DTODetalleReporte detalleReporteDTO) {
-//        Reporte reporte = reporteService.obtenerReportePorId(detalleReporteDTO.getIdReporte());
-//        DetalleVenta detalleVenta = detalleVentaService.obtenerDetalleVentaPorId(detalleReporteDTO.getIdDetalleVenta());
-//
-//        DetalleReporte detalleReporte = new DetalleReporte();
-//        detalleReporte.setTotal(detalleReporteDTO.getTotal());
-//        detalleReporte.setReporte(reporte);
-//        detalleReporte.setDetalleVenta(detalleVenta);
-//
-//        return detalleReporteRepository.save(detalleReporte);
-//    }
+    public DetalleReporte obtenerDetalleReportePorId(Long id) {
+        return detalleReporteRepository.findById(id).orElse(null);
+    }
+
 }

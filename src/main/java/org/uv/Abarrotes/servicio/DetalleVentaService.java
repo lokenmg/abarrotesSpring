@@ -6,7 +6,11 @@ package org.uv.Abarrotes.servicio;
 import java.util.ArrayList;
 import java.util.List;
 import java.sql.Date;
+import java.time.DayOfWeek;
 import java.time.LocalDate;
+import java.time.YearMonth;
+import java.time.temporal.TemporalAdjusters;
+
 import javax.persistence.EntityNotFoundException;
 import javax.transaction.Transactional;
 
@@ -89,27 +93,62 @@ public class DetalleVentaService {
     }
 
     @Transactional
-    public Reporte crearReporte(DTOCrearReporte crearReporte) {
+    public Reporte CrearReporteSemanal(DTOCrearReporte crearReporte) {
         Reporte nuevoReporte = new Reporte();
         nuevoReporte.setCve(crearReporte.getCve());
         nuevoReporte.setDescripcion(crearReporte.getDescripcion());
         Reporte reporteG = reporteRepository.save(nuevoReporte);
 
-        LocalDate startDate = crearReporte.getFechaInicio().toLocalDate();
-        LocalDate endDate = crearReporte.getFechaFin().toLocalDate();
-        List<DetalleVenta> detallesVenta = getDetalleVentasEnRangoDeFechas(startDate, endDate);
+        List<DetalleVenta> detallesVenta = getDetalleVentasDeLaSemanaActual();
+        List<DetalleReporte> detallesReporte = guardarDetallesReporte(reporteG, detallesVenta);
+        reporteG.setDetalleReporte(detallesReporte);
+        return reporteG;
+    }
+
+    @Transactional
+    public Reporte CrearReporteMensual(DTOCrearReporte crearReporte) {
+        Reporte nuevoReporte = new Reporte();
+        nuevoReporte.setCve(crearReporte.getCve());
+        nuevoReporte.setDescripcion(crearReporte.getDescripcion());
+        Reporte reporteG = reporteRepository.save(nuevoReporte);
+
+        List<DetalleVenta> detallesVenta = getDetalleVentasDelMesActual();
+        List<DetalleReporte> detallesReporte = guardarDetallesReporte(reporteG, detallesVenta);
+        reporteG.setDetalleReporte(detallesReporte);
+        return reporteG;
+    }
+
+    private List<DetalleReporte> guardarDetallesReporte(Reporte reporte, List<DetalleVenta> detallesVenta) {
         List<DetalleReporte> detallesReporte = new ArrayList<>();
         Double total = 0.0;
         for (DetalleVenta detalleVenta : detallesVenta) {
             DetalleReporte detalleReporte = new DetalleReporte();
             detalleReporte.setTotal(total +=detalleVenta.getSubtotal().doubleValue());
-            detalleReporte.setReporte(reporteG);
+            detalleReporte.setReporte(reporte);
             detalleReporte.setDetalleVenta(detalleVenta);
             detalleReporteRepository.save(detalleReporte);
             detallesReporte.add(detalleReporte);
         }
-
-        reporteG.setDetalleReporte(detallesReporte);
-        return reporteG;
+        return detallesReporte;
     }
+
+    private List<DetalleVenta> getDetalleVentasDelMesActual() {
+        LocalDate currentDate = LocalDate.now();
+        YearMonth yearMonth = YearMonth.from(currentDate);
+
+        LocalDate firstDayOfMonth = yearMonth.atDay(1);
+        LocalDate lastDayOfMonth = yearMonth.atEndOfMonth();
+
+        return getDetalleVentasEnRangoDeFechas(firstDayOfMonth, lastDayOfMonth);
+    }
+
+        public List<DetalleVenta> getDetalleVentasDeLaSemanaActual() {
+        LocalDate currentDate = LocalDate.now();
+
+        LocalDate startOfWeek = currentDate.with(TemporalAdjusters.previousOrSame(DayOfWeek.MONDAY));
+        LocalDate endOfWeek = currentDate.with(TemporalAdjusters.nextOrSame(DayOfWeek.SUNDAY));
+
+        return getDetalleVentasEnRangoDeFechas(startOfWeek, endOfWeek);
+    }
+
 } 

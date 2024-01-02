@@ -5,11 +5,13 @@
 package org.uv.Abarrotes.servicio;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 import javax.persistence.EntityNotFoundException;
 import javax.persistence.NoResultException;
 import javax.persistence.NonUniqueResultException;
+import javax.swing.text.html.Option;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -159,7 +161,7 @@ public class EmpleadoService {
 
     public void init() {
         // Verificar si ya existen empleados en la base de datos
-        if (empleadoRepository.count() == 0) {
+        if (empleadoRepository.findByNombre("Maria del Carmen")!= null) {
             // Si no hay empleados, crea dos empleados por defecto (jefe y gerente)
             // Crear el rol "Gerente"
             Rol rolEncDepart = new Rol();
