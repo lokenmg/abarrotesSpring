@@ -15,6 +15,9 @@ import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.JoinColumn;
 import java.util.List;
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 /**
  *
  * @author loken
@@ -29,18 +32,24 @@ public class Empleado {
     @Column(name = "id_empleado")
     private long idEmpleado;
 
+    @NotBlank(message = "El nombre no puede estar en blanco")
     @Column(name = "nombre")
     private String nombre;
 
+    @NotBlank(message = "Los apellidos no pueden estar en blanco")
     @Column(name = "apellidos")
     private String apellidos;
 
+    @NotBlank(message = "La contraseña no puede estar en blanco")
     @Column(name = "contrasenia")
     private String contrasenia;
 
+    @NotBlank(message = "El correo electrónico no puede estar en blanco")
+    @Email(message = "El correo electrónico debe ser válido")
     @Column(name = "correo_electronico")
     private String correoElectronico;
 
+    @NotNull(message = "El rol no puede ser nulo")
     @ManyToOne
     @JoinColumn(name = "id_rol", referencedColumnName = "id_rol")
     private Rol roles;

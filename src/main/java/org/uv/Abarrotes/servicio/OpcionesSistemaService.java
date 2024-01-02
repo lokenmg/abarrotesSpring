@@ -6,6 +6,7 @@ package org.uv.Abarrotes.servicio;
 
 import java.util.ArrayList;
 import java.util.List;
+import javax.validation.Valid;
 import javax.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -22,7 +23,7 @@ public class OpcionesSistemaService {
     @Autowired
     private OpcionesSistemaRepository opcionesSistemaRepository;
     
-    public DTOOpcionesSistema crearOpcionesSistema(OpcionesSistema opcionesSistema) {
+    public DTOOpcionesSistema crearOpcionesSistema(@Valid OpcionesSistema opcionesSistema) {
         
         OpcionesSistema opcionesSistemaG = opcionesSistemaRepository.save(opcionesSistema);
         
@@ -53,7 +54,7 @@ public class OpcionesSistemaService {
         return dto;
     }
     
-    public DTOOpcionesSistema actualizarOpcionesSistema(Long idOpcioneSistema, OpcionesSistema opcionSistemaActualizado) {
+    public DTOOpcionesSistema actualizarOpcionesSistema(Long idOpcioneSistema, @Valid OpcionesSistema opcionSistemaActualizado) {
         OpcionesSistema opcionSistemaExistente = opcionesSistemaRepository.findById(idOpcioneSistema)
                 .orElseThrow(() -> new EntityNotFoundException("Opcion sistema no encontrado"));
 

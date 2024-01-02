@@ -14,6 +14,8 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Pattern;
 
 /**
  *
@@ -30,16 +32,20 @@ public class Cliente {
     @Column(name = "id_cliente")
     private Long idCliente;
     
+    @NotBlank(message = "El nombre no puede estar en blanco")
     @Column(name = "nombre")
     private String nombre;
-    
+
+    @NotBlank(message = "Los apellidos no pueden estar en blanco")
     @Column(name = "apellidos")
     private String apellidos;
-    
+
+    @Pattern(regexp = "\\d{10}", message = "El teléfono debe tener 10 dígitos")
     @Column(name = "telefono")
     private String telefono;
-    
-    @Column (name = "direccion")
+
+    @NotBlank(message = "La dirección no puede estar en blanco")
+    @Column(name = "direccion")
     private String direccion;
     
     @OneToMany(mappedBy = "cliente")

@@ -2,6 +2,7 @@ package org.uv.Abarrotes.Controladores;
 
 import java.util.List;
 import java.util.Optional;
+import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -44,13 +45,13 @@ public class DepartamentoController {
     }
 
     @PostMapping
-    public ResponseEntity<DTODepartamentos> nuevoDepartamento(@RequestBody Departamento departamento){
+    public ResponseEntity<DTODepartamentos> nuevoDepartamento(@Valid @RequestBody Departamento departamento){
         DTODepartamentos nuevoDepartamento = departamentoService.crearDepartamento(departamento);
         return ResponseEntity.ok(nuevoDepartamento);
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<DTODepartamentos> actualizarDepartamento(@PathVariable Long id, @RequestBody Departamento departamento){
+    public ResponseEntity<DTODepartamentos> actualizarDepartamento(@PathVariable Long id,@Valid @RequestBody Departamento departamento){
         Optional<DTODepartamentos> departamentoActualizado = departamentoService.actualizarDepartamento(id, departamento);
         if (departamentoActualizado.isPresent()) {
             return ResponseEntity.ok(departamentoActualizado.get());

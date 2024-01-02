@@ -4,6 +4,7 @@
  */
 package org.uv.Abarrotes.DTOs;
 import java.sql.Date;
+import javax.validation.constraints.NotNull;
 import org.uv.Abarrotes.modelos.DetalleVenta;
 /**
  *
@@ -11,10 +12,19 @@ import org.uv.Abarrotes.modelos.DetalleVenta;
  */
 public class DTODetalleVenta {
     private Integer codigo;
+    @NotNull(message = "La cantidad no puede ser nula")
     private long cantidad;
+
+    @NotNull(message = "El subtotal no puede ser nulo")
     private Double subtotal;
+
+    @NotNull(message = "La fecha no puede ser nula")
     private Date fecha;
-    private Long producto; 
+
+    @NotNull(message = "El código de producto no puede ser nulo")
+    private Long producto;
+
+    @NotNull(message = "El número de venta no puede ser nulo")
     private Long venta;
     
     public DTODetalleVenta() {

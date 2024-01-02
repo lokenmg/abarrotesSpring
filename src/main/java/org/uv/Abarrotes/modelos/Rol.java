@@ -14,6 +14,7 @@ import javax.persistence.SequenceGenerator;
 
 import java.util.List;
 import javax.persistence.Table;
+import javax.validation.constraints.NotBlank;
 
 @Entity
 @Table(name = "Roles")
@@ -25,9 +26,11 @@ public class Rol {
     @Column(name = "id_rol")
     private Long idRol;
 
+    @NotBlank(message = "El cve del rol no puede estar en blanco")
     @Column(name = "cve")
     private String cve;
 
+    @NotBlank(message = "La descripcion del rol no puede estar en blanco")
     @Column(name = "descripcion")
     private String descripcion;
     

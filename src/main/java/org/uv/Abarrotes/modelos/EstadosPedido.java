@@ -16,6 +16,7 @@ import javax.persistence.GenerationType;
 import java.util.List;
 
 import javax.persistence.Column;
+import javax.validation.constraints.NotBlank;
 
 @Entity
 @Table(name = "Estados_pedidos")
@@ -27,6 +28,7 @@ public class EstadosPedido{
     @Column(name = "id_estado")
     private Long idEstado;
 
+    @NotBlank(message = "El estado del pedido no puede estar en blanco")
     @Column(name = "estado")
     private String estado;
 

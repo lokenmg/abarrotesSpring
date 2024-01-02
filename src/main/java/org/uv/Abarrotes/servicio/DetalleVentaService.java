@@ -13,7 +13,7 @@ import java.util.List;
 
 import javax.persistence.EntityNotFoundException;
 import javax.transaction.Transactional;
-
+import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.uv.Abarrotes.DTOs.DTODetalleVenta;
@@ -52,7 +52,7 @@ public class DetalleVentaService {
     @Autowired
     DetalleReporteRepository detalleReporteRepository;
     
-    public DTODetalleVenta crearDetalleVenta(DetalleVenta detalleventa) {
+    public DTODetalleVenta crearDetalleVenta(@Valid DetalleVenta detalleventa) {
         
         Producto producto = productoRepository.findById(detalleventa.getProducto().getCodigo())
                 .orElseThrow(() -> new EntityNotFoundException("Producto no encontrado"));
@@ -96,7 +96,7 @@ public class DetalleVentaService {
     }
 
     @Transactional
-    public Reporte CrearReporteSemanal(DTOCrearReporte crearReporte) {
+    public Reporte crearReporte(@Valid DTOCrearReporte crearReporte) {
 
         LocalDate currentDate = LocalDate.now();
 

@@ -7,6 +7,7 @@ package org.uv.Abarrotes.servicio;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
+import javax.validation.Valid;
 
 import javax.persistence.EntityNotFoundException;
 import javax.persistence.NoResultException;
@@ -40,7 +41,7 @@ public class EmpleadoService {
     @Autowired
     private RolRepository rolRepository;
 
-    public DTOEmpleadoInfo crearEmpleado(Empleado empleado, String descripcionRol) {
+    public DTOEmpleadoInfo crearEmpleado(@Valid Empleado empleado, String descripcionRol) {
         // Verificar si el rol especificado existe
         Rol rol = rolRepository.findByDescripcion(descripcionRol)
                 .orElseThrow(() -> new EntityNotFoundException("Rol '" + descripcionRol + "' no encontrado"));
@@ -57,7 +58,7 @@ public class EmpleadoService {
         return dto;
     }
 
-    public DTOEmpleadoInfo crearEmpleadoConDTO(DTOCrearEmpleado empleado) {
+    public DTOEmpleadoInfo crearEmpleadoConDTO(@Valid DTOCrearEmpleado empleado) {
         Empleado nuevoEmpleado = new Empleado();
         nuevoEmpleado.setNombre(empleado.getNombre());
         nuevoEmpleado.setApellidos(empleado.getApellidos());
@@ -91,7 +92,7 @@ public class EmpleadoService {
         }
     }
 
-    private DTOEmpleadoInfo convertirAEmpleadoInfo(Empleado empleado) {
+    private DTOEmpleadoInfo convertirAEmpleadoInfo(@Valid Empleado empleado) {
         DTOEmpleadoInfo dtoEmpleado = new DTOEmpleadoInfo();
 
         dtoEmpleado.setIdEmpleado(empleado.getIdEmpleado());
@@ -114,7 +115,7 @@ public class EmpleadoService {
         return dto;
     }
 
-    public DTOEmpleadoInfo actualizarEmpleado(Long idEmpleado, Empleado empleadoActualizado) {
+    public DTOEmpleadoInfo actualizarEmpleado(Long idEmpleado,@Valid  Empleado empleadoActualizado) {
         Empleado empleadoExistente = empleadoRepository.findById(idEmpleado)
                 .orElseThrow(() -> new EntityNotFoundException("Empleado no encontrado"));
 

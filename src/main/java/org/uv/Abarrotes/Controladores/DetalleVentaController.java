@@ -5,6 +5,7 @@
 package org.uv.Abarrotes.Controladores;
 import java.util.ArrayList;
 import java.util.List;
+import javax.validation.Valid;
 import org.springframework.http.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -36,7 +37,7 @@ public class DetalleVentaController {
     private DetalleVentaService detalleventaService;
  
     @PostMapping
-    public ResponseEntity<org.uv.Abarrotes.DTOs.DTODetalleVenta> crearDetalleVentaConEntidades(@RequestBody DetalleVenta nuevoDetalleVenta) {
+    public ResponseEntity<org.uv.Abarrotes.DTOs.DTODetalleVenta> crearDetalleVentaConEntidades(@Valid @RequestBody DetalleVenta nuevoDetalleVenta) {
         org.uv.Abarrotes.DTOs.DTODetalleVenta detalleventaCreado = detalleventaService.crearDetalleVenta(nuevoDetalleVenta);
         return ResponseEntity.status(HttpStatus.CREATED).body(detalleventaCreado);
     }
@@ -63,6 +64,7 @@ public class DetalleVentaController {
         return detallesVentas;
     }
     
+
     @PostMapping("/crearReporteMensual")
     public ResponseEntity<DTOReporte> CrearReporte(@RequestBody DTOCrearReporte reporte) {
 

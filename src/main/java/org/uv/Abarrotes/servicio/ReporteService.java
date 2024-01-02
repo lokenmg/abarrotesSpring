@@ -5,6 +5,7 @@
 package org.uv.Abarrotes.servicio;
 import java.util.ArrayList;
 import java.util.List;
+import javax.validation.Valid;
 import javax.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -21,7 +22,7 @@ public class ReporteService {
     @Autowired
     private ReporteRepository reporteRepository;
     
-    public DTOReporte crearReporte(Reporte reporte) {
+    public DTOReporte crearReporte(@Valid Reporte reporte) {
         
         Reporte reporteG = reporteRepository.save(reporte);
         org.uv.Abarrotes.DTOs.DTOReporte dto = new DTOReporte(reporteG);
@@ -47,7 +48,7 @@ public class ReporteService {
         return dto;
     }
 
-    public DTOReporte modificarProducto(Reporte reporte, long codigo){
+    public DTOReporte modificarReporte(@Valid Reporte reporte, long codigo){
         Reporte reporteExistente=reporteRepository.findById(reporte.getIdReporte())
                 .orElseThrow(()-> new EntityNotFoundException("Reporte no encontrado"));
         

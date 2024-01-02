@@ -7,6 +7,8 @@ package org.uv.Abarrotes.DTOs;
 
 import org.uv.Abarrotes.modelos.Categoria;
 
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Size;
 
 /**
  *
@@ -15,7 +17,9 @@ import org.uv.Abarrotes.modelos.Categoria;
 public class DTOCategoria {
     
     private long idCategoria;
-
+    
+    @NotBlank(message = "El nombre de la categoria no puede estar en blanco")
+    @Size(max = 30, message = "El nombre de la categoria no puede tener más de 30 caracteres")
     private String nombre;
 
     public DTOCategoria(long idCategoria, String nombre) {

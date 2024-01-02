@@ -17,6 +17,7 @@ import java.math.BigDecimal;
 import java.sql.Date;
 import javax.persistence.OneToMany;
 import java.util.List;
+import javax.validation.constraints.NotNull;
 /**
  *
  * @author loken
@@ -31,18 +32,23 @@ public class Anticipo {
     @Column(name = "id_anticipo")
     private Long idAnticipo;
 
+    @NotNull(message = "La fecha del anticipo no puede ser nula")
     @Column(name = "fecha")
     private Date fecha;
 
+    @NotNull(message = "El monto del anticipo no puede ser nulo")
     @Column(name = "monto")
     private BigDecimal monto;
 
+    @NotNull(message = "El resto del anticipo no puede ser nulo")
     @Column(name = "resto")
     private BigDecimal resto;
 
+    @NotNull(message = "El estado de pago no puede ser nulo")
     @ManyToOne
     @JoinColumn(name = "id_estado_pago")
     private EstadoPago estadoPago;
+
     
     @OneToMany(mappedBy = "anticipo")
     private List <NotaVenta> notaVenta;

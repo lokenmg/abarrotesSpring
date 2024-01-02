@@ -9,6 +9,8 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -27,6 +29,7 @@ public class Marca {
     @Column(name = "id_marca")
     private Long idMarca;
 
+    @NotBlank(message = "El nombre de la marca no puede estar en blanco")
     @Column(name = "nombre")
     private String nombre;
 
@@ -58,7 +61,8 @@ public class Marca {
         this.nombre= nombre;
     }
 
-    public List<Producto> getProducto() {
+    @NotNull(message = "La lista de productos no puede ser nula")
+    public List<Producto> getProductos() {
         return this.producto;
     }
 

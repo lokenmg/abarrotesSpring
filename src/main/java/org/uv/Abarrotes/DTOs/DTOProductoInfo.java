@@ -9,7 +9,7 @@ import org.uv.Abarrotes.modelos.Producto;
 /**
  *
  * @author loken
- */
+ */ 
 public class DTOProductoInfo {
     
     private long codigo;

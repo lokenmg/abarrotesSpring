@@ -5,7 +5,8 @@
 package org.uv.Abarrotes.DTOs;
 
 import org.uv.Abarrotes.modelos.DetalleReporte;
-
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Size;
 import java.util.ArrayList;
 import java.util.List;
 import org.uv.Abarrotes.modelos.Reporte;
@@ -50,6 +51,8 @@ public class DTOReporte {
         this.idReporte = idReporte;
     }
 
+    @NotBlank(message = "La cve del reporte no puede estar en blanco")
+    @Size(max = 30, message = "La cve del reporte no puede tener más de 30 caracteres")
     public String getCve() {
         return cve;
     }
@@ -58,6 +61,8 @@ public class DTOReporte {
         this.cve = cve;
     }
 
+    @NotBlank(message = "La descripcion del reporte no puede estar en blanco")
+    @Size(max = 150, message = "La descripcion del reporte no puede tener más de 150 caracteres")
     public String getDescripcion() {
         return descripcion;
     }

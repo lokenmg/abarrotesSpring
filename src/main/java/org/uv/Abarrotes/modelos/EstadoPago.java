@@ -15,6 +15,7 @@ import javax.persistence.GenerationType;
 import java.util.List;
 
 import javax.persistence.Column;
+import javax.validation.constraints.NotBlank;
 /**
  *
  * @author loken
@@ -29,6 +30,7 @@ public class EstadoPago {
     @Column(name = "id_estado_pago")
     private Long idEstadoPago;
 
+    @NotBlank(message = "El estado del pago no puede estar en blanco")
     @Column(name = "estado")
     private String estado;
     
