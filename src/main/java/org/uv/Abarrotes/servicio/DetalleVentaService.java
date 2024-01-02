@@ -3,13 +3,13 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
 package org.uv.Abarrotes.servicio;
-import java.util.ArrayList;
-import java.util.List;
 import java.sql.Date;
 import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.time.YearMonth;
 import java.time.temporal.TemporalAdjusters;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.persistence.EntityNotFoundException;
 import javax.transaction.Transactional;
@@ -45,6 +45,9 @@ public class DetalleVentaService {
     
     @Autowired
     private NotaVentaRepository notaventaRepository;
+
+    @Autowired
+    private DetalleReporteService detalleReporteService;
 
     @Autowired
     DetalleReporteRepository detalleReporteRepository;
@@ -94,9 +97,15 @@ public class DetalleVentaService {
 
     @Transactional
     public Reporte CrearReporteSemanal(DTOCrearReporte crearReporte) {
+
+        LocalDate currentDate = LocalDate.now();
+
+        LocalDate startOfWeek = currentDate.with(TemporalAdjusters.previousOrSame(DayOfWeek.MONDAY));
+        LocalDate endOfWeek = currentDate.with(TemporalAdjusters.nextOrSame(DayOfWeek.SUNDAY));
+
         Reporte nuevoReporte = new Reporte();
-        nuevoReporte.setCve(crearReporte.getCve());
-        nuevoReporte.setDescripcion(crearReporte.getDescripcion());
+        nuevoReporte.setCve("Semanal");
+        nuevoReporte.setDescripcion("Del " + startOfWeek + " al " + endOfWeek + " del " + currentDate.getYear() );
         Reporte reporteG = reporteRepository.save(nuevoReporte);
 
         List<DetalleVenta> detallesVenta = getDetalleVentasDeLaSemanaActual();
@@ -107,9 +116,16 @@ public class DetalleVentaService {
 
     @Transactional
     public Reporte CrearReporteMensual(DTOCrearReporte crearReporte) {
+
+        LocalDate currentDate = LocalDate.now();
+        YearMonth yearMonth = YearMonth.from(currentDate);
+
+        LocalDate firstDayOfMonth = yearMonth.atDay(1);
+        LocalDate lastDayOfMonth = yearMonth.atEndOfMonth();
+
         Reporte nuevoReporte = new Reporte();
-        nuevoReporte.setCve(crearReporte.getCve());
-        nuevoReporte.setDescripcion(crearReporte.getDescripcion());
+        nuevoReporte.setCve("Mensual");
+        nuevoReporte.setDescripcion("Del " + firstDayOfMonth + " al " + lastDayOfMonth + " del " + yearMonth.getYear());
         Reporte reporteG = reporteRepository.save(nuevoReporte);
 
         List<DetalleVenta> detallesVenta = getDetalleVentasDelMesActual();
@@ -150,5 +166,35 @@ public class DetalleVentaService {
 
         return getDetalleVentasEnRangoDeFechas(startOfWeek, endOfWeek);
     }
+
+    @Transactional
+    public Reporte actualizarReporteSemanal(Long reporteId) {
+        Reporte reporteExistente = reporteRepository.findById(reporteId).orElseThrow(() -> new EntityNotFoundException("Reporte no encontrado"));
+
+        // Borrar los detalles de reporte existentes
+        detalleReporteService.borrarDetalleReportePorReporteId(reporteExistente.getIdReporte());
+
+        List<DetalleVenta> detallesVenta = getDetalleVentasDeLaSemanaActual();
+        List<DetalleReporte> detallesReporte = guardarDetallesReporte(reporteExistente, detallesVenta);
+        reporteExistente.setDetalleReporte(detallesReporte);
+
+        return reporteRepository.save(reporteExistente);
+}
+
+    @Transactional
+    public Reporte actualizarReporteMensual(Long reporteId) {
+      Reporte reporteExistente = reporteRepository.findById(reporteId)
+                  .orElseThrow(() -> new EntityNotFoundException("Reporte no encontrado"));
+
+      // Borrar los detalles de reporte existentes
+      detalleReporteService.borrarDetalleReportePorReporteId(reporteExistente.getIdReporte());
+
+      List<DetalleVenta> detallesVenta = getDetalleVentasDelMesActual();
+      List<DetalleReporte> detallesReporte = guardarDetallesReporte(reporteExistente, detallesVenta);
+     reporteExistente.setDetalleReporte(detallesReporte);
+
+     return reporteRepository.save(reporteExistente);
+}
+
 
 } 
