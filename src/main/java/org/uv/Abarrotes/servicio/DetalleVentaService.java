@@ -96,7 +96,7 @@ public class DetalleVentaService {
     }
 
     @Transactional
-    public Reporte crearReporte(@Valid DTOCrearReporte crearReporte) {
+    public Reporte CrearReporteSemanal(@Valid DTOCrearReporte crearReporte) {
 
         LocalDate currentDate = LocalDate.now();
 
