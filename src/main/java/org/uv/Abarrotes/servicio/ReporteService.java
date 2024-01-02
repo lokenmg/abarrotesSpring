@@ -65,4 +65,9 @@ public class ReporteService {
         // Delete the employee
         reporteRepository.delete(reporteExistente);
     }
+
+    public List<Reporte> obtenerReportePorCve(String cve) {
+        List<Reporte> reportes = reporteRepository.findByCve(cve);
+        return reportes;
+    }
 }
