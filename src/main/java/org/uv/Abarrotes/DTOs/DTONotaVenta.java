@@ -6,6 +6,7 @@ package org.uv.Abarrotes.DTOs;
 
 import java.math.BigDecimal;
 import java.sql.Date;
+import javax.validation.constraints.NotNull;
 import org.uv.Abarrotes.modelos.NotaVenta;
 
 /**
@@ -15,12 +16,25 @@ import org.uv.Abarrotes.modelos.NotaVenta;
 public class DTONotaVenta {
 
     private Long numeroNota;
+    @NotNull(message = "La fecha no puede ser nula")
     private Date fecha;
+
+    @NotNull(message = "El total no puede ser nulo")
     private BigDecimal total;
+
+    @NotNull(message = "El anticipo no puede ser nulo")
     private Long anticipo;
+
+    @NotNull(message = "El cliente no puede ser nulo")
     private Long cliente;
+
+    @NotNull(message = "El empleado no puede ser nulo")
     private Long empleado;
+
+    @NotNull(message = "El departamento no puede ser nulo")
     private Long departamento;
+
+    @NotNull(message = "El detalle de pedido no puede ser nulo")
     private Long detallepedido;
     
     public DTONotaVenta(){

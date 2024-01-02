@@ -7,9 +7,9 @@ package org.uv.Abarrotes.servicio;
 import org.uv.Abarrotes.DTOs.DTOProductoInfo;
 import java.util.ArrayList;
 import java.util.List;
+import javax.validation.Valid;
 
 import javax.persistence.EntityNotFoundException;
-
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -28,6 +28,7 @@ import org.uv.Abarrotes.repositorio.UnidadMedidaRepository;
  */
 @Service
 public class ProductoService {
+
     @Autowired
     private ProductoRepository productoRepository;
 
@@ -40,8 +41,7 @@ public class ProductoService {
     @Autowired
     private UnidadMedidaRepository unidadMedidaRepository;
 
-    public DTOProductoInfo crearProducto(Producto producto) {
-
+    public DTOProductoInfo crearProducto(@Valid Producto producto) {
         if (productoRepository.existsById(producto.getCodigo())) {
             throw new EntityNotFoundException("Producto ya existe");
         }
@@ -60,11 +60,12 @@ public class ProductoService {
         producto.setCategoria(categoria);
         producto.setMarca(marca);
         producto.setUnidadMedida(unidadMedida);
-        
-        Producto productoG=productoRepository.save(producto);
+
+        Producto productoG = productoRepository.save(producto);
         org.uv.Abarrotes.DTOs.DTOProductoInfo dto = new DTOProductoInfo(productoG);
-        
+
         return dto;
+
     }
 
     public List<DTOProductoInfo> obtenerProductos() {
@@ -90,18 +91,18 @@ public class ProductoService {
     }
 
     //modificar producto
-    public DTOProductoInfo modificarProducto(Producto producto, long codigo){
-        Producto productoExistente=productoRepository.findById(producto.getCodigo())
-                .orElseThrow(()-> new EntityNotFoundException("Producto no encontrado"));
-        
+    public DTOProductoInfo modificarProducto(@Valid Producto producto, long codigo) {
+        Producto productoExistente = productoRepository.findById(codigo)
+                .orElseThrow(() -> new EntityNotFoundException("Producto no encontrado"));
+
         // Verificar si la categoría existe
         Categoria categoria = categoriaRepository.findById(producto.getCategoria().getIdCategoria())
                 .orElseThrow(() -> new EntityNotFoundException("Categoria no encontrada"));
-        
+
         // Verificar si la marca existe
         Marca marca = marcaRepository.findById(producto.getMarca().getIdMarca())
                 .orElseThrow(() -> new EntityNotFoundException("Marca no encontrada"));
-        
+
         // Verificar si la unidad de medida existe
         UnidadMedida unidadMedida = unidadMedidaRepository.findById(producto.getUnidadMedida().getIdUnidadMed())
                 .orElseThrow(() -> new EntityNotFoundException("Unidad de medida no encontrada"));

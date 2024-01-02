@@ -12,6 +12,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.JoinColumn;
 import javax.persistence.Table;
+import javax.validation.constraints.NotNull;
 
 @Entity
 @Table(name = "Opciones_roles")
@@ -22,10 +23,12 @@ public class OpcionesRol {
             initialValue = 1, allocationSize = 1)
     private Long idOpcRol;
 
+    @NotNull(message = "La opcion del sistema de la opcion de rol no puede ser nula")
     @ManyToOne
     @JoinColumn(name = "id_opciones", referencedColumnName = "id_opciones")
     private OpcionesSistema opcionesSistema;
 
+    @NotNull(message = "El rol de la opcion del rol no puede ser nula")
     @ManyToOne
     @JoinColumn(name = "id_rol", referencedColumnName = "id_rol")
     private Rol roles;

@@ -16,6 +16,10 @@ import javax.persistence.Table;
 
 import java.util.ArrayList;
 import java.util.List;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Positive;
+import javax.validation.constraints.PositiveOrZero;
 /**
  *
  * @author loken
@@ -24,27 +28,34 @@ import java.util.List;
 @Table(name = "productos")
 public class Producto {
    
+    @Positive(message = "El codigo del producto no puede ser nulo")
     @Id
     @Column(name = "codigo")
     private long codigo;
     
+    @NotBlank(message = "El nombre del producto no puede estar en blanco")
     @Column(name = "nombre")
     private String nombre;
     
+    @PositiveOrZero(message = "La existencia del producto debe ser un número positivo o cero")
     @Column(name = "existencia")
     private long existencia;
     
+    @Positive(message = "El precio del producto debe ser un número positivo")
     @Column(name = "precio")
     private double precio;
     
+    @NotNull(message = "La categoría del producto no puede ser nula")
     @JoinColumn(name = "id_categoria", nullable = false)
     @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private Categoria categoria;
     
+    @NotNull(message = "La marca del producto no puede ser nula")
     @JoinColumn(name = "id_marca", nullable = false)
     @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private Marca marca;
     
+    @NotNull(message = "La unidad de medida del producto no puede ser nula")
     @JoinColumn(name = "id_unidad_med", nullable = false)
     @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private UnidadMedida unidadMedida;

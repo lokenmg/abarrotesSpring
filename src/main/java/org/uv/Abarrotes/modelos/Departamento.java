@@ -14,6 +14,7 @@ import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Table;
+import javax.validation.constraints.NotBlank;
 
 @Entity
 @Table(name = "Departamentos")
@@ -25,6 +26,7 @@ public class Departamento {
     @Column(name = "id_departamento")
     private Long idDepartamento;
 
+    @NotBlank(message = "El nombre del departamento no puede estar en blanco")
     @Column(name = "nombre")
     private String nombre;
     

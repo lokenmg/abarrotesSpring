@@ -14,6 +14,8 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotNull;
 
 /**
  *
@@ -30,13 +32,16 @@ public class DetalleReporte {
     @Column(name = "id_detalle_rep")
     private Long idDetalleReporte;
 
+    @Min(value = 0, message = "El total debe ser mayor o igual a cero")
     @Column(name = "total")
     private double total;
 
+    @NotNull(message = "El reporte no puede ser nulo")
     @ManyToOne
     @JoinColumn(name = "id_reporte", nullable = false)
     private Reporte reporte;
 
+    @NotNull(message = "El detalleVenta no puede ser nulo")
     @ManyToOne
     @JoinColumn(name = "id_detalle_venta", nullable = false)
     private DetalleVenta detalleVenta;

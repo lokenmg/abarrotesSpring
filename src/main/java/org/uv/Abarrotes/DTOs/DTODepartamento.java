@@ -4,6 +4,7 @@
  */
 package org.uv.Abarrotes.DTOs;
 
+import javax.validation.constraints.NotBlank;
 import org.uv.Abarrotes.modelos.Departamento;
 
 /**
@@ -12,7 +13,7 @@ import org.uv.Abarrotes.modelos.Departamento;
  */
 public class DTODepartamento {
     private Long idDepartamento;
-    
+    @NotBlank(message = "El nombre del departamento no puede estar en blanco")
     private String nombre;
     
     public DTODepartamento() {

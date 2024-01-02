@@ -5,6 +5,8 @@
 package org.uv.Abarrotes.DTOs;
 import org.uv.Abarrotes.modelos.UnidadMedida;
 
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Size;
 /**
  *
  * @author loken
@@ -25,6 +27,8 @@ public class DTOUnidadMedida {
     public DTOUnidadMedida() {
     }
 
+    @NotBlank(message = "El nombre de la unidad de medida no puede estar en blanco")
+    @Size(max = 30, message = "El nombre de la unidad de medida no puede tener más de 30 caracteres")
     public String getNombre() {
         return nombre;
     }

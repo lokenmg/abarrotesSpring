@@ -5,6 +5,7 @@
 package org.uv.Abarrotes.Controladores;
 
 import java.util.List;
+import javax.validation.Valid;
 import org.springframework.http.*;
 import org.springframework.stereotype.Controller;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,7 +32,7 @@ public class OpcionesSistemaController {
     private OpcionesSistemaService opcionesSistemaService;
     
     @PostMapping
-    public ResponseEntity<org.uv.Abarrotes.DTOs.DTOOpcionesSistema> crearOpcionesSistemaConEntidades(@RequestBody OpcionesSistema nuevaOpcionSistema) {
+    public ResponseEntity<org.uv.Abarrotes.DTOs.DTOOpcionesSistema> crearOpcionesSistemaConEntidades(@Valid @RequestBody OpcionesSistema nuevaOpcionSistema) {
         org.uv.Abarrotes.DTOs.DTOOpcionesSistema opcionSistemaCreada = opcionesSistemaService.crearOpcionesSistema(nuevaOpcionSistema);
         return ResponseEntity.status(HttpStatus.CREATED).body(opcionSistemaCreada);
     }
@@ -49,7 +50,7 @@ public class OpcionesSistemaController {
     }
     
     @PutMapping("/{id}")
-    public ResponseEntity<DTOOpcionesSistema> actualizarOpcionesSistema(@PathVariable Long id, @RequestBody OpcionesSistema OpcionSistemaActualizada) {
+    public ResponseEntity<DTOOpcionesSistema> actualizarOpcionesSistema(@PathVariable Long id, @Valid @RequestBody OpcionesSistema OpcionSistemaActualizada) {
         DTOOpcionesSistema opcionesSistema = opcionesSistemaService.actualizarOpcionesSistema(id, OpcionSistemaActualizada);
         return ResponseEntity.ok(opcionesSistema);
     }

@@ -124,9 +124,4 @@ public class DTODetalleReporte {
         this.subtotal = subtotal;
     }
     
-    
-    
-    
-    
-    
 }

@@ -6,6 +6,7 @@ package org.uv.Abarrotes.DTOs;
 
 import java.sql.Date;
 import java.sql.Time;
+import javax.validation.constraints.NotNull;
 
 import org.uv.Abarrotes.modelos.DetallePedido;
 
@@ -14,9 +15,15 @@ import org.uv.Abarrotes.modelos.DetallePedido;
  * @author loken
  */
 public class DTODetallePedido {
+    
     private Long idDetallePedido;
+    @NotNull(message = "La fecha de entrega no puede ser nula")
     private Date fecha;
+
+    @NotNull(message = "La hora de entrega no puede ser nula")
     private Time horaEntrega;
+
+    @NotNull(message = "El estado del pedido no puede ser nulo")
     private String estado;
 
     public DTODetallePedido(Long idDetallePedido, Date fecha, Time horaEntrega, String estado) {

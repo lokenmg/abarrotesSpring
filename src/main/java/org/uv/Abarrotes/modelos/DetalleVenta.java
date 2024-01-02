@@ -14,6 +14,7 @@ import javax.persistence.Table;
 import java.sql.Date;
 import javax.persistence.FetchType;
 import javax.persistence.SequenceGenerator;
+import javax.validation.constraints.NotNull;
 
 
 @Entity
@@ -27,19 +28,24 @@ public class DetalleVenta {
             initialValue = 1, allocationSize = 1)
     private Integer codigo;
 
+    @NotNull(message = "La cantidad no puede ser nula")
     @Column(name = "cantidad")
     private long cantidad;
 
+    @NotNull(message = "El subtotal no puede ser nulo")
     @Column(name = "subtotal")
     private Double subtotal;
-    
+
+    @NotNull(message = "La fecha no puede ser nula")
     @Column(name = "fecha")
     private Date fecha;
 
+    @NotNull(message = "El producto no puede ser nulo")
     @ManyToOne
     @JoinColumn(name = "codigo")
     private Producto producto;
 
+    @NotNull(message = "La venta no puede ser nula")
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "numero_nota")
     private NotaVenta venta;

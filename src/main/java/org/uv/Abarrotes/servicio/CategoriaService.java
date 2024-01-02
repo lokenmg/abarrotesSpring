@@ -3,7 +3,7 @@ package org.uv.Abarrotes.servicio;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-
+import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.uv.Abarrotes.DTOs.DTOCategoria;
@@ -27,7 +27,7 @@ public class CategoriaService {
         return categoriaRepository.findById(id).orElse(null);
     }
 
-    public Categoria crearCategoria(Categoria categoria){
+    public Categoria crearCategoria(@Valid Categoria categoria){
         return categoriaRepository.save(categoria);
     }
 
@@ -36,7 +36,7 @@ public class CategoriaService {
         return true;
     }
 
-    public Optional<Categoria> actualizarCategoria(Long id, Categoria categoria){
+    public Optional<Categoria> actualizarCategoria(Long id, @Valid Categoria categoria){
         if(!categoriaRepository.existsById(id)){
             return null;
         }

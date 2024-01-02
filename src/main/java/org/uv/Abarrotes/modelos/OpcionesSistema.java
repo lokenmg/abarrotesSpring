@@ -12,6 +12,8 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Column;
 import javax.persistence.Table;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import java.util.List;
 
 @Entity
@@ -24,9 +26,11 @@ public class OpcionesSistema {
     @Column(name = "id_opciones")
     private Long idOpciones;
 
+    @NotBlank(message = "El nombre de la opcion no puede estar en blanco")
     @Column(name = "nombre")
     private String nombre;
 
+    @NotBlank(message = "El tipo de la opcion no puede estar en blanco")
     @Column(name = "tipo")
     private String tipo;
 

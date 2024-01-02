@@ -5,6 +5,7 @@
 package org.uv.Abarrotes.Controladores;
 
 import java.util.List;
+import javax.validation.Valid;
 import org.springframework.http.*;
 import org.springframework.stereotype.Controller;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,7 +32,7 @@ public class ClienteController {
     private ClienteService clienteService;
     
     @PostMapping
-    public ResponseEntity<org.uv.Abarrotes.DTOs.DTOCliente> crearClienteConEntidades(@RequestBody Cliente nuevoCliente) {
+    public ResponseEntity<org.uv.Abarrotes.DTOs.DTOCliente> crearClienteConEntidades(@Valid @RequestBody Cliente nuevoCliente) {
         org.uv.Abarrotes.DTOs.DTOCliente clienteCreado = clienteService.crearCliente(nuevoCliente);
         return ResponseEntity.status(HttpStatus.CREATED).body(clienteCreado);
     }
@@ -49,7 +50,7 @@ public class ClienteController {
     }
     
     @PutMapping("/{id}")
-    public ResponseEntity<DTOCliente> actualizarCliente(@PathVariable Long id, @RequestBody Cliente clienteActualizado) {
+    public ResponseEntity<DTOCliente> actualizarCliente(@PathVariable Long id,@Valid  @RequestBody Cliente clienteActualizado) {
         DTOCliente cliente = clienteService.actualizarCliente(id, clienteActualizado);
         return ResponseEntity.ok(cliente);
     }

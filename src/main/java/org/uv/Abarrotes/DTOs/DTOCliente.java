@@ -4,6 +4,8 @@
  */
 package org.uv.Abarrotes.DTOs;
 
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Pattern;
 import org.uv.Abarrotes.modelos.Cliente;
 
 /**
@@ -13,12 +15,16 @@ import org.uv.Abarrotes.modelos.Cliente;
 public class DTOCliente {
     private long idCliente;
     
+    @NotBlank(message = "El nombre no puede estar en blanco")
     private String nombre;
-    
+
+    @NotBlank(message = "Los apellidos no pueden estar en blanco")
     private String apellidos;
-    
+
+    @Pattern(regexp = "\\d{10}", message = "El teléfono debe tener 10 dígitos")
     private String telefono;
-    
+
+    @NotBlank(message = "La dirección no puede estar en blanco")
     private String direccion;
     
     public DTOCliente(){

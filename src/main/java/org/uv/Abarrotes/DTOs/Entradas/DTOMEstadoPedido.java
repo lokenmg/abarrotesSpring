@@ -1,8 +1,11 @@
 package org.uv.Abarrotes.DTOs.Entradas;
 
+import javax.validation.constraints.NotNull;
+
 public class DTOMEstadoPedido {
     
     private long idEstadoPedido;
+    @NotNull(message = "La nota no puede ser nula")
     private long nNota; 
 
     public DTOMEstadoPedido() {

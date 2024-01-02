@@ -1,5 +1,6 @@
 package org.uv.Abarrotes.servicio;
 
+import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.uv.Abarrotes.DTOs.DTODetallePedido;
@@ -16,14 +17,14 @@ public class DetallePedidoService {
     @Autowired
     private EstadosPedidoRepository estadosPedidoRepository;
 
-    public DTODetallePedido crearDetallePedido(DetallePedido detallePedido){
+    public DTODetallePedido crearDetallePedido(@Valid DetallePedido detallePedido){
         EstadosPedido estado = estadosPedidoRepository.findById(detallePedido.getEstadoPedido().getIdEstado())
                 .orElseThrow(() -> new RuntimeException("Estado no encontrado"));
         detallePedido.setEstadoPedido(estado);
         return new DTODetallePedido(detallePedidoRepository.save(detallePedido));
     }
 
-    public DTODetallePedido actualizarDetallePedido(Long id, DetallePedido detallePedido){
+    public DTODetallePedido actualizarDetallePedido(Long id, @Valid DetallePedido detallePedido){
         DetallePedido detallePedidoEncontrado = detallePedidoRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Estado no encontrado"));
         EstadosPedido estado = estadosPedidoRepository.findById(detallePedido.getEstadoPedido().getIdEstado())

@@ -1,11 +1,26 @@
 package org.uv.Abarrotes.DTOs.Entradas;
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 
 public class DTOCrearEmpleado {
+    @NotBlank(message = "El nombre no puede estar en blanco")
     private String nombre;
+
+    @NotBlank(message = "Los apellidos no pueden estar en blanco")
     private String apellidos;
+
+    @NotBlank(message = "La contraseña no puede estar en blanco")
     private String contrasenia;
-    private String roles;
+
+    @NotBlank(message = "El correo electrónico no puede estar en blanco")
+    @Email(message = "El correo electrónico debe ser válido")
     private String correoElectronico;
+
+    @NotBlank(message = "Los roles no pueden estar en blanco")
+    private String roles;
+
+    @NotNull(message = "El ID del rol no puede ser nulo")
     private long idRol;
 
     public DTOCrearEmpleado() {

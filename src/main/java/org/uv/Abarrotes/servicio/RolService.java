@@ -7,6 +7,7 @@ package org.uv.Abarrotes.servicio;
 import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.EntityNotFoundException;
+import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.uv.Abarrotes.DTOs.DTORol;
@@ -22,7 +23,7 @@ public class RolService {
     @Autowired
     private RolRepository rolRepository;
 
-    public DTORol crearRol(Rol rol) {
+    public DTORol crearRol(@Valid Rol rol) {
 
         Rol rolG = rolRepository.save(rol);
 
@@ -53,7 +54,7 @@ public class RolService {
         return dto;
     }
 
-    public DTORol actualizarRol(Long idRol, Rol rolActualizado) {
+    public DTORol actualizarRol(Long idRol, @Valid Rol rolActualizado) {
         Rol rolExistente = rolRepository.findById(idRol)
                 .orElseThrow(() -> new EntityNotFoundException("Rol no encontrado"));
 

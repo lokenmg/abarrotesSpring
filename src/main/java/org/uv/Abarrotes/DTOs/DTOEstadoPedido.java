@@ -4,6 +4,7 @@
  */
 package org.uv.Abarrotes.DTOs;
 
+import javax.validation.constraints.NotBlank;
 import org.uv.Abarrotes.modelos.EstadosPedido;
 
 /**
@@ -13,6 +14,8 @@ import org.uv.Abarrotes.modelos.EstadosPedido;
 public class DTOEstadoPedido {
 
     private Long idEstadoPedido;
+    
+    @NotBlank(message = "El estado del pedido no puede estar en blanco")
     private String estado;
 
     

@@ -1,5 +1,6 @@
 package org.uv.Abarrotes.Controladores;
 
+import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -27,7 +28,7 @@ public class PedidoController {
     private NotaVentaService notaVentaService;
 
     @PostMapping
-    public ResponseEntity<String> crearPedido(@RequestBody NotaVenta notaVenta) {
+    public ResponseEntity<String> crearPedido(@Valid @RequestBody NotaVenta notaVenta) {
         try {
             pedidoServicio.CrearPedido(notaVenta);
             return new ResponseEntity<>("Pedido creado con éxito", HttpStatus.CREATED);

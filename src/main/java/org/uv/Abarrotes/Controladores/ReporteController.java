@@ -4,7 +4,7 @@
  */
 package org.uv.Abarrotes.Controladores;
 import java.util.List;
-
+import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -31,11 +31,11 @@ public class ReporteController {
     @Autowired
     private ReporteService reporteService;
     
-    @PostMapping
-    public ResponseEntity<org.uv.Abarrotes.DTOs.DTOReporte> crearReporteConEntidades(@RequestBody Reporte nuevoReporte) {
-        org.uv.Abarrotes.DTOs.DTOReporte reporteCreado = reporteService.crearReporte(nuevoReporte);
-        return ResponseEntity.status(HttpStatus.CREATED).body(reporteCreado);
-    }
+//    @PostMapping
+//    public ResponseEntity<org.uv.Abarrotes.DTOs.DTOReporte> crearReporteConEntidades(@Valid @RequestBody Reporte nuevoReporte) {
+//        org.uv.Abarrotes.DTOs.DTOReporte reporteCreado = reporteService.crearReporte(nuevoReporte);
+//        return ResponseEntity.status(HttpStatus.CREATED).body(reporteCreado);
+//    }
 
     @GetMapping
     public ResponseEntity<List<DTOReporte>> obtenerReporte(){
@@ -49,11 +49,11 @@ public class ReporteController {
         return ResponseEntity.ok(reporte);
     }
     
-    @PutMapping("/{id}")
-    public ResponseEntity<DTOReporte> actualizarReporte(@PathVariable Long id, @RequestBody Reporte reporteActualizado) {
-        DTOReporte reporte = reporteService.modificarProducto(reporteActualizado, id);
-        return ResponseEntity.ok(reporte);
-    }
+//    @PutMapping("/{id}")
+//    public ResponseEntity<DTOReporte> actualizarReporte(@PathVariable Long id, @Valid @RequestBody Reporte reporteActualizado) {
+//        DTOReporte reporte = reporteService.modificarReporte(reporteActualizado, id);
+//        return ResponseEntity.ok(reporte);
+//    }
 
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> eliminarReporte(@PathVariable Long id) {

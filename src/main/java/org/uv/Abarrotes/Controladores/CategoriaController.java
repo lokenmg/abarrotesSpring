@@ -7,7 +7,7 @@ package org.uv.Abarrotes.Controladores;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-
+import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -53,13 +53,13 @@ public class CategoriaController {
     }
 
     @PostMapping
-    public ResponseEntity<DTOCategoria> crearCategoria(@RequestBody Categoria categoria){
+    public ResponseEntity<DTOCategoria> crearCategoria(@Valid @RequestBody Categoria categoria){
         Categoria nuevaCategoria = categoriaService.crearCategoria(categoria);
         return ResponseEntity.status(HttpStatus.CREATED).body(new DTOCategoria(nuevaCategoria));
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<DTOCategoria> actualizarCategoria(@PathVariable Long id,@RequestBody Categoria categoria){
+    public ResponseEntity<DTOCategoria> actualizarCategoria(@PathVariable Long id,@Valid @RequestBody Categoria categoria){
         Optional<Categoria> categoriaActualizada = categoriaService.actualizarCategoria(id, categoria);
         if(categoriaActualizada.isPresent()){
             return ResponseEntity.ok(new DTOCategoria(categoriaActualizada.get()));

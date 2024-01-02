@@ -15,6 +15,7 @@ import org.uv.Abarrotes.modelos.EstadosPedido;
 import org.uv.Abarrotes.servicio.EstadoPedidoService;
 import java.util.List;
 import java.util.Optional;
+import javax.validation.Valid;
 import org.springframework.web.bind.annotation.CrossOrigin;
 @Controller
 @RequestMapping("api/estadopedido")
@@ -43,13 +44,13 @@ public class EstadoPedidoController {
     }
 
     @PostMapping
-    public ResponseEntity<DTOEstadoPedido> nuevoEstadoPedido(@RequestBody EstadosPedido estado){
+    public ResponseEntity<DTOEstadoPedido> nuevoEstadoPedido(@Valid @RequestBody EstadosPedido estado){
         DTOEstadoPedido nuevoEstadoPedido = estadoPedidoService.crearEstadoPedido(estado);
         return ResponseEntity.ok(nuevoEstadoPedido);
     }
 
     @PutMapping("/id")
-    public ResponseEntity<DTOEstadoPedido> actualizarEstadoPedido(@PathVariable Long id, @RequestBody EstadosPedido estado){
+    public ResponseEntity<DTOEstadoPedido> actualizarEstadoPedido(@PathVariable Long id, @Valid @RequestBody EstadosPedido estado){
         Optional<DTOEstadoPedido> estadoPedidoActualizado = estadoPedidoService.actualizarEstadoPedido(id, estado);
         if (estadoPedidoActualizado.isPresent()) {
             return ResponseEntity.ok(estadoPedidoActualizado.get());

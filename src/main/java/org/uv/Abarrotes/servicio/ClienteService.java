@@ -6,6 +6,7 @@ package org.uv.Abarrotes.servicio;
 import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.EntityNotFoundException;
+import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.uv.Abarrotes.DTOs.DTOCliente;
@@ -21,7 +22,7 @@ public class ClienteService {
     @Autowired
     private ClienteRepository clienteRepository;
     
-    public DTOCliente crearCliente(Cliente cliente) {
+    public DTOCliente crearCliente(@Valid Cliente cliente) {
         
         Cliente clienteG = clienteRepository.save(cliente);
         
@@ -52,7 +53,7 @@ public class ClienteService {
         return dto;
     }
     
-    public DTOCliente actualizarCliente(Long idCliente, Cliente clienteActualizado) {
+    public DTOCliente actualizarCliente(Long idCliente,@Valid Cliente clienteActualizado) {
         Cliente clienteExistente = clienteRepository.findById(idCliente)
                 .orElseThrow(() -> new EntityNotFoundException("Cliente no encontrado"));
 

@@ -1,10 +1,16 @@
 package org.uv.Abarrotes.DTOs;
 
+import javax.validation.constraints.NotNull;
+
 public class DTODetallesVentas {
+    @NotNull(message = "La cantidad no puede ser nula")
     private long cantidad;
+    @NotNull(message = "El subtotal no puede ser nulo")
     private Double subtotal;
     private long codigo;
+    @NotNull(message = "El nombre no puede ser nulo")
     private String nombre;
+    @NotNull(message = "La existencia no puede ser nulo")
     private long existencia;    
     
     //getters y setters

@@ -12,6 +12,7 @@ import java.util.List;
 import java.util.Optional;
 
 import javax.persistence.EntityNotFoundException;
+import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.uv.Abarrotes.DTOs.DTONotaVenta;
@@ -96,7 +97,7 @@ public class NotaVentaService {
         return dto;
     }
     
-    public DTONotaVenta actualizarNotaVenta(Long idNotaVenta, NotaVenta notaventaActualizada) {
+    public DTONotaVenta actualizarNotaVenta(Long idNotaVenta, @Valid NotaVenta notaventaActualizada) {
         NotaVenta notaventaExistente = notaventaRepository.findById(idNotaVenta)
                 .orElseThrow(() -> new EntityNotFoundException("Nota de venta no encontrado"));
 
@@ -125,7 +126,7 @@ public class NotaVentaService {
     }
 
 
-    public NotaVenta crandoVenta(NotaVenta notaventa){
+    public NotaVenta crandoVenta(@Valid NotaVenta notaventa){
         Date fecha = new Date(System.currentTimeMillis());
         Time hora = new Time(System.currentTimeMillis());
     
@@ -137,7 +138,7 @@ public class NotaVentaService {
         return notaVenta;
     }
 
-    private Anticipo crearAnticipo(NotaVenta notaventa, Date fecha){
+    private Anticipo crearAnticipo(@Valid NotaVenta notaventa, Date fecha){
         Anticipo anticipo = new Anticipo();
         anticipo.setFecha(fecha);
         anticipo.setMonto(notaventa.getAnticipo().getMonto());
@@ -159,7 +160,7 @@ public class NotaVentaService {
         return detallepedidoRepository.save(detallePedido);
     }
 
-    private NotaVenta crearNotaDeVenta(NotaVenta notaventa, Date fecha, Anticipo anticipo, DetallePedido detallePedido){
+    private NotaVenta crearNotaDeVenta(@Valid NotaVenta notaventa, Date fecha, @Valid Anticipo anticipo, @Valid DetallePedido detallePedido){
         NotaVenta notaVenta = new NotaVenta();
         Cliente cliente = clienteRepository.findById(notaventa.getCliente().getIdCliente()).orElseThrow(() -> new EntityNotFoundException("Cliente no encontrado"));
         Empleado empleado = empleadoRepository.findById(notaventa.getEmpleado().getIdEmpleado()).orElseThrow(() -> new EntityNotFoundException("Empleado no encontrado"));
@@ -175,7 +176,7 @@ public class NotaVentaService {
         return notaventaRepository.save(notaVenta);
     }
 
-    private void crearDetalleVenta(NotaVenta notaventa, Date fecha, NotaVenta notaVenta){
+    private void crearDetalleVenta(@Valid NotaVenta notaventa, Date fecha, @Valid NotaVenta notaVenta){
         for (DetalleVenta detalle : notaventa.getDetalleVenta()) {
             Producto producto = productoRepository.findById(detalle.getProducto().getCodigo()).orElseThrow();
             DetalleVenta detalleVenta = new DetalleVenta();

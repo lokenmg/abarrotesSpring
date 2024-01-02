@@ -7,6 +7,7 @@ package org.uv.Abarrotes.Controladores;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -52,13 +53,13 @@ public class MarcaController {
     }
 
     @PostMapping
-    public ResponseEntity<DTOmarca> crearMarca(@RequestBody Marca marca){
+    public ResponseEntity<DTOmarca> crearMarca(@Valid @RequestBody Marca marca){
         Marca nuevaMarca = marcaService.crearMarca(marca);
         return ResponseEntity.status(HttpStatus.CREATED).body(new DTOmarca(nuevaMarca));
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<DTOmarca> actualizarMarca(@PathVariable Long id,@RequestBody Marca marca){
+    public ResponseEntity<DTOmarca> actualizarMarca(@PathVariable Long id,@Valid @RequestBody Marca marca){
         Optional<Marca> marcaActualizada = marcaService.actualizarMarca(id, marca);
         if(marcaActualizada.isPresent()){
             
@@ -68,7 +69,7 @@ public class MarcaController {
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> eliminarMarca(Long id){
+    public ResponseEntity<Void> eliminarMarca(@PathVariable Long id){
         boolean eliminada = marcaService.eliminarMarca(id);
         return eliminada ? ResponseEntity.noContent().build() : ResponseEntity.notFound().build();
     }

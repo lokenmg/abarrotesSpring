@@ -14,6 +14,8 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 
 /**
  *
@@ -29,9 +31,11 @@ public class Reporte {
     @Column(name = "id_reporte")
     private Long idReporte;
 
+    @NotBlank(message = "La cve del reporte no puede estar en blanco")
     @Column(name = "cve")
     private String cve;
 
+    @NotBlank(message = "La descripcion del reporte no puede estar en blanco")
     @Column(name = "descripcion")
     private String descripcion;
 
@@ -73,6 +77,7 @@ public class Reporte {
         this.descripcion= descripcion;
     }
 
+    @NotNull(message = "La lista de detalles no puede ser nula")
     public List<DetalleReporte> getDetalleReporte() {
         return this.detalleReporte;
     }
