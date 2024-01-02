@@ -17,20 +17,16 @@ public class DTOCrearEmpleado {
     @Email(message = "El correo electrónico debe ser válido")
     private String correoElectronico;
 
-    @NotBlank(message = "Los roles no pueden estar en blanco")
-    private String roles;
-
     @NotNull(message = "El ID del rol no puede ser nulo")
     private long idRol;
 
     public DTOCrearEmpleado() {
     }
 
-    public DTOCrearEmpleado(String nombre, String apellidos, String contrasenia, String correoElectronico, String roles, long idRol) {
+    public DTOCrearEmpleado(String nombre, String apellidos, String contrasenia, String correoElectronico, long idRol) {
         this.nombre = nombre;
         this.apellidos = apellidos;
         this.contrasenia = contrasenia;
-        this.roles = roles;
         this.idRol = idRol;
         this.correoElectronico = correoElectronico;
     }
@@ -65,14 +61,6 @@ public class DTOCrearEmpleado {
 
     public void setCorreoElectronico(String correoElectronico) {
         this.correoElectronico = correoElectronico;
-    }
-    
-    public String getRoles() {
-        return roles;
-    }
-
-    public void setRoles(String roles) {
-        this.roles = roles;
     }
 
     public long getIdRol() {
