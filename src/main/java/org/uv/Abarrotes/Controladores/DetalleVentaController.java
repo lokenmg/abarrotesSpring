@@ -88,7 +88,7 @@ public class DetalleVentaController {
     }
 
     @PutMapping("/actualizarReporteSemanal/{id}")
-    public ResponseEntity<DTOReporte> ActualizarReporteSemanal(@PathVariable Long id) {
+    public ResponseEntity<DTOReporte> ActualizarReporteSemanal(@PathVariable Long id) { 
         Reporte nuevoReporte = detalleventaService.actualizarReporteSemanal(id);
         DTOReporte dtoReporte = new DTOReporte(nuevoReporte);
         return ResponseEntity.ok(dtoReporte);
