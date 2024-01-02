@@ -161,11 +161,11 @@ public class EmpleadoService {
 
     public void init() {
         // Verificar si ya existen empleados en la base de datos
-        if (empleadoRepository.findByNombre("Maria del Carmen")!= null) {
+        if (empleadoRepository.findByNombre("Maria del Carmen")==null) {
             // Si no hay empleados, crea dos empleados por defecto (jefe y gerente)
             // Crear el rol "Gerente"
             Rol rolEncDepart = new Rol();
-            rolEncDepart.setCve("ENCARGADO_DEPARTAMENTO");
+            rolEncDepart.setCve("ENC_DEP");
             rolEncDepart.setDescripcion("Encargado_Departamento");
             rolRepository.save(rolEncDepart);
 
