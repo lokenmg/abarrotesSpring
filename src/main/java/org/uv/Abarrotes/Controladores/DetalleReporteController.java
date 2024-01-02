@@ -32,5 +32,15 @@ public class DetalleReporteController {
         return ResponseEntity.ok(detalle);
     }
 
+    @DeleteMapping("/byReporteId/{reporteId}")
+    public ResponseEntity<String> borrarDetalleReportePorReporteId(Long reporteId) {
+        detalleReporteService.borrarDetalleReportePorReporteId(reporteId);
+        try {
+            return ResponseEntity.ok("Detalle de reporte eliminado con éxito");
+        } catch (Exception e) {
+            return ResponseEntity.ok("Error al eliminar detalle de reporte");
+        }
+    }
+
 
 }
