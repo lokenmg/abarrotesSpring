@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -22,6 +23,8 @@ import org.uv.Abarrotes.DTOs.Entradas.DTOCrearReporte;
 import org.uv.Abarrotes.modelos.DetalleVenta;
 import org.uv.Abarrotes.modelos.Reporte;
 import org.uv.Abarrotes.servicio.DetalleVentaService;
+
+import net.bytebuddy.asm.Advice.Return;
 /**
  *
  * @author yacruz
@@ -45,7 +48,7 @@ public class DetalleVentaController {
         return ResponseEntity.ok(detalleventas);
     }
     
-@GetMapping("/byNumeroNota/{numeroNota}")
+    @GetMapping("/byNumeroNota/{numeroNota}")
     public List<DTODetallesVentas> getDetalleVentaByNumeroNota(@PathVariable Long numeroNota) {
         List<DetalleVenta> detallesEncontrados = detalleventaService.getDetalleVentaByNumeroNota(numeroNota);
         List<DTODetallesVentas> detallesVentas = new ArrayList<>();
@@ -61,11 +64,36 @@ public class DetalleVentaController {
         return detallesVentas;
     }
     
-    @PostMapping("/crearReporte")
-    public ResponseEntity<DTOReporte> CrearReporte(@Valid @RequestBody DTOCrearReporte reporte) {
 
-        Reporte nuevoReporte = detalleventaService.crearReporte(reporte);
+    @PostMapping("/crearReporteMensual")
+    public ResponseEntity<DTOReporte> CrearReporte(@RequestBody DTOCrearReporte reporte) {
+
+        Reporte nuevoReporte = detalleventaService.CrearReporteMensual(reporte);
         DTOReporte dtoReporte = new DTOReporte(nuevoReporte);
         return ResponseEntity.ok(dtoReporte);
     }
+
+    @PostMapping("/crearReporteSemanal")
+    public ResponseEntity<DTOReporte> CrearReporteSemanal(@RequestBody DTOCrearReporte reporte) {
+
+        Reporte nuevoReporte = detalleventaService.CrearReporteSemanal(reporte);
+        DTOReporte dtoReporte = new DTOReporte(nuevoReporte);
+        return ResponseEntity.ok(dtoReporte);
+    }
+
+    @PutMapping("/actualizarReporteMensual/{id}")
+    public ResponseEntity<DTOReporte> ActualizarReporte(@PathVariable Long id) {
+
+        Reporte nuevoReporte = detalleventaService.actualizarReporteMensual(id);
+        DTOReporte dtoReporte = new DTOReporte(nuevoReporte);
+        return ResponseEntity.ok(dtoReporte);
+    }
+
+    @PutMapping("/actualizarReporteSemanal/{id}")
+    public ResponseEntity<DTOReporte> ActualizarReporteSemanal(@PathVariable Long id) { 
+        Reporte nuevoReporte = detalleventaService.actualizarReporteSemanal(id);
+        DTOReporte dtoReporte = new DTOReporte(nuevoReporte);
+        return ResponseEntity.ok(dtoReporte);
+    }
+
 }

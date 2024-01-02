@@ -4,7 +4,10 @@
  */
 package org.uv.Abarrotes.repositorio;
 
+
+
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.transaction.annotation.Transactional;
 import org.uv.Abarrotes.modelos.DetalleReporte;
 
 /**
@@ -12,5 +15,6 @@ import org.uv.Abarrotes.modelos.DetalleReporte;
  * @author loken
  */
 public interface DetalleReporteRepository extends JpaRepository<DetalleReporte, Long>{
-    
+    @Transactional
+    void deleteByReporte_idReporte(Long reporteId);
 }

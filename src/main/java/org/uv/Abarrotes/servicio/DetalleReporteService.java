@@ -6,10 +6,7 @@ package org.uv.Abarrotes.servicio;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.uv.Abarrotes.DTOs.DTODetalleReporte;
 import org.uv.Abarrotes.modelos.DetalleReporte;
-import org.uv.Abarrotes.modelos.DetalleVenta;
-import org.uv.Abarrotes.modelos.Reporte;
 import org.uv.Abarrotes.repositorio.DetalleReporteRepository;
 
 /**
@@ -21,21 +18,19 @@ public class DetalleReporteService {
     @Autowired
     private DetalleReporteRepository detalleReporteRepository;
 
-    @Autowired
-    private ReporteService reporteService;
+    public void borraDetalleReporte(Long id) {
+        DetalleReporte detalleReporte = detalleReporteRepository.findById(id).orElse(null);
+        if (detalleReporte == null) {
+            detalleReporteRepository.deleteById(id);
+        }
+        
+    }
 
-    @Autowired
-    private DetalleVentaService detalleVentaService;
+    public DetalleReporte obtenerDetalleReportePorId(Long id) {
+        return detalleReporteRepository.findById(id).orElse(null);
+    }
 
-//    public DetalleReporte guardarDetalleReporte(DTODetalleReporte detalleReporteDTO) {
-//        Reporte reporte = reporteService.obtenerReportePorId(detalleReporteDTO.getIdReporte());
-//        DetalleVenta detalleVenta = detalleVentaService.obtenerDetalleVentaPorId(detalleReporteDTO.getIdDetalleVenta());
-//
-//        DetalleReporte detalleReporte = new DetalleReporte();
-//        detalleReporte.setTotal(detalleReporteDTO.getTotal());
-//        detalleReporte.setReporte(reporte);
-//        detalleReporte.setDetalleVenta(detalleVenta);
-//
-//        return detalleReporteRepository.save(detalleReporte);
-//    }
+    public void borrarDetalleReportePorReporteId(Long reporteId) {
+        detalleReporteRepository.deleteByReporte_idReporte(reporteId);
+    }
 }

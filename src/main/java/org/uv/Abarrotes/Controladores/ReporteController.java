@@ -3,6 +3,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
 package org.uv.Abarrotes.Controladores;
+import java.util.ArrayList;
 import java.util.List;
 import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -59,5 +60,15 @@ public class ReporteController {
     public ResponseEntity<Void> eliminarReporte(@PathVariable Long id) {
         reporteService.eliminarReporte(id);
         return ResponseEntity.noContent().build();
+    }
+
+    @GetMapping("/byCve/{cve}")
+    public ResponseEntity<List<DTOReporte>> getReporteByCve(@PathVariable String cve) {
+        List<Reporte> reportes = reporteService.obtenerReportePorCve(cve);
+        List<DTOReporte> reportesDTO = new ArrayList<>();
+        for (Reporte reporte : reportes) {
+            reportesDTO.add(new DTOReporte(reporte));
+        }
+        return ResponseEntity.ok(reportesDTO);
     }
 }

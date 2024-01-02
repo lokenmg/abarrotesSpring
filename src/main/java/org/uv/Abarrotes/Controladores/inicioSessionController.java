@@ -32,25 +32,26 @@ public class inicioSessionController {
         String usuario = credentials.get("usuario");
         String contrasenia = credentials.get("contrasenia");
 
-        // Realizar la autenticación del usuario (puedes usar tu lógica de autenticación
-        // aquí)
+        // Realizar la autenticación del usuario
         if (inicioSessionService.autenticarUsuario(usuario, contrasenia)) {
-            // Si la autenticación es exitosa, asigna permisos
-            String rol = inicioSessionService.asignarPermisos(usuario);
+            // Si la autenticación es exitosa, obtener detalles del empleado
+            Empleado empleado = empleadoService.obtenerEmpleadoPorUsuario(usuario);
 
-            if (rol != null) {
-                // Devuelve la respuesta con el rol y un mensaje de éxito
+            if (empleado != null) {
+                // Construir la respuesta con el rol, id_empleado y nombre
                 Map<String, Object> response = new HashMap<>();
                 response.put("success", true);
-                response.put("rol", rol);
+                response.put("rol", empleado.getRoles().getNombre());
+                response.put("id_empleado", empleado.getIdEmpleado());
+                response.put("nombre", empleado.getNombre());
                 return ResponseEntity.ok(response);
             }
         }
 
-        // Si la autenticación falla o el rol es nulo, devuelve una respuesta de error
+        // Si la autenticación falla, devuelve una respuesta de error
         Map<String, Object> response = new HashMap<>();
         response.put("success", false);
-        response.put("message", "Credenciales incorrectas o permisos insuficientes");
+        response.put("message", "Credenciales incorrectas");
         return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(response);
     }
 
