@@ -17,7 +17,6 @@ public class DTOCrearEmpleado {
     @Email(message = "El correo electrónico debe ser válido")
     private String correoElectronico;
 
-
     @NotNull(message = "El ID del rol no puede ser nulo")
     private long idRol;
 
