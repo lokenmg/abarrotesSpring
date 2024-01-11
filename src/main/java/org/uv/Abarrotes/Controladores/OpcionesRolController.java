@@ -5,6 +5,7 @@
 package org.uv.Abarrotes.Controladores;
 
 import java.util.List;
+import javax.validation.Valid;
 import org.springframework.http.*;
 import org.springframework.stereotype.Controller;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,7 +33,7 @@ public class OpcionesRolController {
     private OpcionesRolService opcionesRolService;
  
     @PostMapping
-    public ResponseEntity<org.uv.Abarrotes.DTOs.DTOOpcionesRol> crearOpcionRolConEntidades(@RequestBody OpcionesRol nuevaopcionRol) {
+    public ResponseEntity<org.uv.Abarrotes.DTOs.DTOOpcionesRol> crearOpcionRolConEntidades(@Valid @RequestBody OpcionesRol nuevaopcionRol) {
         org.uv.Abarrotes.DTOs.DTOOpcionesRol opcionrolCreado = opcionesRolService.crearOpcionRol(nuevaopcionRol);
         return ResponseEntity.status(HttpStatus.CREATED).body(opcionrolCreado);
     }
@@ -50,7 +51,7 @@ public class OpcionesRolController {
     }
     
     @PutMapping("/{id}")
-    public ResponseEntity<DTOOpcionesRol> actualizarOpocionRol(@PathVariable Long id, @RequestBody OpcionesRol opcionRolActualizado) {
+    public ResponseEntity<DTOOpcionesRol> actualizarOpocionRol(@PathVariable Long id, @Valid @RequestBody OpcionesRol opcionRolActualizado) {
         DTOOpcionesRol opcionRol = opcionesRolService.actualizarOpcionRol(id, opcionRolActualizado);
         return ResponseEntity.ok(opcionRol);
     }

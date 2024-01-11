@@ -6,7 +6,7 @@ package org.uv.Abarrotes.servicio;
 
 import java.util.List;
 import java.util.Optional;
-
+import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.uv.Abarrotes.modelos.UnidadMedida;
@@ -22,7 +22,7 @@ public class UnidadMedidaService {
     @Autowired
     private UnidadMedidaRepository unidadMedidaRepository;
 
-    public UnidadMedida crearUnidadMedida(UnidadMedida unidadMedida){
+    public UnidadMedida crearUnidadMedida(@Valid UnidadMedida unidadMedida){
         return unidadMedidaRepository.save(unidadMedida);
     }
 
@@ -42,7 +42,7 @@ public class UnidadMedidaService {
         return true;
     }
 
-    public Optional<UnidadMedida> actualizarUnidadMedida(Long id, UnidadMedida unidadMedida){
+    public Optional<UnidadMedida> actualizarUnidadMedida(Long id, @Valid UnidadMedida unidadMedida){
         if(!unidadMedidaRepository.existsById(id)){
             return Optional.empty();
         }

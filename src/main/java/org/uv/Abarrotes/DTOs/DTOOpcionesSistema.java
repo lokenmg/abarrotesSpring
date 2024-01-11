@@ -5,6 +5,8 @@
 package org.uv.Abarrotes.DTOs;
 
 import org.uv.Abarrotes.modelos.OpcionesSistema;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Size;
 
 /**
  *
@@ -41,6 +43,8 @@ public class DTOOpcionesSistema {
         this.idOpciones = idOpciones;
     }
 
+    @NotBlank(message = "El nombre de la opcion no puede estar en blanco")
+    @Size(max = 20, message = "El nombre de la opcion no puede tener más de 20 caracteres")
     public String getNombre() {
         return nombre;
     }
@@ -49,6 +53,8 @@ public class DTOOpcionesSistema {
         this.nombre = nombre;
     }
 
+    @NotBlank(message = "El tipo de la opcion no puede estar en blanco")
+    @Size(max = 10, message = "El tipo de la opcion no puede tener más de 10 caracteres")
     public String getTipo() {
         return tipo;
     }

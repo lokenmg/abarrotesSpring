@@ -15,4 +15,8 @@ import org.uv.Abarrotes.modelos.Rol;
  */
 public interface RolRepository extends JpaRepository<Rol, Long> {
     Optional<Rol> findFirstByCve(String cve);
+
+    boolean existsByDescripcion(String descripcion);
+
+    Optional<Rol> findByDescripcion(String descripcion);
 }

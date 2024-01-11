@@ -17,9 +17,10 @@ import javax.persistence.Table;
  import java.math.BigDecimal;
 import javax.persistence.OneToMany;
 import java.util.List;
-import java.util.ArrayList;
 import java.sql.Date;
 import javax.persistence.CascadeType;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.PositiveOrZero;
 
 @Entity
 @Table(name = "Nota_ventas")
@@ -31,9 +32,12 @@ public class NotaVenta {
     @Column(name = "numero_nota")
     private Long numeroNota;
 
+    @NotNull(message = "La fecha no puede ser nula")
     @Column(name = "fecha")
     private Date fecha;
 
+    @NotNull(message = "El total no puede ser nulo")
+    @PositiveOrZero(message = "El total debe ser un número positivo o cero")
     @Column(name = "total")
     private BigDecimal total;
 
@@ -41,14 +45,17 @@ public class NotaVenta {
     @JoinColumn(name = "id_anticipo", referencedColumnName = "id_anticipo")
     private Anticipo anticipo;
 
+    @NotNull(message = "El cliente no puede ser nulo")
     @ManyToOne
     @JoinColumn(name = "id_cliente", referencedColumnName = "id_cliente")
     private Cliente cliente;
 
+    @NotNull(message = "El empleado no puede ser nulo")
     @ManyToOne
     @JoinColumn(name = "id_empleado", referencedColumnName = "id_empleado")
     private Empleado empleado;
 
+    @NotNull(message = "El departamento no puede ser nulo")
     @ManyToOne
     @JoinColumn(name = "id_departamento", referencedColumnName = "id_departamento")
     private Departamento departamento;

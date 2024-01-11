@@ -4,6 +4,7 @@
  */
 package org.uv.Abarrotes.DTOs;
 import java.sql.Date;
+import javax.validation.constraints.NotNull;
 import org.uv.Abarrotes.modelos.DetalleVenta;
 /**
  *
@@ -11,16 +12,25 @@ import org.uv.Abarrotes.modelos.DetalleVenta;
  */
 public class DTODetalleVenta {
     private Integer codigo;
-    private Double cantidad;
+    @NotNull(message = "La cantidad no puede ser nula")
+    private long cantidad;
+
+    @NotNull(message = "El subtotal no puede ser nulo")
     private Double subtotal;
+
+    @NotNull(message = "La fecha no puede ser nula")
     private Date fecha;
-    private Long producto; 
+
+    @NotNull(message = "El código de producto no puede ser nulo")
+    private Long producto;
+
+    @NotNull(message = "El número de venta no puede ser nulo")
     private Long venta;
     
     public DTODetalleVenta() {
     }
     
-    public DTODetalleVenta(Integer codigo, Double cantidad, Double subtotal, Date fecha,
+    public DTODetalleVenta(Integer codigo, long cantidad, Double subtotal, Date fecha,
             Long producto, Long venta) {
         this.codigo = codigo;
         this.cantidad = cantidad;
@@ -32,7 +42,7 @@ public class DTODetalleVenta {
     
     public DTODetalleVenta(DetalleVenta detalleVenta) {
         this.codigo = detalleVenta.getCodigo();
-//        this.cantidad = detalleVenta.getCantidad();
+        this.cantidad = detalleVenta.getCantidad();
         this.subtotal = detalleVenta.getSubtotal();
         this.fecha = detalleVenta.getFecha();
         this.producto = detalleVenta.getProducto().getCodigo();
@@ -47,11 +57,11 @@ public class DTODetalleVenta {
         this.codigo = codigo;
     }
 
-    public Double getCantidad() {
+    public long getCantidad() {
         return cantidad;
     }
 
-    public void setCantidad(Double cantidad) {
+    public void setCantidad(long cantidad) {
         this.cantidad = cantidad;
     }
 

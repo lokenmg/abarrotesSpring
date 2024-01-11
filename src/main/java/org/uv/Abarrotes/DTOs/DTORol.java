@@ -4,6 +4,8 @@
  */
 package org.uv.Abarrotes.DTOs;
 
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Size;
 import org.uv.Abarrotes.modelos.Rol;
 
 /**
@@ -43,6 +45,8 @@ public class DTORol {
         this.idRol = idRol;
     }
 
+    @NotBlank(message = "El cve del rol no puede estar en blanco")
+    @Size(max = 20, message = "El cve del rol no puede tener más de 20 caracteres")
     public String getCve() {
         return cve;
     }
@@ -51,6 +55,8 @@ public class DTORol {
         this.cve = cve;
     }
 
+    @NotBlank(message = "La descripcion del rol no puede estar en blanco")
+    @Size(max = 60, message = "La descripcion del rol no puede tener más de 60 caracteres")
     public String getDescripcion() {
         return descripcion;
     }

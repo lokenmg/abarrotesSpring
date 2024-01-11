@@ -1,4 +1,4 @@
-package org.uv.Abarrotes.DTOs;
+package org.uv.Abarrotes.DTOs.Entradas;
 
 import java.math.BigDecimal;
 

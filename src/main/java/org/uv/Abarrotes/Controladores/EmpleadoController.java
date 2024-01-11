@@ -6,6 +6,10 @@ package org.uv.Abarrotes.Controladores;
 
 
 import java.util.List;
+
+import javax.persistence.EntityNotFoundException;
+import javax.validation.Valid;
+
 import org.springframework.http.*;
 import org.springframework.stereotype.Controller;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,6 +23,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.uv.Abarrotes.DTOs.DTOEmpleadoInfo;
+import org.uv.Abarrotes.DTOs.Entradas.DTOCrearEmpleado;
 import org.uv.Abarrotes.modelos.Empleado;
 import org.uv.Abarrotes.servicio.EmpleadoService;
 
@@ -34,9 +39,13 @@ public class EmpleadoController {
     private EmpleadoService empleadoService;
  
     @PostMapping
-    public ResponseEntity<org.uv.Abarrotes.DTOs.DTOEmpleadoInfo> crearEmpleadoConEntidades(@RequestBody Empleado nuevoEmpleado) {
-        org.uv.Abarrotes.DTOs.DTOEmpleadoInfo empleadoCreado = empleadoService.crearEmpleado(nuevoEmpleado);
-        return ResponseEntity.status(HttpStatus.CREATED).body(empleadoCreado);
+    public ResponseEntity<DTOEmpleadoInfo> crearEmpleadoConEntidades(@Valid @RequestBody Empleado nuevoEmpleado, @RequestParam String descripcionRol) {
+        try {
+            DTOEmpleadoInfo empleadoCreado = empleadoService.crearEmpleado(nuevoEmpleado, descripcionRol);
+            return ResponseEntity.status(HttpStatus.CREATED).body(empleadoCreado);
+        } catch (EntityNotFoundException e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+        }
     }
 
     @GetMapping
@@ -52,7 +61,7 @@ public class EmpleadoController {
     }
     
     @PutMapping("/{id}")
-    public ResponseEntity<DTOEmpleadoInfo> actualizarEmpleado(@PathVariable Long id, @RequestBody Empleado empleadoActualizado) {
+    public ResponseEntity<DTOEmpleadoInfo> actualizarEmpleado(@PathVariable Long id,@Valid @RequestBody Empleado empleadoActualizado) {
         DTOEmpleadoInfo empleado = empleadoService.actualizarEmpleado(id, empleadoActualizado);
         return ResponseEntity.ok(empleado);
     }
@@ -71,4 +80,10 @@ public class EmpleadoController {
         List<DTOEmpleadoInfo> empleados = empleadoService.buscarEmpleadosPorNombreYApellidos(nombre, apellidos);
         return ResponseEntity.ok(empleados);
     }
+
+    @PostMapping("/crearConDTO")
+    public ResponseEntity<DTOEmpleadoInfo> crearEmpleadoConDTO(@Valid @RequestBody DTOCrearEmpleado dto) {
+        DTOEmpleadoInfo empleadoCreado = empleadoService.crearEmpleadoConDTO(dto);
+        return ResponseEntity.status(HttpStatus.CREATED).body(empleadoCreado);
+    } 
 }

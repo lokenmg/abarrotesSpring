@@ -5,7 +5,7 @@
 package org.uv.Abarrotes.Controladores;
 
 import java.util.List;
-
+import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -34,7 +34,7 @@ public class ProductoController {
     private ProductoService productoService;
  
     @PostMapping
-    public ResponseEntity<org.uv.Abarrotes.DTOs.DTOProductoInfo> crearProductoConEntidades(@RequestBody Producto nuevoProducto) {
+    public ResponseEntity<org.uv.Abarrotes.DTOs.DTOProductoInfo> crearProductoConEntidades(@Valid @RequestBody Producto nuevoProducto) {
         org.uv.Abarrotes.DTOs.DTOProductoInfo productoCreado = productoService.crearProducto(nuevoProducto);
         return ResponseEntity.status(HttpStatus.CREATED).body(productoCreado);
     }
@@ -52,7 +52,7 @@ public class ProductoController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<DTOProductoInfo> actualizarProducto(@PathVariable Long id, @RequestBody Producto producto){
+    public ResponseEntity<DTOProductoInfo> actualizarProducto(@PathVariable Long id, @Valid @RequestBody Producto producto){
         DTOProductoInfo productoActualizado = productoService.modificarProducto(producto, id);
         return ResponseEntity.ok(productoActualizado);
     }

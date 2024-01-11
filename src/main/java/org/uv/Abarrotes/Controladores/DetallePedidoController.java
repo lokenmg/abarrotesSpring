@@ -1,5 +1,6 @@
 package org.uv.Abarrotes.Controladores;
 
+import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Repository;
@@ -22,7 +23,7 @@ public class DetallePedidoController {
     private DetallePedidoService detallePedidoService;
 
     @PostMapping
-    public ResponseEntity<DTODetallePedido> crearDetallePedido(@RequestBody DetallePedido detallePedido){
+    public ResponseEntity<DTODetallePedido> crearDetallePedido(@Valid @RequestBody DetallePedido detallePedido){
         DTODetallePedido nuevoDetallePedido = detallePedidoService.crearDetallePedido(detallePedido);
         return ResponseEntity.ok(nuevoDetallePedido);
     }
@@ -34,7 +35,7 @@ public class DetallePedidoController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<DTODetallePedido> actualizarDetallePedido(@PathVariable Long id, @RequestBody DetallePedido detallePedido){
+    public ResponseEntity<DTODetallePedido> actualizarDetallePedido(@PathVariable Long id,@Valid @RequestBody DetallePedido detallePedido){
         DTODetallePedido detallePedidoActualizado = detallePedidoService.actualizarDetallePedido(id, detallePedido);
         return ResponseEntity.ok(detallePedidoActualizado);
     }

@@ -7,7 +7,7 @@ package org.uv.Abarrotes.Controladores;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-
+import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -51,14 +51,14 @@ public class UnidadMedidaController {
     }
     
     @PostMapping
-    public ResponseEntity<DTOUnidadMedida> crearUnidadMedida(@RequestBody UnidadMedida unidadMedida){
+    public ResponseEntity<DTOUnidadMedida> crearUnidadMedida(@Valid @RequestBody UnidadMedida unidadMedida){
         UnidadMedida nuevaUnidadMedida = unidadMedidaService.crearUnidadMedida(unidadMedida);
         DTOUnidadMedida dtoUnidadMedida = new DTOUnidadMedida(nuevaUnidadMedida);
         return ResponseEntity.ok(dtoUnidadMedida);
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<DTOUnidadMedida> actualizarUnidadMedida(@PathVariable Long id, @RequestBody UnidadMedida unidadMedida){
+    public ResponseEntity<DTOUnidadMedida> actualizarUnidadMedida(@PathVariable Long id, @Valid @RequestBody UnidadMedida unidadMedida){
         Optional<UnidadMedida> unidadMedidaActualizada = unidadMedidaService.actualizarUnidadMedida(id, unidadMedida);
         if(unidadMedidaActualizada.isPresent()){
             return ResponseEntity.ok(new DTOUnidadMedida(unidadMedidaActualizada.get()));

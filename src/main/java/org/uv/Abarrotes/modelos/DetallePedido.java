@@ -22,6 +22,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
 import java.util.List;
+import javax.validation.constraints.NotNull;
 
 @Entity
 @Table(name = "Detalle_pedido")
@@ -33,9 +34,11 @@ public class DetallePedido implements Serializable {
     @Column(name = "id_detalle_pedido")
     private Long idDetallePedido;
 
+    @NotNull(message = "La fecha de entrega no puede ser nula")
     @Column(name = "fecha_entrega")
     private Date fechaEntrega;
 
+    @NotNull(message = "La hora de entrega no puede ser nula")
     @Column(name = "hora_entrega")
     private Time horaEntrega;
 
@@ -47,6 +50,7 @@ public class DetallePedido implements Serializable {
     @JsonIgnore
     private Time horaRecoger;
 
+    @NotNull(message = "El estado del pedido no puede ser nulo")
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "id_estado")
     private EstadosPedido estadoPedido;

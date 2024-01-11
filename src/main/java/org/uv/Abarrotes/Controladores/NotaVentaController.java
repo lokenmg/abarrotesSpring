@@ -5,6 +5,7 @@
 package org.uv.Abarrotes.Controladores;
 
 import java.util.List;
+import javax.validation.Valid;
 import org.springframework.http.*;
 import org.springframework.stereotype.Controller;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,7 +18,7 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.uv.Abarrotes.DTOs.DTONotaVenta;
-import org.uv.Abarrotes.DTOs.DTOPago;
+import org.uv.Abarrotes.DTOs.Entradas.DTOPago;
 import org.uv.Abarrotes.DTOs.DTOVenta;
 import org.uv.Abarrotes.modelos.NotaVenta;
 import org.uv.Abarrotes.servicio.NotaVentaService;
@@ -35,9 +36,9 @@ public class NotaVentaController {
 
     //postmapping para crear una nota de venta con metdo limpio
     @PostMapping("/crearlimpio")
-    public ResponseEntity<String> crearNota(@RequestBody NotaVenta notaVenta) {
+    public ResponseEntity<String> crearNota(@Valid @RequestBody NotaVenta notaVenta) {
         try {
-            NotaVenta nuevaNotaVenta = notaventaService.crandoVenta(notaVenta);
+            notaventaService.crandoVenta(notaVenta);
             return new ResponseEntity<>("Nota de venta creada con éxito", HttpStatus.CREATED);
         } catch (Exception e) {
             return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
@@ -58,7 +59,7 @@ public class NotaVentaController {
     }
     
     @PutMapping("/{id}")
-    public ResponseEntity<DTONotaVenta> actualizarNotaVenta(@PathVariable Long id, @RequestBody NotaVenta notaventaActualizado) {
+    public ResponseEntity<DTONotaVenta> actualizarNotaVenta(@PathVariable Long id,@Valid @RequestBody NotaVenta notaventaActualizado) {
         DTONotaVenta notaventa = notaventaService.actualizarNotaVenta(id, notaventaActualizado);
         return ResponseEntity.ok(notaventa);
     }

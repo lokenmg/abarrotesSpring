@@ -7,6 +7,8 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -24,6 +26,7 @@ public class UnidadMedida {
     @Column(name = "id_unidad_med")
     private Long idUnidadMed;
 
+    @NotBlank(message = "El nombre de la unidad de medida no puede estar en blanco")
     @Column(name = "nombre")
     private String nombre;
 
@@ -54,6 +57,7 @@ public class UnidadMedida {
         this.nombre = nombre;
     }
 
+    @NotNull(message = "La lista de productos no puede ser nula")
     public List<Producto> getProductos() {
         return productos;
     }
