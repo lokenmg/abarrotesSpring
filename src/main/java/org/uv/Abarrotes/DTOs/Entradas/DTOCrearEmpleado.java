@@ -13,7 +13,6 @@ public class DTOCrearEmpleado {
     @NotBlank(message = "La contraseña no puede estar en blanco")
     private String contrasenia;
 
-    @NotBlank(message = "El correo electrónico no puede estar en blanco")
     @Email(message = "El correo electrónico debe ser válido")
     private String correoElectronico;
 
